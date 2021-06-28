@@ -1,76 +1,86 @@
 {
     "products": [
         {
-            "id": "OLJCESPC7Z",
-            "name": "Vintage Typewriter",
-            "description": "This typewriter looks good in your living room.",
-            "picture": "static/img/products/typewriter.jpg",
-            "cost": 67.99,
-            "categories": ["vintage"]
+            "id": "1DOR4VSD",
+            "name": "Robinson Crusoe",
+            "author": "Daniel Defoe",
+            "publishedYear": "2019",
+            "image": "static/img/products/Daniel Defoe/preview.jpg",
+            "cost": 260000,
+            "category": ["fiction"]
         },
         {
-            "id": "66VCHSJNUP",
-            "name": "Vintage Camera Lens",
-            "description": "You won't have a camera to use it and it probably doesn't work anyway.",
-            "picture": "static/img/products/camera-lens.jpg",
-            "cost": 12.49,
-            "categories": ["photography", "vintage"]
-        },
-        {
-            "id": "1YMWWN1N4O",
-            "name": "Home Barista Kit",
-            "description": "Always wanted to brew coffee with Chemex and Aeropress at home?",
-            "picture": "static/img/products/barista-kit.jpg",
-            "cost": 124,
-            "categories": ["cookware"]
-        },
-        {
-            "id": "L9ECAV7KIM",
-            "name": "Terrarium",
-            "description": "This terrarium will looks great in your white painted living room.",
-            "picture": "static/img/products/terrarium.jpg",
-            "cost": 36.45,
-            "categories": ["gardening"]
-        },
-        {
-            "id": "2ZYFJ3GM2N",
-            "name": "Film Camera",
-            "description": "This camera looks like it's a film camera, but it's actually digital.",
-            "picture": "static/img/products/film-camera.jpg",
-            "cost": 2245,
-            "categories": ["photography", "vintage"]
-        },
-        {
-            "id": "0PUK6V6EV0",
-            "name": "Vintage Record Player",
-            "description": "It still works.",
-            "picture": "static/img/products/record-player.jpg",
-            "cost": 65.50,
-            "categories": ["music", "vintage"]
-        },
-        {
-            "id": "LS4PSXUNUM",
-            "name": "Metal Camping Mug",
-            "description": "You probably don't go camping that often but this is better than plastic cups.",
-            "picture": "static/img/products/camp-mug.jpg",
-            "cost": 24.33,
-            "categories": ["cookware"]
-        },
-        {
-            "id": "9SIQT8TOJO",
-            "name": "City Bike",
-            "description": "This single gear bike probably cannot climb the hills of San Francisco.",
-            "picture": "static/img/products/city-bike.jpg",
-            "cost": 789.50,
-            "categories": ["cycling"]
-        },
-        {
-            "id": "6E92ZMYYFZ",
-            "name": "Air Plant",
-            "description": "Have you ever wondered whether air plants need water? Buy one and figure out.",
-            "picture": "static/img/products/air-plant.jpg",
-            "cost": 12.30,
-            "categories": ["gardening"]
+            "id": "7HNI5MBN",
+            "name": "The Invisible Man",
+            "author": "H. G. Wells",
+            "publishedYear": "2018",
+            "image": "static/img/products/H. G. Wells/The Invisible Man/preview.jpg",
+            "cost": 80000,
+            "category": ["fiction", "horror"]
+        },{
+            "id": "7HSI3DPE",
+            "name": "The Island of Doctor Moreau",
+            "author": "H. G. Wells",
+            "publishedYear": "2018",
+            "picture": "static/img/products/H. G. Wells/The Island of Doctor Moreau/preview.jpg",
+            "cost": 60000,
+            "category": ["fiction", "horror"]
+        },{
+            "id": "7HIT4DBN",
+            "name": "The Time Machine",
+            "author": "H. G. Wells",
+            "publishedYear": "2018",
+            "picture": "static/img/products/H. G. Wells/The Time Machine/preview.jpg",
+            "cost": 60000,
+            "category": ["fiction"]
+        },{
+            "id": "4HAK5PIT",
+            "name": "Kafka on The Shore",
+            "author": "Haruki Murakami",
+            "publishedYear": "2005",
+            "picture": "static/img/products/Haruki Murakami/Kafka on The Shore/preview.jpg",
+            "cost": 163000,
+            "category": ["fantasy", "fiction", "realism"]
+        },{
+            "id": "4HIW3SJC",
+            "name": "The Wind-up Bird Chronicle",
+            "author": "Haruki Murakami",
+            "publishedYear": "2020",
+            "picture": "static/img/products/Haruki Murakami/The Wind-up Bird Chronicle/preview.jpg",
+            "cost": 199000,
+            "category": ["realism", "fantasy", "fiction"]
+        },{
+            "id": "8JEP8OBQ",
+            "name": "Peter Pan",
+            "author": "J. M. Barrie",
+            "publishedYear": "2019",
+            "picture": "static/img/products/J. M. Barrie/Peter Pan/preview.jpg",
+            "cost": 350000,
+            "category": ["classic", "fantasy", "fiction", "children's"]
+        },{
+            "id": "2LLA7OPX",
+            "name": "Alice in Wonderland",
+            "author": "Lewis Carroll",
+            "publishedYear": "2015",
+            "picture": "static/img/products/J. M. Barrie/Alice in Wonderland/preview.jpg",
+            "cost": 165000,
+            "category": ["classic", "fantasy"]
+        },{
+            "id": "9NLB2BXT",
+            "name": "The Black Swan",
+            "author": "Nassim Nicholas Taleb",
+            "publishedYear": "2020",
+            "picture": "static/img/products/Nassim Nicholas Taleb/The Black Swan/preview.jpg",
+            "cost": 299000,
+            "category": ["nfiction"]
+        },{
+            "id": "4SNU9UVO",
+            "name": "Universe in A Nutshell",
+            "author": "Stephen Hawking",
+            "publishedYear": "2016",
+            "picture": "static/img/products/Stephen Hawking/Universe in A Nutshell/preview.jpg",
+            "cost": 75000,
+            "category": ["science"]
         }
     ]
 }
