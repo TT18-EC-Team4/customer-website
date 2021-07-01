@@ -18,22 +18,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Orders({ match }) {
+export default function Products({ match }) {
   const classes = useStyles();
 
   const [hasErrors, setErrors] = useState(false);
   const [order, setOrder] = useState({});
 
   const orderId = match.params.id;
-  
+
   async function fetchOrder(orderId) {
     try {
-      // const response = await fetch(
-      //   `${process.env.REACT_APP_ORDERS_URL}/${orderId}`
-      // );
-      // const order = await response.json();
-      const orders = require("../../data/orders.json").orders;
-      const order = orders.find(order => order.id === orderId);     
+      const response = await fetch(
+        `${process.env.REACT_APP_ORDERS_URL}/${orderId}`
+      );
+      const order = await response.json();
       setOrder(order);
     } catch (err) {
       setErrors(true);

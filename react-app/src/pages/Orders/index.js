@@ -48,8 +48,9 @@ export default function Orders({ history }) {
 
   async function fetchOrders() {
     try {
-      const response = await fetch(`${process.env.REACT_APP_ORDERS_URL}`);
-      const orders = await response.json();
+      // const response = await fetch(`${process.env.REACT_APP_ORDERS_URL}`);
+      // const orders = await response.json();
+      const orders = require("../../data/orders.json").orders;
       setOrders(orders);
     } catch (err) {
       setErrors(true);
