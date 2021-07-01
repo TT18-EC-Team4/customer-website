@@ -34,6 +34,7 @@ import {
 //Import Pages
 import Home from "../../pages/Home";
 import Products from "../../pages/Products";
+import ProductDetails from "../../pages/ProductDetails";
 import Orders from "../../pages/Orders";
 import OrderDetails from "../../pages/OrderDetails";
 import NotFound from "../../pages/NotFound";
@@ -123,7 +124,8 @@ export default function ClippedDrawer() {
           <div className={classes.toolbar} />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/products" component={Products} />
+            <Route path="/products" component={Products} />
+            <Route path="/products/:id" component={ProductDetails} />
             <Route path="/orders/:id" component={OrderDetails} />
             <Route path="/orders" component={Orders} />
             <Route component={NotFound} />

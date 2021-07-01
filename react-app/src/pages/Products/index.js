@@ -7,24 +7,24 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   grid: {
     width: "1000px",
-    margin: "0 auto"
+    margin: "0 auto",
   },
   paper: {
-    padding: theme.spacing(3, 2)
+    padding: theme.spacing(3, 2),
   },
   media: {
     height: 0,
-    paddingTop: "100%" // 16:9
-  }
+    paddingTop: "100%", // 16:9
+  },
 }));
 
-export default function Products() {
+export default function Products({ history }) {
   const classes = useStyles();
 
   const [hasErrors, setErrors] = useState(false);
@@ -35,7 +35,7 @@ export default function Products() {
       // const response = await fetch(`${process.env.REACT_APP_PRODUCTS_URL}`);
       // const products = await response.json();
       const products = require("../../data/products.json").products;
-      const product = products.find(product => product.id === productId)
+      // const product = products.find((product) => product.id === productId);
       setProducts(products);
     } catch (err) {
       setErrors(true);
@@ -56,14 +56,35 @@ export default function Products() {
         </Paper>
       )}
       {!hasErrors && (
-        <Grid className={classes.grid} container spacing={3} justify="flex-start" alignItems="stretch">
-          <Grid item container xs={6}>
-
-          </Grid>
-          <Grid item container xs={6}>
-
-          </Grid>
-
+        <Grid
+          className={classes.grid}
+          container
+          spacing={3}
+          justify="flex-start"
+          alignItems="stretch"
+        >
+          {products.map((product) => {
+            return (
+              <Grid key={product.id} item md={4} xs={12}>
+                <Card
+                  onClick={() => {
+                    history.push(`/products/${product.id}`);
+                  }}
+                >
+                  <CardMedia
+                    className={classes.media}
+                    image={product.picture}
+                    title={product.name}
+                  />
+                  <CardContent>
+                    <Typography variant="caption" display="block" gutterBottom>
+                      {product.name} - ${product.cost}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            );
+          })}
         </Grid>
       )}
     </div>

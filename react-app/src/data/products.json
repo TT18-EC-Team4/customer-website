@@ -5,7 +5,7 @@
             "name": "Robinson Crusoe",
             "author": "Daniel Defoe",
             "publishedYear": "2019",
-            "image": "static/img/products/Daniel Defoe/Robinson Crusoe/preview.jpg",
+            "picture": "static/img/products/Daniel Defoe/Robinson Crusoe/preview.jpg",
             "cost": 260000,
             "category": ["fiction"]
         },
@@ -14,7 +14,7 @@
             "name": "The Invisible Man",
             "author": "H. G. Wells",
             "publishedYear": "2018",
-            "image": "static/img/products/H. G. Wells/The Invisible Man/preview.jpg",
+            "picture": "static/img/products/H. G. Wells/The Invisible Man/preview.jpg",
             "cost": 80000,
             "category": ["fiction", "horror"]
         },{
@@ -22,7 +22,7 @@
             "name": "The Island of Doctor Moreau",
             "author": "H. G. Wells",
             "publishedYear": "2018",
-            "image": "static/img/products/H. G. Wells/The Island of Doctor Moreau/preview.jpg",
+            "picture": "static/img/products/H. G. Wells/The Island of Doctor Moreau/preview.jpg",
             "cost": 60000,
             "category": ["fiction", "horror"]
         },{
@@ -30,7 +30,7 @@
             "name": "The Time Machine",
             "author": "H. G. Wells",
             "publishedYear": "2018",
-            "image": "static/img/products/H. G. Wells/The Time Machine/preview.jpg",
+            "picture": "static/img/products/H. G. Wells/The Time Machine/preview.jpg",
             "cost": 60000,
             "category": ["fiction"]
         },{
@@ -38,7 +38,7 @@
             "name": "Kafka on The Shore",
             "author": "Haruki Murakami",
             "publishedYear": "2005",
-            "image": "static/img/products/Haruki Murakami/Kafka on The Shore/preview.jpg",
+            "picture": "static/img/products/Haruki Murakami/Kafka on The Shore/preview.jpg",
             "cost": 163000,
             "category": ["fantasy", "fiction", "realism"]
         },{
@@ -46,7 +46,7 @@
             "name": "The Wind-up Bird Chronicle",
             "author": "Haruki Murakami",
             "publishedYear": "2020",
-            "image": "static/img/products/Haruki Murakami/The Wind-up Bird Chronicle/preview.jpg",
+            "picture": "static/img/products/Haruki Murakami/The Wind-up Bird Chronicle/preview.jpg",
             "cost": 199000,
             "category": ["realism", "fantasy", "fiction"]
         },{
@@ -54,7 +54,7 @@
             "name": "Peter Pan",
             "author": "J. M. Barrie",
             "publishedYear": "2019",
-            "image": "static/img/products/J. M. Barrie/Peter Pan/preview.jpg",
+            "picture": "static/img/products/J. M. Barrie/Peter Pan/preview.jpg",
             "cost": 350000,
             "category": ["classic", "fantasy", "fiction", "children's"]
         },{
@@ -62,7 +62,7 @@
             "name": "Alice in Wonderland",
             "author": "Lewis Carroll",
             "publishedYear": "2015",
-            "image": "static/img/products/J. M. Barrie/Alice in Wonderland/preview.jpg",
+            "picture": "static/img/products/Lewis Carroll/Alice in Wonderland/preview.jpg",
             "cost": 165000,
             "category": ["classic", "fantasy"]
         },{
@@ -70,7 +70,7 @@
             "name": "The Black Swan",
             "author": "Nassim Nicholas Taleb",
             "publishedYear": "2020",
-            "image": "static/img/products/Nassim Nicholas Taleb/The Black Swan/preview.jpg",
+            "picture": "static/img/products/Nassim Nicholas Taleb/The Black Swan/preview.jpg",
             "cost": 299000,
             "category": ["nfiction"]
         },{
@@ -78,7 +78,7 @@
             "name": "Universe in A Nutshell",
             "author": "Stephen Hawking",
             "publishedYear": "2016",
-            "image": "static/img/products/Stephen Hawking/Universe in A Nutshell/preview.jpg",
+            "picture": "static/img/products/Stephen Hawking/Universe in A Nutshell/preview.jpg",
             "cost": 75000,
             "category": ["science"]
         }
