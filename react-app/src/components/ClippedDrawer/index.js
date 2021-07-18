@@ -11,9 +11,8 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License.
+limitations under the License.import React from "react";
 */
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -22,7 +21,19 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import ListItem from "@material-ui/core/ListItem";
+import { Divider, ListItemIcon, SvgIcon } from "@material-ui/core";
 import ListItemText from "@material-ui/core/ListItemText";
+import React, { Component }  from 'react';
+
+//Import icons
+import HomeIcon from '@material-ui/icons/Home';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import CategoryIcon from '@material-ui/icons/Category';
+import PeopleIcon from '@material-ui/icons/People';
+import ReceiptIcon from '@material-ui/icons/Receipt';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 
 import {
   BrowserRouter as Router,
@@ -34,12 +45,11 @@ import {
 //Import Pages
 import Home from "../../pages/Home";
 import Products from "../../pages/Products";
-import ProductDetails from "../../pages/ProductDetails";
 import Orders from "../../pages/Orders";
 import OrderDetails from "../../pages/OrderDetails";
 import NotFound from "../../pages/NotFound";
 
-const drawerWidth = 200;
+const drawerWidth = 238;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,6 +67,7 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0
   },
   drawerPaper: {
+    background: "#363740",
     width: drawerWidth
   },
   drawerItem: {
@@ -66,7 +77,10 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3)
   },
-  toolbar: theme.mixins.toolbar
+  toolbar: theme.mixins.toolbar,
+  navContent: {
+    color: '#000'
+  }
 }));
 
 export default function ClippedDrawer() {
@@ -99,7 +113,12 @@ export default function ClippedDrawer() {
               activeClassName="Mui-selected"
               to="/"
             >
-              <ListItemText primary="Home" />
+              <ListItemIcon>
+                <HomeIcon style={{color: "#dde2ff"}}/>
+              </ListItemIcon>
+              <ListItemText                 
+                primary={
+                  <Typography style={{ color: "#dde2ff" }}>Overview</Typography>}/>
             </ListItem>{" "}
             <ListItem
               component={NavLink}
@@ -108,24 +127,97 @@ export default function ClippedDrawer() {
               activeClassName="Mui-selected"
               to="/products"
             >
-              <ListItemText primary="Products" />
+              <ListItemIcon>
+                <MenuBookIcon style={{color: "#dde2ff"}}/>
+              </ListItemIcon>
+              <ListItemText 
+                primary={
+                  <Typography style={{ color: "#dde2ff" }}>Products</Typography>}/>
             </ListItem>{" "}
             <ListItem
               component={NavLink}
               className={classes.drawerItem}
               activeClassName="Mui-selected"
-              to="/orders"
             >
-              <ListItemText primary="Orders" />
+              <ListItemIcon>
+                <CategoryIcon style={{color: "#dde2ff"}}/>
+              </ListItemIcon>
+              <ListItemText                 
+                primary={
+                  <Typography style={{ color: "#dde2ff" }}>Categories</Typography>} />
             </ListItem>
+            <ListItem
+            component={NavLink}
+            className={classes.drawerItem}
+            activeClassName="Mui-selected"
+            >
+              <ListItemIcon>
+                <PeopleIcon style={{color: "#dde2ff"}}/>
+              </ListItemIcon>
+              <ListItemText 
+                primary={
+                  <Typography style={{ color: "#dde2ff" }}>Customer</Typography>}/>
+            </ListItem>
+            <ListItem
+            component={NavLink}
+            className={classes.drawerItem}
+            activeClassName="Mui-selected"
+            >
+              <ListItemIcon>
+                <ReceiptIcon style={{color: "#dde2ff"}}/>
+              </ListItemIcon>
+              <ListItemText                 
+                primary={
+                  <Typography style={{ color: "#dde2ff" }}>Orders</Typography>} />
+            </ListItem>
+            <ListItem
+            component={NavLink}
+            className={classes.drawerItem}
+            activeClassName="Mui-selected"
+            >
+              <ListItemIcon>
+                <RotateLeftIcon style={{color: "#dde2ff"}}/>
+              </ListItemIcon>
+              <ListItemText                 
+                primary={
+                  <Typography noWrap={true} style={{ color: "#dde2ff", fontSize: '16px' }}>Delivery Refund</Typography>} />
+            </ListItem>
+            
+          </List>
+          <Divider/>
+          <List>
+            <ListItem
+            component={NavLink}
+            className={classes.drawerItem}
+            activeClassName="Mui-selected"
+            >
+              <ListItemIcon>
+                <SettingsIcon style={{color: "#dde2ff"}}/>
+              </ListItemIcon>
+              <ListItemText                 
+                primary={
+                  <Typography style={{ color: "#dde2ff" }}>Settings</Typography>}/>
+            </ListItem>
+            <ListItem
+            component={NavLink}
+            className={classes.drawerItem}
+            activeClassName="Mui-selected"
+            >
+              <ListItemIcon>
+                <ContactSupportIcon style={{color: "#dde2ff"}}/>
+              </ListItemIcon>
+              <ListItemText                 
+                primary={
+                  <Typography style={{ color: "#dde2ff" }}>Contact Us</Typography>}/>
+            </ListItem>
+            
           </List>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/products" component={Products} />
-            <Route path="/products/:id" component={ProductDetails} />
+            <Route exact path="/products" component={Products} />
             <Route path="/orders/:id" component={OrderDetails} />
             <Route path="/orders" component={Orders} />
             <Route component={NotFound} />

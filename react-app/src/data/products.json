@@ -5,82 +5,92 @@
             "name": "Robinson Crusoe",
             "author": "Daniel Defoe",
             "publishedYear": "2019",
-            "picture": "static/img/products/Daniel Defoe/Robinson Crusoe/preview.jpg",
+            "picture": "static/img/products/daniel-defoe/robinson-crusoe/preview.jpg",
             "cost": 260000,
-            "category": ["fiction"]
+            "category": ["fiction"],
+            "quantity": 5
         },
         {
             "id": "7HNI5MBN",
             "name": "The Invisible Man",
             "author": "H. G. Wells",
             "publishedYear": "2018",
-            "picture": "static/img/products/H. G. Wells/The Invisible Man/preview.jpg",
+            "picture": "static/img/products/h-g-wells/the-invisible-man/preview.jpg",
             "cost": 80000,
-            "category": ["fiction", "horror"]
+            "category": ["fiction", "horror"],
+            "quantity": 6
         },{
             "id": "7HSI3DPE",
             "name": "The Island of Doctor Moreau",
             "author": "H. G. Wells",
             "publishedYear": "2018",
-            "picture": "static/img/products/H. G. Wells/The Island of Doctor Moreau/preview.jpg",
+            "picture": "static/img/products/h-g-wells/the-island-of-doctor-moreau/preview.jpg",
             "cost": 60000,
-            "category": ["fiction", "horror"]
+            "category": ["fiction", "horror"],
+            "quantity": 0
         },{
             "id": "7HIT4DBN",
             "name": "The Time Machine",
             "author": "H. G. Wells",
             "publishedYear": "2018",
-            "picture": "static/img/products/H. G. Wells/The Time Machine/preview.jpg",
+            "picture": "static/img/products/h-g-wells/the-time-machine/preview.jpg",
             "cost": 60000,
-            "category": ["fiction"]
+            "category": ["fiction"],
+            "quantity": 10
         },{
             "id": "4HAK5PIT",
             "name": "Kafka on The Shore",
             "author": "Haruki Murakami",
             "publishedYear": "2005",
-            "picture": "static/img/products/Haruki Murakami/Kafka on The Shore/preview.jpg",
+            "picture": "static/img/products/haruki-murakami/kafka-on-the-shore/preview.jpg",
             "cost": 163000,
-            "category": ["fantasy", "fiction", "realism"]
+            "category": ["fantasy", "fiction", "realism"],
+            "quantity": 0
         },{
             "id": "4HIW3SJC",
             "name": "The Wind-up Bird Chronicle",
             "author": "Haruki Murakami",
             "publishedYear": "2020",
-            "picture": "static/img/products/Haruki Murakami/The Wind-up Bird Chronicle/preview.jpg",
+            "picture": "static/img/products/haruki-murakami/the-wind-up-bird-chronicle/preview.jpg",
             "cost": 199000,
-            "category": ["realism", "fantasy", "fiction"]
+            "category": ["realism", "fantasy", "fiction"],
+            "quantity": 4
         },{
             "id": "8JEP8OBQ",
             "name": "Peter Pan",
             "author": "J. M. Barrie",
             "publishedYear": "2019",
-            "picture": "static/img/products/J. M. Barrie/Peter Pan/preview.jpg",
+            "picture": "static/img/products/j-m-barrie/peter-pan/preview.jpg",
             "cost": 350000,
-            "category": ["classic", "fantasy", "fiction", "children's"]
+            "category": ["classic", "fantasy", "fiction", "children's"],
+            "quantity": 2
         },{
             "id": "2LLA7OPX",
             "name": "Alice in Wonderland",
             "author": "Lewis Carroll",
             "publishedYear": "2015",
-            "picture": "static/img/products/Lewis Carroll/Alice in Wonderland/preview.jpg",
+            "picture": "static/img/products/lewis-carroll/alice-in-wonderland/preview.jpg",
             "cost": 165000,
-            "category": ["classic", "fantasy"]
+            "category": ["classic", "fantasy"],
+            "quantity": 1
         },{
             "id": "9NLB2BXT",
             "name": "The Black Swan",
             "author": "Nassim Nicholas Taleb",
             "publishedYear": "2020",
-            "picture": "static/img/products/Nassim Nicholas Taleb/The Black Swan/preview.jpg",
+            "picture": "static/img/products/nassim-nicholas-taleb/the-black-swan/preview.jpg",
             "cost": 299000,
-            "category": ["nfiction"]
+            "category": ["nfiction"],
+            "quantity": 0
         },{
             "id": "4SNU9UVO",
             "name": "Universe in A Nutshell",
             "author": "Stephen Hawking",
             "publishedYear": "2016",
-            "picture": "static/img/products/Stephen Hawking/Universe in A Nutshell/preview.jpg",
+            "picture": "static/img/products/stephen-hawking/universe-in-a-nutshell/preview.jpg",
             "cost": 75000,
-            "category": ["science"]
+            "category": ["science"],
+            "quantity": 5
         }
     ]
 }
