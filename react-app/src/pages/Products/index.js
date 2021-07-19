@@ -69,7 +69,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Products() {
+export default function Products({history}) {
   const classes = useStyles();
   
   const [hasErrors, setErrors] = useState(false);
@@ -119,7 +119,7 @@ export default function Products() {
                     title={product.name}/>
                   <CardMedia
                     className={classes.media}
-                    image={product.picture}
+                    image={`static/img/products/${product.picture}/preview.jpg`}
                     title={product.name}
                   />
                   <CardContent 

@@ -45,6 +45,7 @@ import {
 //Import Pages
 import Home from "../../pages/Home";
 import Products from "../../pages/Products";
+import ProductDetail from "../../pages/ProductDetail"
 import Orders from "../../pages/Orders";
 import OrderDetails from "../../pages/OrderDetails";
 import NotFound from "../../pages/NotFound";
@@ -138,6 +139,7 @@ export default function ClippedDrawer() {
               component={NavLink}
               className={classes.drawerItem}
               activeClassName="Mui-selected"
+              to="/orders"
             >
               <ListItemIcon>
                 <CategoryIcon style={{color: "#dde2ff"}}/>
@@ -218,6 +220,7 @@ export default function ClippedDrawer() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/products" component={Products} />
+            <Route path="/products/:id" component={ProductDetail} />
             <Route path="/orders/:id" component={OrderDetails} />
             <Route path="/orders" component={Orders} />
             <Route component={NotFound} />
