@@ -119,7 +119,7 @@ export default function Products({history}) {
                     title={product.name}/>
                   <CardMedia
                     className={classes.media}
-                    image={`static/img/products/${product.picture}/preview.jpg`}
+                    image={`${product.picture}/preview.jpg`}
                     title={product.name}
                   />
                   <CardContent 

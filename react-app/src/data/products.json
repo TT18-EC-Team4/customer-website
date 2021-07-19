@@ -5,7 +5,7 @@
             "name": "Robinson Crusoe",
             "author": "Daniel Defoe",
             "publishedYear": "2019",
-            "picture": "daniel-defoe/robinson-crusoe/",
+            "picture": "static/img/products/daniel-defoe/robinson-crusoe/",
             "cost": 260000,
             "category": ["fiction"],
             "quantity": 5
@@ -15,7 +15,7 @@
             "name": "The Invisible Man",
             "author": "H. G. Wells",
             "publishedYear": "2018",
-            "picture": "h-g-wells/the-invisible-man/",
+            "picture": "static/img/products/h-g-wells/the-invisible-man/",
             "cost": 80000,
             "category": ["fiction", "horror"],
             "quantity": 6
@@ -24,7 +24,7 @@
             "name": "The Island of Doctor Moreau",
             "author": "H. G. Wells",
             "publishedYear": "2018",
-            "picture": "h-g-wells/the-island-of-doctor-moreau/",
+            "picture": "static/img/products/h-g-wells/the-island-of-doctor-moreau/",
             "cost": 60000,
             "category": ["fiction", "horror"],
             "quantity": 0
@@ -33,7 +33,7 @@
             "name": "The Time Machine",
             "author": "H. G. Wells",
             "publishedYear": "2018",
-            "picture": "h-g-wells/the-time-machine/",
+            "picture": "static/img/products/h-g-wells/the-time-machine/",
             "cost": 60000,
             "category": ["fiction"],
             "quantity": 10
@@ -42,7 +42,7 @@
             "name": "Kafka on The Shore",
             "author": "Haruki Murakami",
             "publishedYear": "2005",
-            "picture": "haruki-murakami/kafka-on-the-shore/",
+            "picture": "static/img/products/haruki-murakami/kafka-on-the-shore/",
             "cost": 163000,
             "category": ["fantasy", "fiction", "realism"],
             "quantity": 0
@@ -51,7 +51,7 @@
             "name": "The Wind-up Bird Chronicle",
             "author": "Haruki Murakami",
             "publishedYear": "2020",
-            "picture": "haruki-murakami/the-wind-up-bird-chronicle/",
+            "picture": "static/img/products/haruki-murakami/the-wind-up-bird-chronicle/",
             "cost": 199000,
             "category": ["realism", "fantasy", "fiction"],
             "quantity": 4
@@ -60,7 +60,7 @@
             "name": "Peter Pan",
             "author": "J. M. Barrie",
             "publishedYear": "2019",
-            "picture": "j-m-barrie/peter-pan/",
+            "picture": "static/img/products/j-m-barrie/peter-pan/",
             "cost": 350000,
             "category": ["classic", "fantasy", "fiction", "children's"],
             "quantity": 2
@@ -69,7 +69,7 @@
             "name": "Alice in Wonderland",
             "author": "Lewis Carroll",
             "publishedYear": "2015",
-            "picture": "lewis-carroll/alice-in-wonderland/",
+            "picture": "static/img/products/lewis-carroll/alice-in-wonderland/",
             "cost": 165000,
             "category": ["classic", "fantasy"],
             "quantity": 1
@@ -78,7 +78,7 @@
             "name": "The Black Swan",
             "author": "Nassim Nicholas Taleb",
             "publishedYear": "2020",
-            "picture": "nassim-nicholas-taleb/the-black-swan/",
+            "picture": "static/img/products/nassim-nicholas-taleb/the-black-swan/",
             "cost": 299000,
             "category": ["nfiction"],
             "quantity": 0
@@ -87,7 +87,7 @@
             "name": "Universe in A Nutshell",
             "author": "Stephen Hawking",
             "publishedYear": "2016",
-            "picture": "stephen-hawking/universe-in-a-nutshell/",
+            "picture": "static/img/products/stephen-hawking/universe-in-a-nutshell/",
             "cost": 75000,
             "category": ["science"],
             "quantity": 5

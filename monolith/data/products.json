@@ -5,7 +5,7 @@
             "name": "Robinson Crusoe",
             "author": "Daniel Defoe",
             "publishedYear": "2019",
-            "picture": "daniel-defoe/robinson-crusoe/",
+            "picture": "static/img/products/daniel-defoe/robinson-crusoe/preview.jpg",
             "cost": 260000,
             "category": ["fiction"],
             "quantity": 5
