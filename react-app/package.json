@@ -4,11 +4,13 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.1",
+    "@material-ui/data-grid": "^4.0.0-alpha.33",
     "@material-ui/icons": "^4.11.2",
     "env-cmd": "^9.0.3",
     "express": "^4.17.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-meta-tags": "^1.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^4.0.3"
   },

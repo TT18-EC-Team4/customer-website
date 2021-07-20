@@ -8,7 +8,8 @@
             "picture": "static/img/products/daniel-defoe/robinson-crusoe/",
             "cost": 260000,
             "category": ["fiction"],
-            "quantity": 5
+            "quantity": 5,
+            "onDiscount": 0
         },
         {
             "id": "7HNI5MBN",
@@ -18,7 +19,8 @@
             "picture": "static/img/products/h-g-wells/the-invisible-man/",
             "cost": 80000,
             "category": ["fiction", "horror"],
-            "quantity": 6
+            "quantity": 6,
+            "onDiscount": 1
         },{
             "id": "7HSI3DPE",
             "name": "The Island of Doctor Moreau",
@@ -27,7 +29,8 @@
             "picture": "static/img/products/h-g-wells/the-island-of-doctor-moreau/",
             "cost": 60000,
             "category": ["fiction", "horror"],
-            "quantity": 0
+            "quantity": 0,
+            "onDiscount": 0
         },{
             "id": "7HIT4DBN",
             "name": "The Time Machine",
@@ -36,7 +39,8 @@
             "picture": "static/img/products/h-g-wells/the-time-machine/",
             "cost": 60000,
             "category": ["fiction"],
-            "quantity": 10
+            "quantity": 10,
+            "onDiscount": 0
         },{
             "id": "4HAK5PIT",
             "name": "Kafka on The Shore",
@@ -45,7 +49,8 @@
             "picture": "static/img/products/haruki-murakami/kafka-on-the-shore/",
             "cost": 163000,
             "category": ["fantasy", "fiction", "realism"],
-            "quantity": 0
+            "quantity": 0,
+            "onDiscount": 0
         },{
             "id": "4HIW3SJC",
             "name": "The Wind-up Bird Chronicle",
@@ -54,7 +59,8 @@
             "picture": "static/img/products/haruki-murakami/the-wind-up-bird-chronicle/",
             "cost": 199000,
             "category": ["realism", "fantasy", "fiction"],
-            "quantity": 4
+            "quantity": 4,
+            "onDiscount": 0
         },{
             "id": "8JEP8OBQ",
             "name": "Peter Pan",
@@ -63,7 +69,8 @@
             "picture": "static/img/products/j-m-barrie/peter-pan/",
             "cost": 350000,
             "category": ["classic", "fantasy", "fiction", "children's"],
-            "quantity": 2
+            "quantity": 2,
+            "onDiscount": 1
         },{
             "id": "2LLA7OPX",
             "name": "Alice in Wonderland",
@@ -72,7 +79,8 @@
             "picture": "static/img/products/lewis-carroll/alice-in-wonderland/",
             "cost": 165000,
             "category": ["classic", "fantasy"],
-            "quantity": 1
+            "quantity": 1,
+            "onDiscount": 0
         },{
             "id": "9NLB2BXT",
             "name": "The Black Swan",
@@ -81,7 +89,8 @@
             "picture": "static/img/products/nassim-nicholas-taleb/the-black-swan/",
             "cost": 299000,
             "category": ["nfiction"],
-            "quantity": 0
+            "quantity": 0,
+            "onDiscount": 0
         },{
             "id": "4SNU9UVO",
             "name": "Universe in A Nutshell",
@@ -90,7 +99,8 @@
             "picture": "static/img/products/stephen-hawking/universe-in-a-nutshell/",
             "cost": 75000,
             "category": ["science"],
-            "quantity": 5
+            "quantity": 5,
+            "onDiscount": 0
         }
     ]
 }

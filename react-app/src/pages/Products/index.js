@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
     paddingTop: "56.25%" // 16:9
   },
   titleStyle: {
-    fontSize: "14px",
+    fontSize: "13.5px",
     fontWeight: "bold",
     alignContent: "center"
   },
