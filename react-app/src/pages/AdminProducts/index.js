@@ -25,7 +25,6 @@ import { CardHeader } from "@material-ui/core";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { IconButton, Box } from '@material-ui/core';
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -131,11 +130,17 @@ export default function Products({history}) {
                       {product.quantity > 0 ? "AVAILABLE" : "UNAVAILABLE"}
                   </CardContent>
                 </Card>
-                
+                <Card
+                  variant="outlined"
+                  elevation={10}>
+                  <CardMedia
+                    image={<AddCircleIcon/>}/>
+                </Card>
               </Grid>
+              
             );
           })}
-          <Grid  item lg={2} md={3} xs={6} >
+            <Grid  item lg={2} md={3} xs={6}>
             <Card >    
               <CardHeader
                 title="Add New Book"
@@ -153,6 +158,7 @@ export default function Products({history}) {
               </CardMedia>
             </Card>
           </Grid>
+
         </Grid>
       )}
     </div>

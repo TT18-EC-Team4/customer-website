@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
 import Typography from "@material-ui/core/Typography";
-import { Button, Chip, ThemeProvider } from "@material-ui/core";
+import { Button, Chip, IconButton, ThemeProvider } from "@material-ui/core";
 import {Row, Col, Image, ListGroup} from "react-bootstrap"; 
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -12,6 +12,9 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import Rating from '@material-ui/lab/Rating';
+import EditIcon from '@material-ui/icons/Edit';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,8 +49,6 @@ const mainTheme = createTheme({
     },
   }
 })
-
-
 
 export default function Products({ match }) {
   const classes = useStyles();
@@ -91,33 +92,65 @@ export default function Products({ match }) {
             <Image src={`../../${product.picture}/main.jpg`} alt={product.name}  fluid />
           </Col>
           <Col md={8}>
-            <ListGroup className={classes.restyle}>      
+            <ListGroup className={classes.restyle}>
               <ListGroup.Item 
                 className={classes.restyle} 
                 align="center" 
                 style={{fontSize: "xx-large"}}
               >
-                {product.name}
+                <Row>
+                  <Col align="left">
+                    <ThemeProvider theme={mainTheme}>
+                      <Button
+                        startIcon={<DoneAllIcon/>}
+                        variant="contained"
+                        color="primary"
+                        disabled
+                      >
+                        Finalize
+                      </Button>
+                    </ThemeProvider>
+                  </Col>
+                  <Col style={{alignSelf: "center"}}>
+                    {product.name}
+                  </Col>
+                  <Col align="right">
+                    <IconButton size="small">
+                      <EditIcon/>
+                    </IconButton>
+                  </Col>
+                </Row>
               </ListGroup.Item>
               <ListGroup.Item variant="transparent">
                   <Row>
                     <Col className={classes.neededInfo}>Author</Col>
-                    <Col>{product.author}</Col>
-                    
+                    <Col align="center">{product.author}</Col>
+                    <Col align="right">
+                      <IconButton size="small">
+                        <EditIcon/>
+                      </IconButton>
+                    </Col>
                   </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                   <Row>
                     <Col className={classes.neededInfo}>Published Year</Col>
-                    <Col>{product.publishedYear}</Col>
+                    <Col align="center">{product.publishedYear}</Col>
+                    <Col align="right">
+                      <IconButton size="small">
+                        <EditIcon/>
+                      </IconButton>
+                    </Col>
                   </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                   <Row>
                     <Col className={classes.neededInfo}>Category</Col>
-                    <Col>
-                    {/* {product.category.map(item =>
-                    <Col>{item} abc</Col>)} */}
+                    <Col align="center"></Col>
+                    <Col align="right">
+                      <IconButton size="small">
+                        <EditIcon/>
+                      </IconButton>
                     </Col>
                   </Row>
               </ListGroup.Item>

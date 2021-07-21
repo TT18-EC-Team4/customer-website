@@ -9,7 +9,9 @@
             "cost": 260000,
             "category": ["fiction"],
             "quantity": 5,
-            "onDiscount": 0
+            "onDiscount": 0,
+            "numOfReviews": 0,
+            "ratePoint": 0
         },
         {
             "id": "7HNI5MBN",
@@ -20,7 +22,9 @@
             "cost": 80000,
             "category": ["fiction", "horror"],
             "quantity": 6,
-            "onDiscount": 1
+            "onDiscount": 1,
+            "numOfReviews": 0,
+            "ratePoint": 0
         },{
             "id": "7HSI3DPE",
             "name": "The Island of Doctor Moreau",
@@ -30,7 +34,9 @@
             "cost": 60000,
             "category": ["fiction", "horror"],
             "quantity": 0,
-            "onDiscount": 0
+            "onDiscount": 0,
+            "numOfReviews": 0,
+            "ratePoint": 0
         },{
             "id": "7HIT4DBN",
             "name": "The Time Machine",
@@ -40,7 +46,9 @@
             "cost": 60000,
             "category": ["fiction"],
             "quantity": 10,
-            "onDiscount": 0
+            "onDiscount": 0,
+            "numOfReviews": 0,
+            "ratePoint": 0
         },{
             "id": "4HAK5PIT",
             "name": "Kafka on The Shore",
@@ -50,7 +58,9 @@
             "cost": 163000,
             "category": ["fantasy", "fiction", "realism"],
             "quantity": 0,
-            "onDiscount": 0
+            "onDiscount": 0,
+            "numOfReviews": 0,
+            "ratePoint": 0
         },{
             "id": "4HIW3SJC",
             "name": "The Wind-up Bird Chronicle",
@@ -60,7 +70,9 @@
             "cost": 199000,
             "category": ["realism", "fantasy", "fiction"],
             "quantity": 4,
-            "onDiscount": 0
+            "onDiscount": 0,
+            "numOfReviews": 0,
+            "ratePoint": 0
         },{
             "id": "8JEP8OBQ",
             "name": "Peter Pan",
@@ -70,7 +82,9 @@
             "cost": 350000,
             "category": ["classic", "fantasy", "fiction", "children's"],
             "quantity": 2,
-            "onDiscount": 1
+            "onDiscount": 1,
+            "numOfReviews": 0,
+            "ratePoint": 0
         },{
             "id": "2LLA7OPX",
             "name": "Alice in Wonderland",
@@ -80,7 +94,9 @@
             "cost": 165000,
             "category": ["classic", "fantasy"],
             "quantity": 1,
-            "onDiscount": 0
+            "onDiscount": 0,
+            "numOfReviews": 0,
+            "ratePoint": 0
         },{
             "id": "9NLB2BXT",
             "name": "The Black Swan",
@@ -90,7 +106,9 @@
             "cost": 299000,
             "category": ["nfiction"],
             "quantity": 0,
-            "onDiscount": 0
+            "onDiscount": 0,
+            "numOfReviews": 0,
+            "ratePoint": 0
         },{
             "id": "4SNU9UVO",
             "name": "Universe in A Nutshell",
@@ -100,7 +118,9 @@
             "cost": 75000,
             "category": ["science"],
             "quantity": 5,
-            "onDiscount": 0
+            "onDiscount": 0,
+            "numOfReviews": 0,
+            "ratePoint": 0
         }
     ]
 }
