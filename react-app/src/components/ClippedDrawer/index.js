@@ -49,6 +49,8 @@ import ProductDetail from "../../pages/ProductDetail"
 import Orders from "../../pages/Orders";
 import OrderDetails from "../../pages/OrderDetails";
 import NotFound from "../../pages/NotFound";
+import AuthenticationForm from "../../pages/Register";
+
 
 const drawerWidth = 238;
 
