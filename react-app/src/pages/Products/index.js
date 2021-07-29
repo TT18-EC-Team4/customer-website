@@ -22,8 +22,6 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { CardHeader } from "@material-ui/core";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import { IconButton, Box } from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
@@ -135,24 +133,6 @@ export default function Products({history}) {
               </Grid>
             );
           })}
-          <Grid  item lg={2} md={3} xs={6} >
-            <Card >    
-              <CardHeader
-                title="Add New Book"
-                classes={{title: classes.titleStyle}}
-                className={classes.titleContainer}
-                style={{backgroundColor: 'gray', borderBottom: '0px'}}
-              />
-              <CardMedia 
-                align="center"
-                style={{border: '1px dashed gray'}}
-              >
-                <IconButton>
-                  <AddCircleIcon />
-                </IconButton>
-              </CardMedia>
-            </Card>
-          </Grid>
         </Grid>
       )}
     </div>

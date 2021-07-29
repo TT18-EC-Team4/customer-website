@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
 import Typography from "@material-ui/core/Typography";
-import { Button, Chip, ThemeProvider } from "@material-ui/core";
+import { Button, Chip, ThemeProvider, Tabs, Tab, Divider, TextareaAutosize, Avatar } from "@material-ui/core";
 import {Row, Col, Image, ListGroup} from "react-bootstrap"; 
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -11,7 +11,7 @@ import { createTheme } from '@material-ui/core/styles';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import Rating from '@material-ui/lab/Rating';
+import { Rating, TabPanel } from '@material-ui/lab';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,7 +47,12 @@ const mainTheme = createTheme({
   }
 })
 
-
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 export default function Products({ match }) {
   const classes = useStyles();
@@ -102,29 +107,32 @@ export default function Products({ match }) {
               <ListGroup.Item variant="transparent">
                   <Row>
                     <Col className={classes.neededInfo}>Author</Col>
-                    <Col>{product.author}</Col>
+                    <Col style={{alignSelf: 'center'}}>{product.author}</Col>
                     
                   </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                   <Row>
                     <Col className={classes.neededInfo}>Published Year</Col>
-                    <Col>{product.publishedYear}</Col>
+                    <Col style={{alignSelf: 'center'}}>{product.publishedYear}</Col>
                   </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                   <Row>
                     <Col className={classes.neededInfo}>Category</Col>
-                    <Col>
-                    {/* {product.category.map(item =>
-                    <Col>{item} abc</Col>)} */}
+                    <Col style={{alignSelf: 'center'}}>
+                      {console.log(product)}
+                      { product.category ? product.category.map( (item, index) =>
+                    <Col key={index}>{item} abc</Col>) 
+                  :
+                  null}
                     </Col>
                   </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                   <Row>
                     <Col className={classes.neededInfo}>Rating</Col>
-                    <Col>
+                    <Col style={{alignSelf: 'center'}}>
                       <Rating 
                         name="rate"
                         value={(product.numOfReviews > 0) ? product.ratePoint/product.numOfReviews : 0}
@@ -138,7 +146,7 @@ export default function Products({ match }) {
               <ListGroup.Item>
                   <Row>
                     <Col className={classes.neededInfo}>Status</Col>
-                    <Col>{product.quantity > 0 ? 
+                    <Col style={{alignSelf: 'center'}}>{product.quantity > 0 ? 
                       (
                         <ThemeProvider theme={mainTheme}>
                           <Chip
@@ -194,6 +202,26 @@ export default function Products({ match }) {
                         BOOK
                     </Button>
                   </ThemeProvider>
+                </Col>
+              </Row>
+              <Row style={{paddingTop: '2%'}}>
+                <Col md={1} style={{width: "60%"}}>
+                  <Paper>
+                    <Tabs variant="fullWidth">
+                      <Tab label="About the book"/>
+                      <Tab label="About the author"/>
+                    </Tabs>
+                  </Paper>
+                </Col>
+                <Col md={1} style={{alignSelf: 'center', paddingLeft: '1.5%', width: '40%'}}>
+                  <Row>
+                    <Col><Typography display="inline" style={{fontWeight: 'bold'}} gutterBottom variant="subtitle">Review Section</Typography></Col>
+                    <Col><Typography align="right" display="block" style={{fontWeight: 'bold'}} gutterBottom variant='caption'>{product.numOfReviews} review(s)</Typography></Col>
+                  </Row>
+                  <Divider style={{marginBottom: '2.5%', backgroundColor: '#000080'}}/>
+                  <Row>
+                    <TextareaAutosize  minRows={4} maxRows={4} placeholder='Be polite!'/>
+                  </Row>
                 </Col>
               </Row>
               </ListGroup>
