@@ -50,6 +50,7 @@ import Orders from "../../pages/Orders";
 import OrderDetails from "../../pages/OrderDetails";
 import NotFound from "../../pages/NotFound";
 import AuthenticationForm from "../../pages/Register";
+import BookingConfirmation from "../../pages/BookingConfirmation"
 
 
 const drawerWidth = 238;
@@ -154,6 +155,7 @@ export default function ClippedDrawer() {
             component={NavLink}
             className={classes.drawerItem}
             activeClassName="Mui-selected"
+            to="/"
             >
               <ListItemIcon>
                 <PeopleIcon style={{color: "#dde2ff"}}/>
@@ -166,6 +168,7 @@ export default function ClippedDrawer() {
             component={NavLink}
             className={classes.drawerItem}
             activeClassName="Mui-selected"
+            to="/"
             >
               <ListItemIcon>
                 <ReceiptIcon style={{color: "#dde2ff"}}/>
@@ -178,6 +181,7 @@ export default function ClippedDrawer() {
             component={NavLink}
             className={classes.drawerItem}
             activeClassName="Mui-selected"
+            to="/"
             >
               <ListItemIcon>
                 <RotateLeftIcon style={{color: "#dde2ff"}}/>
@@ -194,6 +198,7 @@ export default function ClippedDrawer() {
             component={NavLink}
             className={classes.drawerItem}
             activeClassName="Mui-selected"
+            to="/"
             >
               <ListItemIcon>
                 <SettingsIcon style={{color: "#dde2ff"}}/>
@@ -206,6 +211,7 @@ export default function ClippedDrawer() {
             component={NavLink}
             className={classes.drawerItem}
             activeClassName="Mui-selected"
+            to="/"
             >
               <ListItemIcon>
                 <ContactSupportIcon style={{color: "#dde2ff"}}/>
@@ -223,6 +229,7 @@ export default function ClippedDrawer() {
             <Route exact path="/" component={Home} />
             <Route exact path="/products" component={Products} />
             <Route path="/products/:id" component={ProductDetail} />
+            <Route path="/order/confirmation" component={BookingConfirmation} />
             <Route path="/orders/:id" component={OrderDetails} />
             <Route path="/orders" component={Orders} />
             <Route component={NotFound} />

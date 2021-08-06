@@ -22,6 +22,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { CardHeader } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 
 const useStyles = makeStyles(theme => ({
@@ -70,7 +71,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Products({history}) {
+export default function Products({ history }) {
   const classes = useStyles();
   
   const [hasErrors, setErrors] = useState(false);

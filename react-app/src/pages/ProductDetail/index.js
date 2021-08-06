@@ -47,14 +47,8 @@ const mainTheme = createTheme({
   }
 })
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
 
-export default function Products({ match }) {
+export default function Products({ match, history }) {
   const classes = useStyles();
   
   const [hasErrors, setErrors] = useState(false);
@@ -158,7 +152,6 @@ export default function Products({ match }) {
                       ) : (
                         <ThemeProvider theme={mainTheme}>
                           <Chip
-                            style={{padding: '5%'}}
                             label="UNAVAILABLE"
                             color="secondary"
                             icon={<ClearIcon/>}
@@ -198,7 +191,10 @@ export default function Products({ match }) {
                       startIcon={<AssignmentTurnedInIcon/>}
                       color="primary"
                       variant="contained"
-                      size="large">
+                      size="large"
+                      onClick={() => {
+                        history.push({pathname:`/order/confirmation`, state: product.id});
+                      }}>
                         BOOK
                     </Button>
                   </ThemeProvider>
