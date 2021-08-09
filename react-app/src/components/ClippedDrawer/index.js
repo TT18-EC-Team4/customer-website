@@ -49,8 +49,9 @@ import ProductDetail from "../../pages/ProductDetail"
 import Orders from "../../pages/Orders";
 import OrderDetails from "../../pages/OrderDetails";
 import NotFound from "../../pages/NotFound";
-import AuthenticationForm from "../../pages/Register";
+// import AuthenticationForm from "../../pages/Register";
 import BookingConfirmation from "../../pages/BookingConfirmation"
+import BookingCheckout from "../../pages/CheckOut"
 
 
 const drawerWidth = 238;
@@ -234,6 +235,7 @@ export default function ClippedDrawer() {
             <Route exact path="/products" component={Products} />
             <Route path="/products/:id" component={ProductDetail} />
             <Route path="/order/confirmation" component={BookingConfirmation} />
+            <Route path="/order/checkout" component={BookingCheckout} />
             <Route path="/orders/:id" component={OrderDetails} />
             <Route path="/orders" component={Orders} />
             <Route component={NotFound} />

@@ -10,7 +10,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import { createTheme } from '@material-ui/core/styles';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+// import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import { Rating, TabPanel } from '@material-ui/lab';
 
 const useStyles = makeStyles(theme => ({

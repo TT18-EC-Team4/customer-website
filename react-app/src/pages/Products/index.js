@@ -22,7 +22,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { CardHeader, Button } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 let wlist = new Array();
 
 export default function Products({ history, location }) {
@@ -77,7 +78,9 @@ export default function Products({ history, location }) {
 
   const [hasErrors, setErrors] = useState(false);
   const [products, setProducts] = useState([]);
-  const [order, setOrder] = useState([]);
+
+  
+
   async function fetchData(productId) {
     try {
       // const response = await fetch(`${process.env.REACT_APP_PRODUCTS_URL}`);
@@ -93,24 +96,10 @@ export default function Products({ history, location }) {
     fetchData();
     if (location.state) {
       wlist.push(location.state)
+      console.log(wlist); 
     }
     // eslint-disable-next-line
   }, []);
-
-  // useEffect(() => {
-  //   if (location.state) {
-  //     const check = JSON.stringify(location.state);
-  //     location.state = null;
-  //     const result = JSON.parse(check);
-  //     if (result) {
-  //       console.log("hello");
-  //       console.log(result);
-  //       setOrder((order) => [...order, result]);
-  //     }
-  //   }
-  //   // eslint-disable-next-line
-  // }, [order]);
-
 
   return (
     <div className={classes.root}>
@@ -166,7 +155,7 @@ export default function Products({ history, location }) {
             })}
           </Grid>
           <div className={classes.orderButton}>
-            <div></div>
+            <div>{wlist.length}</div>
             {wlist.length > 0 ? 
               <Button onClick={() => {history.push("/order/confirmation", wlist)}}>Order</Button> 
               : 
@@ -175,5 +164,5 @@ export default function Products({ history, location }) {
         </div>
       )}
     </div>
-  );
+  );  
 }
