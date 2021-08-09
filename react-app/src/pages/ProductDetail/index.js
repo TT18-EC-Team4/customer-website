@@ -75,6 +75,10 @@ export default function Products({ match, history }) {
       fetchProduct(productId);
     }, [productId]);
 
+    function handleAddCart() {
+      history.push({pathname:`/products`, state: product});
+    }
+
     return (
       <div className={classes.root}>
         {hasErrors && (
@@ -115,7 +119,7 @@ export default function Products({ match, history }) {
                   <Row>
                     <Col className={classes.neededInfo}>Category</Col>
                     <Col style={{alignSelf: 'center'}}>
-                      {console.log(product)}
+                      {/* {console.log(product)} */}
                       { product.category ? product.category.map( (item, index) =>
                     <Col key={index}>{item} abc</Col>) 
                   :
@@ -192,15 +196,13 @@ export default function Products({ match, history }) {
                       color="primary"
                       variant="contained"
                       size="large"
-                      onClick={() => {
-                        history.push({pathname:`/order/confirmation`, state: product.id});
-                      }}>
-                        BOOK
+                      onClick={handleAddCart}>
+                        ADD TO CART
                     </Button>
                   </ThemeProvider>
                 </Col>
               </Row>
-              <Row style={{paddingTop: '2%'}}>
+              {/* <Row style={{paddingTop: '2%'}}>
                 <Col md={1} style={{width: "60%"}}>
                   <Paper>
                     <Tabs variant="fullWidth">
@@ -219,7 +221,7 @@ export default function Products({ match, history }) {
                     <TextareaAutosize  minRows={4} maxRows={4} placeholder='Be polite!'/>
                   </Row>
                 </Col>
-              </Row>
+              </Row> */}
               </ListGroup>
           </Col>
           </Row>

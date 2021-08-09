@@ -21,62 +21,60 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { CardHeader } from "@material-ui/core";
+import { CardHeader, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   grid: {
     margin: "0 auto",
-    width: "100%"
+    width: "100%",
   },
   paper: {
-    padding: theme.spacing(3, 2)
+    padding: theme.spacing(3, 2),
   },
   media: {
-    backgroundSize: 'contain',
+    backgroundSize: "contain",
     margin: "2.5%",
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "56.25%", // 16:9
   },
   titleStyle: {
     fontSize: "13.5px",
     fontWeight: "bold",
-    alignContent: "center"
+    alignContent: "center",
   },
   titleContainer: {
     backgroundColor: "yellow",
-    padding:"2%", 
-    borderBottom: '1px solid black',
+    padding: "2%",
+    borderBottom: "1px solid black",
     textAlign: "center",
   },
   contentContainer: {
-    
     textAlign: "center",
-    borderTop: '1px solid black',
+    borderTop: "1px solid black",
     alignItems: "center",
     fontWeight: "bold",
-    '&:last-child': { 
-      padding: "2%", 
-    }
+    "&:last-child": {
+      padding: "2%",
+    },
   },
   cardContainer: {
     borderRadius: "8px",
     borderStyle: "solid",
     borderWidth: "1px",
     borderColor: "black",
-    borderCollapse: "separate"
-  }
+    borderCollapse: "separate",
+  },
 }));
 
-export default function Products({ history }) {
+export default function Products({ history, location }) {
   const classes = useStyles();
-  
+
   const [hasErrors, setErrors] = useState(false);
   const [products, setProducts] = useState([]);
-
+  const [order, setOrder] = useState([]);
   async function fetchData(productId) {
     try {
       // const response = await fetch(`${process.env.REACT_APP_PRODUCTS_URL}`);
@@ -88,11 +86,24 @@ export default function Products({ history }) {
       setErrors(true);
     }
   }
-
-
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (location.state) {
+      const check = JSON.stringify(location.state);
+      location.state = null;
+      const result = JSON.parse(check);
+      if (result) {
+        console.log("hello");
+        console.log(result);
+        setOrder((order) => [...order, result]);
+      }
+    }
+    // eslint-disable-next-line
+  }, [order]);
 
   return (
     <div className={classes.root}>
@@ -104,37 +115,54 @@ export default function Products({ history }) {
         </Paper>
       )}
       {!hasErrors && (
-        <Grid className={classes.grid} container spacing={3} direction="row" justifyContent="flex-start" alignItems="flex-start">
-          {products.map(product => {
-            return (
-              <Grid key={product.id} item lg={2} md={3} xs={6} >
-                <Card
-                  onClick={() => {
-                    history.push(`/products/${product.id}`);
-                  }}
-                  className={classes.cardContainer}
-                  variant="outlined" 
-                  elevation={10}>
-                  <CardHeader 
-                    classes={{title: classes.titleStyle}}
-                    className={classes.titleContainer}
-                    title={product.name}/>
-                  <CardMedia
-                    className={classes.media}
-                    image={`${product.picture}/preview.jpg`}
-                    title={product.name}
-                  />
-                  <CardContent 
-                    style={{backgroundColor: product.quantity > 0 ? "green" : "red"}}
-                    className={classes.contentContainer}>
+        <div>
+          <Grid
+            className={classes.grid}
+            container
+            spacing={3}
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+          >
+            {products.map((product) => {
+              return (
+                <Grid key={product.id} item lg={2} md={3} xs={6}>
+                  <Card
+                    onClick={() => {
+                      history.push(`/products/${product.id}`);
+                    }}
+                    className={classes.cardContainer}
+                    variant="outlined"
+                    elevation={10}
+                  >
+                    <CardHeader
+                      classes={{ title: classes.titleStyle }}
+                      className={classes.titleContainer}
+                      title={product.name}
+                    />
+                    <CardMedia
+                      className={classes.media}
+                      image={`${product.picture}/preview.jpg`}
+                      title={product.name}
+                    />
+                    <CardContent
+                      style={{
+                        backgroundColor: product.quantity > 0 ? "green" : "red",
+                      }}
+                      className={classes.contentContainer}
+                    >
                       {product.quantity > 0 ? "AVAILABLE" : "UNAVAILABLE"}
-                  </CardContent>
-                </Card>
-                
-              </Grid>
-            );
-          })}
-        </Grid>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              );
+            })}
+          </Grid>
+          <div className={classes.orderButton}>
+            <div>{order[0].id}</div>
+            <Button>Order</Button>
+          </div>
+        </div>
       )}
     </div>
   );
