@@ -58,20 +58,19 @@ const CustomButton = withStyles((theme) => ({
 export default function BookingConfirmation({ location }) {
   const classes = useStyles();
   const [hasErrors, setErrors] = useState(false);
-  const [product, setProduct] = useState({});
+  const [products, setProducts] = useState([]);
   //let location = useLocation();
-  const productId = location.state
 
   console.log(location)
-  async function fetchProduct(productId) {
+  async function fetchProduct() {
     try {
       // const response = await fetch(
       //   `${process.env.REACT_APP_ORDERS_URL}/${orderId}`
       // );
       // const order = await response.json();
-      const products = require("../../data/products.json").products;
-      const product = products.find(product => product.id === productId);
-      setProduct(product);
+      
+      const products = location.state; 
+      setProducts(products);
 
     } catch (err) {
       setErrors(true);
@@ -79,8 +78,8 @@ export default function BookingConfirmation({ location }) {
   }
 
   useEffect(() => {
-    fetchProduct(productId);
-  }, [productId]);
+    fetchProduct();
+  },);
 
   return (
     <div className={classes.root}>
@@ -92,6 +91,7 @@ export default function BookingConfirmation({ location }) {
         </Paper>
       )}
       {!hasErrors && (
+        
             <Grid container >
               <Grid item container md={6} direction="column" justifyContent="center" alignItems="center" style={{backgroundColor: '#fdfdd3'}}
                className={classes.form} >
@@ -163,7 +163,8 @@ export default function BookingConfirmation({ location }) {
                 </Grid>
               </Grid>
               <Grid xs={6} style={{paddingLeft: '0%'}}>
-                <ListGroup>
+                {products.map((product) => { return (
+                  <ListGroup>
                   <ListGroup.Item>
                     <Row>
                       <Col><Image src={`../../${product.picture}/preview.jpg`} width='80px' height='145px'/></Col> 
@@ -196,7 +197,8 @@ export default function BookingConfirmation({ location }) {
                       <Col align='right'>VND</Col>
                     </Row>
                   </ListGroup.Item>
-                </ListGroup>
+                </ListGroup>)
+                })}
               </Grid>
             </Grid>
   )

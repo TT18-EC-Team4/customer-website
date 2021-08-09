@@ -69,7 +69,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let wlist = new Array();
+
 export default function Products({ history, location }) {
+  
   const classes = useStyles();
 
   const [hasErrors, setErrors] = useState(false);
@@ -88,22 +91,26 @@ export default function Products({ history, location }) {
   }
   useEffect(() => {
     fetchData();
+    if (location.state) {
+      wlist.push(location.state)
+    }
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    if (location.state) {
-      const check = JSON.stringify(location.state);
-      location.state = null;
-      const result = JSON.parse(check);
-      if (result) {
-        console.log("hello");
-        console.log(result);
-        setOrder((order) => [...order, result]);
-      }
-    }
-    // eslint-disable-next-line
-  }, [order]);
+  // useEffect(() => {
+  //   if (location.state) {
+  //     const check = JSON.stringify(location.state);
+  //     location.state = null;
+  //     const result = JSON.parse(check);
+  //     if (result) {
+  //       console.log("hello");
+  //       console.log(result);
+  //       setOrder((order) => [...order, result]);
+  //     }
+  //   }
+  //   // eslint-disable-next-line
+  // }, [order]);
+
 
   return (
     <div className={classes.root}>
@@ -159,8 +166,11 @@ export default function Products({ history, location }) {
             })}
           </Grid>
           <div className={classes.orderButton}>
-            <div>{order[0].id}</div>
-            <Button>Order</Button>
+            <div></div>
+            {wlist.length > 0 ? 
+              <Button onClick={() => {history.push("/order/confirmation", wlist)}}>Order</Button> 
+              : 
+              ""}
           </div>
         </div>
       )}

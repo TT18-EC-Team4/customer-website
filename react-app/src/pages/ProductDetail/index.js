@@ -75,7 +75,7 @@ export default function Products({ match, history }) {
       fetchProduct(productId);
     }, [productId]);
 
-    function handleAddCart() {
+    function handleAddWishlist() {
       history.push({pathname:`/products`, state: product});
     }
 
@@ -176,31 +176,31 @@ export default function Products({ match, history }) {
                   </Row>
               </ListGroup.Item>
               <Row align="center" style={{paddingTop: '1.75%'}}>
-                <Col md={1} align="right" style={{width: '70%'}}>
+                <Col md={1} align="right" style={{width: '100%'}}>
                   <ThemeProvider theme={mainTheme}>
                     <Button
                       style={{padding: '4%', width: '100%'}}
                       startIcon={<ShoppingCartIcon/>}
                       color="primary"
                       variant="contained"
-                      size="large">
+                      size="large"
+                      onClick={handleAddWishlist}>
                         ADD TO WISHLIST
                     </Button>
                   </ThemeProvider>
                 </Col>
-                <Col md={1} style={{width: '30%'}}>
+                {/* <Col md={1} style={{width: '30%'}}>
                   <ThemeProvider theme={mainTheme}>
                     <Button
                       style={{padding: '4%', width: '100%', height: '100%'}}
                       startIcon={<AssignmentTurnedInIcon/>}
                       color="primary"
                       variant="contained"
-                      size="large"
-                      onClick={handleAddCart}>
+                      size="large">
                         ADD TO CART
                     </Button>
                   </ThemeProvider>
-                </Col>
+                </Col> */}
               </Row>
               {/* <Row style={{paddingTop: '2%'}}>
                 <Col md={1} style={{width: "60%"}}>
