@@ -67,9 +67,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BookingCheckout({ history, location }) {
   const steps = [
-    "Delivery Address",
-    "Order Detail",
-    "Payment Method",
+    "Địa chỉ giao hàng",
+    "Chi tiết đơn hàng",
+    "Phương thức thanh toán",
   ];
 
   function getStepContent(step) {
@@ -103,17 +103,10 @@ export default function BookingCheckout({ history, location }) {
   return (
     <Fragment>
       <CssBaseline />
-      <AppBar position="absolute" color="default" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Company name
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
-            CHECKOUT
+            Thanh toán
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (

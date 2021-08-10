@@ -52,7 +52,7 @@ import NotFound from "../../pages/NotFound";
 // import AuthenticationForm from "../../pages/Register";
 import BookingConfirmation from "../../pages/BookingConfirmation"
 import BookingCheckout from "../../pages/CheckOut"
-
+import Header from "../../pages/Header"
 
 const drawerWidth = 238;
 
@@ -99,13 +99,7 @@ export default function ClippedDrawer() {
     <div className={classes.root}>
       <Router>
         <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" noWrap>
-              Fancy Store
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        <Header />
         <Drawer
           className={classes.drawer}
           variant="permanent"
@@ -147,7 +141,7 @@ export default function ClippedDrawer() {
               component={NavLink}
               className={classes.drawerItem}
               activeClassName="Mui-selected"
-              to="/orders"
+              to="/categories"
             >
               <ListItemIcon>
                 <CategoryIcon style={{color: "#dde2ff"}}/>
@@ -173,7 +167,7 @@ export default function ClippedDrawer() {
             component={NavLink}
             className={classes.drawerItem}
             activeClassName="Mui-selected"
-            to="/"
+            to="/orders"
             >
               <ListItemIcon>
                 <ReceiptIcon style={{color: "#dde2ff"}}/>

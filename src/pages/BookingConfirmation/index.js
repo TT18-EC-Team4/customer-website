@@ -101,6 +101,7 @@ export default function BookingConfirmation({ history, location }) {
           <Grid xs={10} style={{ paddingLeft: "20%" }}>
             <div>
               {products.map((product) => {
+                console.log(productsInOrder);
                 const qty = productsInOrder.get(product);
                 return (
                   <ListGroup>

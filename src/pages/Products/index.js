@@ -1,12 +1,9 @@
 /*
 Copyright 2019 Google LLC
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     https://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,6 +21,7 @@ import Typography from "@material-ui/core/Typography";
 import { CardHeader, Button } from "@material-ui/core";
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 // import { useHistory } from "react-router-dom";
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,6 +65,24 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: "1px",
     borderColor: "black",
     borderCollapse: "separate",
+  },
+  bodyBtnOrder: {
+    position: "absolute",
+    right: 0,
+    bottom: 0,
+    marginRight: '30px',
+    marginBottom: '30px',
+    boxShadow: '0 0 5px rgba(0, 0, 0.3)',
+    height: '66px',
+    width: '66px',
+    borderRadius: '33px',
+  },
+  btnOrder: {
+    height: '66px',
+    width: '66px',
+    borderRadius: '33px',
+    fontWeight: 'bold',
+    fontSize: '20px',
   },
 }));
 
@@ -175,16 +191,16 @@ export default function Products({ history, location }) {
               );
             })}
           </Grid>
-          <div className={classes.orderButton}>
-            <Grid align='center'>
-            {wlist.size > 0 ? 
-              <CustomButton 
-                onClick={() => {history.push("/order/confirmation", wlist)}}
-                startIcon={<DoneAllIcon/>}
-              >To Checkout Section</CustomButton> 
-              : 
-              ""}
-            </Grid>
+          <div className={classes.bodyBtnOrder}>
+            {wlist.size  == 0 ? (
+              <Button className={classes.btnOrder} variant="contained" color="secondary">
+                <AddShoppingCartIcon />
+              </Button>
+            ) : (
+            <Button onClick={() => {history.push("/order/confirmation", wlist)}} className={classes.btnOrder} variant="contained" color="secondary">
+              {wlist.size}
+            </Button>
+            )}
           </div>
         </div>
       )}

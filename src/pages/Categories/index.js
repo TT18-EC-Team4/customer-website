@@ -27,4 +27,4 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Categories
+export default function Categories() 

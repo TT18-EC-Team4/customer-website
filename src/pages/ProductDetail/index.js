@@ -178,6 +178,7 @@ export default function Products({ match, history }) {
               <Row align="center" style={{paddingTop: '1.75%'}}>
                 <Col md={1} align="right" style={{width: '100%'}}>
                   <ThemeProvider theme={mainTheme}>
+                    {product.quantity > 0 ? (
                     <Button
                       style={{padding: '4%', width: '100%'}}
                       startIcon={<ShoppingCartIcon/>}
@@ -187,6 +188,18 @@ export default function Products({ match, history }) {
                       onClick={handleAddWishlist}>
                         ADD TO WISHLIST
                     </Button>
+                    ) : (
+                    <Button
+                      disabled
+                      style={{padding: '4%', width: '100%'}}
+                      startIcon={<ShoppingCartIcon/>}
+                      color="primary"
+                      variant="contained"
+                      size="large"
+                      onClick={handleAddWishlist}>
+                        ADD TO WISHLIST
+                    </Button>
+                    )}
                   </ThemeProvider>
                 </Col>
                 {/* <Col md={1} style={{width: '30%'}}>
