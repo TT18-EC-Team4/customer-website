@@ -23,6 +23,8 @@ import { Row, Col, Image, ListGroup } from "react-bootstrap";
 // import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 // import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 // import { Rating, TabPanel } from "@material-ui/lab";
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -126,20 +128,30 @@ export default function BookingConfirmation({ history, location }) {
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <Row>
-                        <Col
-                          xs={10}
-                          align="right"
-                          style={{ alignSelf: "center", marginTop: "0.5%" }}
-                        >
-                          <TextField placeholder="Coupon" variant="outlined" />
-                        </Col>
-                        <Col xs={2} style={{ alignSelf: "center" }}>
+                     
+                        <Col xs={4} style={{ alignSelf: "right", marginLeft: "auto", display: "flex"}}>
                           <Button
-                            style={{ paddingLeft: "20%", paddingRight: "20%" }}
-                            variant="outlined"
+                            variant="outlined" 
+                            color="primary"
                             type="submit"
                           >
-                            Apply
+                            <RemoveIcon />
+                          </Button>
+                          <Button
+                            style={{marginLeft: "20px" }}
+                            variant="outlined" 
+                            color="primary"
+                            type="submit"
+                          >
+                            <AddIcon />
+                          </Button>
+                          <Button
+                            style={{marginLeft: "20px" }}
+                            variant="contained" 
+                            color="secondary"
+                            type="submit"
+                          >
+                            Delete
                           </Button>
                         </Col>
                       </Row>
