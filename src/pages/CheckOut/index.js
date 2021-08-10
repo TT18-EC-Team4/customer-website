@@ -67,9 +67,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BookingCheckout({ history, location }) {
   const steps = [
-    "Địa chỉ giao hàng",
-    "Chi tiết đơn hàng",
-    "Phương thức thanh toán",
+    "Delivery Address",
+    "Order Detail",
+    "Payment Method",
   ];
 
   function getStepContent(step) {
@@ -113,7 +113,7 @@ export default function BookingCheckout({ history, location }) {
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
-            Thanh toán
+            CHECKOUT
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (

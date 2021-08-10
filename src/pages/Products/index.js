@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.import React from "react";
 */
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -22,6 +22,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { CardHeader, Button } from "@material-ui/core";
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 // import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -69,8 +70,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const CustomButton = withStyles((theme) => ({
+  root: {
+    borderRadius: "20px",
+    border: "1px black solid",
+    fontSize: 25,
+    fontWeight: "bold",
+    padding: "10px 30px",
 
-let wlist = new Array();
+    color: theme.palette.getContrastText("#FFEB3B"),
+    backgroundColor: "#FFEB3B",
+    "&:hover": {
+      backgroundColor: "#FFA700",
+    },
+  },
+}))(Button);
+
+let wlist = new Map();
 
 export default function Products({ history, location }) {
   
@@ -95,8 +111,13 @@ export default function Products({ history, location }) {
   useEffect(() => {
     fetchData();
     if (location.state) {
-      wlist.push(location.state)
-      console.log(wlist); 
+      if (!wlist.has(location.state)) {
+        wlist.set(location.state, 1);
+      }
+      else {
+        wlist.set(location.state, wlist.get(location.state) + 1)
+      }
+      console.log(wlist) 
     }
     // eslint-disable-next-line
   }, []);
@@ -155,11 +176,15 @@ export default function Products({ history, location }) {
             })}
           </Grid>
           <div className={classes.orderButton}>
-            <div>{wlist.length}</div>
-            {wlist.length > 0 ? 
-              <Button onClick={() => {history.push("/order/confirmation", wlist)}}>Order</Button> 
+            <Grid align='center'>
+            {wlist.size > 0 ? 
+              <CustomButton 
+                onClick={() => {history.push("/order/confirmation", wlist)}}
+                startIcon={<DoneAllIcon/>}
+              >To Checkout Section</CustomButton> 
               : 
               ""}
+            </Grid>
           </div>
         </div>
       )}

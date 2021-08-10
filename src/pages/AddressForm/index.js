@@ -139,7 +139,7 @@ export default function AddressForm(props) {
             required
             id="Name"
             name="Name"
-            label="Họ và tên"
+            label="Full Name"
             fullWidth
             error={NameError}
           />
@@ -150,7 +150,7 @@ export default function AddressForm(props) {
             required
             id="Phone"
             name="Phone"
-            label="Số điện thoại"
+            label="Phone Number"
             fullWidth
             error={PhoneError}
           />
@@ -161,7 +161,7 @@ export default function AddressForm(props) {
             required
             id="Address"
             name="Address"
-            label="Địa chỉ"
+            label="Address"
             fullWidth
             error={AddressError}
           />
@@ -170,7 +170,7 @@ export default function AddressForm(props) {
           <TextField
             id="standard-select-cities"
             select
-            label="Tỉnh/Thành phố"
+            label="City/Province"
             fullWidth
             value={City}
             onChange={handleChangeCity}
@@ -186,7 +186,7 @@ export default function AddressForm(props) {
           <TextField
             id="standard-select-districts"
             select
-            label="Quận/ Huyện" 
+            label="District" 
             fullWidth
             value={District}
             onChange={handleChangeDistrict}

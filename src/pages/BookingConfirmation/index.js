@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 // import { useLocation } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -51,35 +51,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomButton = withStyles((theme) => ({
-  root: {
-    borderRadius: "20px",
-    border: "1px black solid",
-    fontSize: 25,
-    fontWeight: "bold",
-    padding: "10px 30px",
-
-    color: theme.palette.getContrastText("#FFEB3B"),
-    backgroundColor: "#FFEB3B",
-    "&:hover": {
-      backgroundColor: "#FFA700",
-    },
-  },
-}))(Button);
 
 export default function BookingConfirmation({ history, location }) {
   const classes = useStyles();
   const [hasErrors, setErrors] = useState(false);
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
+  const [quantities, setQuantities] = useState([]);
+  const productsInOrder = location.state;
 
   async function fetchProduct() {
     try {
       // console.log(location.state);
-      setProducts(location.state);
+      setProducts(Array.from(productsInOrder.keys()));
+      setQuantities(Array.from(productsInOrder.values()));
       let temp = 0;
       for (var i = 0; i < products.length; i++) {
-        temp += products[i].cost;
+        temp += products[i].cost * quantities[i];
       }
       setTotal(temp);
     } catch (err) {
@@ -113,6 +101,7 @@ export default function BookingConfirmation({ history, location }) {
           <Grid xs={10} style={{ paddingLeft: "20%" }}>
             <div>
               {products.map((product) => {
+                const qty = productsInOrder.get(product);
                 return (
                   <ListGroup>
                     <ListGroup.Item>
@@ -126,11 +115,11 @@ export default function BookingConfirmation({ history, location }) {
                         </Col>
                         <Col style={{ alignSelf: "center" }} align="center">
                           <Typography noWrap variant="h4" display="inline">
-                            {product.name}
+                            {product.name} 
                           </Typography>
                         </Col>
-                        <Col style={{ alignSelf: "center" }} align="right">
-                          x1
+                        <Col style={{alignSelf: 'center'}} align='right'>
+                          x{qty}
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -157,7 +146,7 @@ export default function BookingConfirmation({ history, location }) {
                     <ListGroup.Item style={{ fontWeight: "bold" }}>
                       <Row>
                         <Col>Temporary</Col>
-                        <Col align="right">{product.cost}</Col>
+                        <Col align="right">{product.cost * qty}</Col>
                         <Col align="right">VND</Col>
                       </Row>
                       <Row>
@@ -195,7 +184,7 @@ export default function BookingConfirmation({ history, location }) {
                       className={classes.button}
                       onClick={handlePurchase}
                     >
-                      Thanh toan
+                      Checkout
                     </Button>
                   </Col>
                 </Row>
