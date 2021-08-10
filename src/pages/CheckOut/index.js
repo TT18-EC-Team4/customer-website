@@ -66,21 +66,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BookingCheckout({ history, location }) {
-  const steps = [
-    "Địa chỉ giao hàng",
-    "Chi tiết đơn hàng",
-    "Phương thức thanh toán",
-  ];
+  const steps = ["Delivery Address", "Order Detail", "Payment Method"];
 
   function getStepContent(step) {
     switch (step) {
       case 0:
+        console.log(location);
         return <AddressForm />;
       case 1:
         // console.log(location.state);
         return <Review products={location.state} />;
       case 2:
-        return <PaymentForm />;
+        let temp = 0;
+        for (var i = 0; i < location.state.length; i++) {
+          temp += location.state[i].cost;
+        }
+        return <PaymentForm total={temp}/>;
       default:
         throw new Error("Unknown step");
     }
@@ -106,7 +107,7 @@ export default function BookingCheckout({ history, location }) {
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
-            Thanh toán
+            CHECKOUT
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
