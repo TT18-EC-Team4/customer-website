@@ -7,7 +7,7 @@ import {
   Grid,
   Button,
   TextField,
-  Box,
+  // Box,
   // ThemeProvider,
   // Tabs,
   // Tab,
@@ -79,14 +79,14 @@ export default function BookingConfirmation({ history, location }) {
 
   useEffect(() => {
     fetchProduct();
-  });
+  }, []);
 
   const handleReturn = () => {
     history.push({pathname:`/products`});
   }
 
   const handlePurchase = () => {
-    history.push("/order/checkout", products);
+    history.push("/order/checkout", products, quantities);
   }
 
   return (

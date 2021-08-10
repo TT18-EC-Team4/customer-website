@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PaymentForm() {
+export default function PaymentForm({ total }) {
   const classes = useStyles();
   const theme = useTheme();
   return (
@@ -62,7 +62,7 @@ export default function PaymentForm() {
             Người nhận: Đỗ Khắc Minh Nhật - 0387594646
           </Typography>
           <Typography gutterBottom>
-            Số tiền đơn hàng: xxxxxxđ
+            Số tiền đơn hàng: {total} VND
           </Typography>
           <Typography gutterBottom>
             Ghi chú chuyển tiền nhập mã đơn hàng: #3456
