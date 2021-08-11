@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   cardContainer: {
     borderRadius: "3px",
     border: "1px solid #f2f2f2",
-    boxShadow: "0 0 3px rgba(0, 0, 0, 0.3)",
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
     textAlign: "center",
   },
   bodyBtnOrder: {
@@ -110,8 +110,6 @@ export default function Products({ history, location }) {
 
   const [hasErrors, setErrors] = useState(false);
   const [products, setProducts] = useState([]);
-
-  
 
   async function fetchData(productId) {
     try {
