@@ -8,9 +8,10 @@ import Typography from "@material-ui/core/Typography";
 import ListItem from "@material-ui/core/ListItem";
 import { Divider, ListItemIcon, SvgIcon } from "@material-ui/core";
 import ListItemText from "@material-ui/core/ListItemText";
-import React, { Component, useState }  from 'react';
+import React, { useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 import clsx from 'clsx';
+import { Link } from "react-router-dom";
 
 //Import Pages
 import Home from "../../pages/Home";
@@ -41,7 +42,8 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  NavLink
+  NavLink,
+  useParams
 } from "react-router-dom";
 import { auto } from "@popperjs/core";
 
@@ -78,18 +80,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ClippedDrawer() {
+let Name;
+
+export default function ClippedDrawer({history, location}) {
   const classes = useStyles();
   const [checklogin, setchecklogin] = useState(0);
-  const [NamePage, setNamePage] = useState("HOME");
   const handleLogin = () => {
     setchecklogin(1);
-    setNamePage("Log in");
+    // setNamePage("Log in");
   };
 
   const handleSignup = () => {
     setchecklogin(1);
-    setNamePage("Sign up");
+    // setNamePage("Sign up");
   };
 
   const handleLogout = () => {
@@ -107,7 +110,11 @@ export default function ClippedDrawer() {
             </Typography>
             {checklogin == 0 ? (
               <div className={classes.mlauto}>
-                <Button onClick={handleLogin} variant="outlined" color="primary">
+                <Button 
+                  onClick={handleLogin} 
+                  variant="outlined" 
+                  color="primary"
+                >
                   Log in
                 </Button>
                 <Button onClick={handleSignup}  className={classes.ml1} variant="outlined" color="secondary">
@@ -117,7 +124,7 @@ export default function ClippedDrawer() {
             ) : (
               <div className={classes.mlauto} > 
                 <Button 
-                  onClick={(e) => setNamePage("Account")}
+                  // onClick={(e) => setNamePage("Account")}
                   variant="contained" 
                   color="primary"
                 >
@@ -137,34 +144,43 @@ export default function ClippedDrawer() {
             </IconButton>
           </Toolbar>
           <Toolbar className={classes.nav}>
-            <Typography variant="h6" >
-              {NamePage}
-            </Typography>
+            <Switch>
+              <Route path="/:namepage" children={<Child />} />
+              <Route children={
+                <Typography variant="h6" >
+                  HOME
+                </Typography>
+              } />
+            </Switch>
             
             <Button 
-              onClick={(e) => setNamePage("HOME")}
               className={clsx(classes.mlauto, classes.textbold)} 
               href="/"
             ><HomeIcon/></Button>
             <Button 
-              onClick={(e) => setNamePage("Products")}
               className={clsx(classes.ml1, classes.textbold)} 
               href="/products"
             >Products</Button>
             <Button 
-              onClick={(e) => setNamePage("Orders")}
               className={clsx(classes.ml1, classes.textbold)} 
               href="/orders"
             >Orders</Button>
             <Button 
-              onClick={(e) => setNamePage("Delivery Refund")}
               className={clsx(classes.ml1, classes.textbold)} 
               href="/"
             >Delivery Refund</Button>
           </Toolbar>
         </AppBar>
-        
       </Router>
     </div>
+  );
+}
+
+function Child() {
+  let { namepage } = useParams();
+  return (
+    <Typography variant="h6" style={{textTransform: "capitalize", letterSpacing: "2px"}}>
+      {namepage}
+    </Typography>
   );
 }

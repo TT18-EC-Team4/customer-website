@@ -83,6 +83,7 @@ const useStyles = makeStyles(theme => ({
     paddingTop: "100px",
     paddingLeft: "50px",
     paddingRight: "50px",
+    paddingBottom: "50px"
   },
   toolbar: theme.mixins.toolbar,
   navContent: {
@@ -94,9 +95,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function ClippedDrawer() {
   const classes = useStyles();
-
-  const [order, setOrder] = useState([]);
-
   return (
     <div className={classes.root}>
       <Router>

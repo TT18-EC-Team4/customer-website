@@ -26,6 +26,7 @@ import { CardHeader, Button } from "@material-ui/core";
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 // import { useHistory } from "react-router-dom";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import { ListTwoTone } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +88,13 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: '20px',
   },
+  contentCategory: {
+    display: "flex", 
+    justifyContent: "center", 
+    alignItems: "center", 
+    paddingTop: "20px",
+    paddingBottom: "20px"
+  }
 }));
 
 let wlist = new Map();
@@ -94,22 +102,20 @@ let List = new Map();
 
 export default function Home({ history, location }) {
   const classes = useStyles();
- 
+  const color = ["#03a9f4","#8bc34a","#ff9800", "#009688", "#3f51b5", "#f44336"];
+  const [indexColor, setindexColor] = useState(0);
   const [hasErrors, setErrors] = useState(false);
   const [categories, setCategories] = useState([]);
   async function fetchData() {
     try {
-      // const response = await fetch(`${process.env.REACT_APP_PRODUCTS_URL}`);
-      // const products = await response.json();
       const products = require("../../data/products.json").products;
       const categories = require("../../data/categories.json").categories;
-        // const product = products.find((product) => product.id === productId);
       setCategories(categories);
       for (let i in categories)
       {
         let productsCategory = [];
         for (let j in products) {
-          const found = products[j].category.find(element => element === categories[i]);
+          const found = products[j].category.find(element => element == categories[i]);
           if (found != undefined)
           {
             productsCategory.push(products[j]);
@@ -123,7 +129,20 @@ export default function Home({ history, location }) {
   }
   useEffect(() => {
     fetchData();
+    if (location.state) {
+      if (!wlist.has(location.state)) {
+        wlist.set(location.state, 1);
+      }
+      else {
+        wlist.set(location.state, wlist.get(location.state) + 1)
+      }
+      console.log(wlist) 
+    }
   }, []);
+
+  const increaseIndex = (cnt) => {
+    setindexColor(cnt);
+  }
  
   return (
     <div className={classes.root}>
@@ -138,10 +157,18 @@ export default function Home({ history, location }) {
         <div>
           {categories.map((category) => {
             return (
-              <div>
-                <Typography variant="h4"> 
-                  {category}
-                </Typography>
+              <div 
+                className={classes.contentCategory}
+                style={{
+                  backgroundColor: color[categories.indexOf(category)%6],
+                }}
+              >
+                <div style={{width: "40%", textAlign: "center"}}>
+                  <Typography style={{textTransform: "uppercase", fontWeight: "bolder"}} variant="h3" gutterBottom> 
+                    {category}
+                  </Typography>
+                  <Button variant="contained" style={{backgroundColor: "rgba(255, 255, 255, 0.3)"}} >Xem thêm</Button>
+                </div>
                 <Grid
                   className={classes.grid}
                   container
@@ -150,8 +177,14 @@ export default function Home({ history, location }) {
                   justifyContent="flex-start"
                   alignItems="flex-start"
                 >
-                  {console.log(List.get(category))}
-                  {List.get(category).map((product) => {
+                  {List.get(category).length == 0 ? (
+                    <Typography variant="h6" style={{marginLeft: "auto", marginRight: "auto"}}> 
+                      No product
+                    </Typography>
+                  ) : List.get(category).map((product) => {
+                    if(List.get(category).indexOf(product) >= 4){
+                      return;
+                    } 
                     return (
                       <Grid key={product.id} item md={3} xs={3}>
                         <Card
@@ -191,9 +224,6 @@ export default function Home({ history, location }) {
                               >
                                 {product.quantity > 0 ? "AVAILABLE" : "UNAVAILABLE"}
                               </Typography>
-                              {/* <Typography>
-                                `${product.picture}/preview.jpg`
-                              </Typography> */}
                             </CardContent>
                           </CardActionArea>
                         </Card>
