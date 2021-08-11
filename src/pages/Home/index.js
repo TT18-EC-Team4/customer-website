@@ -234,20 +234,19 @@ export default function Home({ history, location }) {
               </div>
             )
           })}
-        
-          <div className={classes.bodyBtnOrder}>
-            {wlist.size  == 0 ? (
-              <Button className={classes.btnOrder} variant="contained" color="secondary">
-                <AddShoppingCartIcon />
-              </Button>
-            ) : (
-            <Button onClick={() => {history.push("/order/confirmation", wlist)}} className={classes.btnOrder} variant="contained" color="secondary">
-              {wlist.size}
-            </Button>
-            )}
-          </div>
         </div>
       )}
+      <div className={classes.bodyBtnOrder}>
+        {wlist.size  == 0 ? (
+          <Button className={classes.btnOrder} variant="contained" color="secondary">
+            <AddShoppingCartIcon />
+          </Button>
+        ) : (
+        <Button onClick={() => {history.push("/order/confirmation", wlist)}} className={classes.btnOrder} variant="contained" color="secondary">
+          {wlist.size}
+        </Button>
+        )}
+      </div>
     </div>
   );  
 }
