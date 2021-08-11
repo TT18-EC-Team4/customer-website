@@ -80,7 +80,9 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    paddingTop: "100px",
+    paddingLeft: "50px",
+    paddingRight: "50px",
   },
   toolbar: theme.mixins.toolbar,
   navContent: {
@@ -100,128 +102,6 @@ export default function ClippedDrawer() {
       <Router>
         <CssBaseline />
         <Header />
-        <Drawer
-          className={classes.drawer}
-          variant="permanent"
-          classes={{
-            paper: classes.drawerPaper
-          }}
-        >
-          <div className={classes.toolbar} />
-          <List>
-            <ListItem
-              component={NavLink}
-              exact
-              className={classes.drawerItem}
-              activeClassName="Mui-selected"
-              to="/"
-            >
-              <ListItemIcon>
-                <HomeIcon style={{color: "#dde2ff"}}/>
-              </ListItemIcon>
-              <ListItemText                 
-                primary={
-                  <Typography style={{ color: "#dde2ff" }}>Overview</Typography>}/>
-            </ListItem>{" "}
-            <ListItem
-              component={NavLink}
-              exact
-              className={classes.drawerItem}
-              activeClassName="Mui-selected"
-              to="/products"
-            >
-              <ListItemIcon>
-                <MenuBookIcon style={{color: "#dde2ff"}}/>
-              </ListItemIcon>
-              <ListItemText 
-                primary={
-                  <Typography style={{ color: "#dde2ff" }}>Products</Typography>}/>
-            </ListItem>{" "}
-            <ListItem
-              component={NavLink}
-              className={classes.drawerItem}
-              activeClassName="Mui-selected"
-              to="/categories"
-            >
-              <ListItemIcon>
-                <CategoryIcon style={{color: "#dde2ff"}}/>
-              </ListItemIcon>
-              <ListItemText                 
-                primary={
-                  <Typography style={{ color: "#dde2ff" }}>Categories</Typography>} />
-            </ListItem>
-            <ListItem
-            component={NavLink}
-            className={classes.drawerItem}
-            activeClassName="Mui-selected"
-            to="/"
-            >
-              <ListItemIcon>
-                <PeopleIcon style={{color: "#dde2ff"}}/>
-              </ListItemIcon>
-              <ListItemText 
-                primary={
-                  <Typography style={{ color: "#dde2ff" }}>Customer</Typography>}/>
-            </ListItem>
-            <ListItem
-            component={NavLink}
-            className={classes.drawerItem}
-            activeClassName="Mui-selected"
-            to="/orders"
-            >
-              <ListItemIcon>
-                <ReceiptIcon style={{color: "#dde2ff"}}/>
-              </ListItemIcon>
-              <ListItemText                 
-                primary={
-                  <Typography style={{ color: "#dde2ff" }}>Orders</Typography>} />
-            </ListItem>
-            <ListItem
-            component={NavLink}
-            className={classes.drawerItem}
-            activeClassName="Mui-selected"
-            to="/"
-            >
-              <ListItemIcon>
-                <RotateLeftIcon style={{color: "#dde2ff"}}/>
-              </ListItemIcon>
-              <ListItemText                 
-                primary={
-                  <Typography noWrap={true} style={{ color: "#dde2ff", fontSize: '16px' }}>Delivery Refund</Typography>} />
-            </ListItem>
-            
-          </List>
-          <Divider/>
-          <List>
-            <ListItem
-            component={NavLink}
-            className={classes.drawerItem}
-            activeClassName="Mui-selected"
-            to="/"
-            >
-              <ListItemIcon>
-                <SettingsIcon style={{color: "#dde2ff"}}/>
-              </ListItemIcon>
-              <ListItemText                 
-                primary={
-                  <Typography style={{ color: "#dde2ff" }}>Settings</Typography>}/>
-            </ListItem>
-            <ListItem
-            component={NavLink}
-            className={classes.drawerItem}
-            activeClassName="Mui-selected"
-            to="/"
-            >
-              <ListItemIcon>
-                <ContactSupportIcon style={{color: "#dde2ff"}}/>
-              </ListItemIcon>
-              <ListItemText                 
-                primary={
-                  <Typography style={{ color: "#dde2ff" }}>Contact Us</Typography>}/>
-            </ListItem>
-            
-          </List>
-        </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Switch>

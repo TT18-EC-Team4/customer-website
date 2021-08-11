@@ -64,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "3px",
     border: "1px solid #f2f2f2",
     boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
-    textAlign: "center",
   },
   bodyBtnOrder: {
     position: "fixed",
@@ -157,7 +156,7 @@ export default function Products({ history, location }) {
           >
             {products.map((product) => {
               return (
-                <Grid key={product.id} item md={3} xs={3}>
+                <Grid key={product.id} item style={{ width: "20%"}}>
                   <Card
                     onClick={() => {
                       history.push(`/products/${product.id}`);
@@ -165,6 +164,7 @@ export default function Products({ history, location }) {
                     className={classes.cardContainer}
                     variant="outlined"
                     elevation={10}
+                    title={product.name}
                   >
                     <CardActionArea>
                       <CardMedia
@@ -179,22 +179,44 @@ export default function Products({ history, location }) {
                         }}
                       >
                         <Typography 
-                          gutterBottom 
                           variant="body1" 
                           style={{
-                            fontSize: "16px", fontWeight: "bold", textAlign: "center",
+                            fontSize: "16px", fontWeight: "bold", textAlign: "left",
                           }}
                           noWrap
                         >
                           {product.name}
                         </Typography>
                         <Typography 
-                          variant="h6" 
-                          component="h2"
-                          color={product.quantity > 0 ? "primary" : "secondary"}
+                          variant="body1" 
+                          style={{
+                            fontSize: "13px",  color: "#787878", textAlign: "left",
+                          }}
+                          noWrap
                         >
-                          {product.quantity > 0 ? "AVAILABLE" : "UNAVAILABLE"}
+                          {product.author}
                         </Typography>
+                        <div style={{display: "flex", marginTop: "10px"}}>
+                          <Typography 
+                            variant="body2" 
+                            style={{
+                              fontSize: "13px", fontWeight: "bold", textAlign: "left", marginRight: "auto",
+                            }}
+                            color={product.quantity > 0 ? "primary" : "secondary"}
+                          >
+                            {product.quantity > 0 ? "AVAILABLE" : "UNAVAILABLE"}
+                          </Typography>
+                          <Typography 
+                            gutterBottom 
+                            variant="body1" 
+                            style={{
+                              fontSize: "13px",  textAlign: "right",
+                            }}
+                            noWrap
+                          >
+                            {product.cost}
+                          </Typography>
+                        </div>
                       </CardContent>
                     </CardActionArea>
                   </Card>

@@ -12,9 +12,31 @@ import React, { Component, useState }  from 'react';
 import { Button } from "@material-ui/core";
 import clsx from 'clsx';
 
+//Import Pages
+import Home from "../../pages/Home";
+import Products from "../../pages/Products";
+import ProductDetail from "../../pages/ProductDetail"
+import Orders from "../../pages/Orders";
+import OrderDetails from "../../pages/OrderDetails";
+import NotFound from "../../pages/NotFound";
+// import AuthenticationForm from "../../pages/Register";
+import BookingConfirmation from "../../pages/BookingConfirmation"
+import BookingCheckout from "../../pages/CheckOut"
+
 //Import icons
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
+import HomeIcon from '@material-ui/icons/Home';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import CategoryIcon from '@material-ui/icons/Category';
+import PeopleIcon from '@material-ui/icons/People';
+import ReceiptIcon from '@material-ui/icons/Receipt';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -42,19 +64,32 @@ const useStyles = makeStyles(theme => ({
   },
   ml1: {
     marginLeft: '10px',
+  },
+  nav: {
+    borderTop: "1px solid #ccc",
+    borderBottom: "1px solid #ccc",
+    paddingLeft: "50px",
+  },
+  textbold: {
+    fontWeight: "bold",
+  },
+  btnSm: {
+    width: "30px", 
   }
 }));
 
 export default function ClippedDrawer() {
   const classes = useStyles();
   const [checklogin, setchecklogin] = useState(0);
-
-  const handleSignin = () => {
+  const [NamePage, setNamePage] = useState("HOME");
+  const handleLogin = () => {
     setchecklogin(1);
+    setNamePage("Log in");
   };
 
   const handleSignup = () => {
     setchecklogin(1);
+    setNamePage("Sign up");
   };
 
   const handleLogout = () => {
@@ -67,21 +102,25 @@ export default function ClippedDrawer() {
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
-            <Typography variant="h6" >
+            <Typography className={classes.textbold} variant="h6" >
               Fancy Store
             </Typography>
             {checklogin == 0 ? (
               <div className={classes.mlauto}>
-                <Button onClick={handleSignin} variant="outlined" color="primary">
+                <Button onClick={handleLogin} variant="outlined" color="primary">
                   Log in
                 </Button>
-                <Button className={classes.ml1} variant="outlined" color="secondary">
+                <Button onClick={handleSignup}  className={classes.ml1} variant="outlined" color="secondary">
                   Sign up
                 </Button>
               </div>
             ) : (
               <div className={classes.mlauto} > 
-                <Button variant="contained" color="primary">
+                <Button 
+                  onClick={(e) => setNamePage("Account")}
+                  variant="contained" 
+                  color="primary"
+                >
                   <PersonIcon /> dkmnhat
                 </Button>
                 <Button onClick={handleLogout} className={classes.ml1} variant="contained">
@@ -89,8 +128,42 @@ export default function ClippedDrawer() {
                 </Button>
               </div>
             )}
+            
+            <IconButton className={clsx(classes.ml1, classes.textbold)} color="primary" component="span">
+              <SettingsIcon/>
+            </IconButton>
+            <IconButton className={clsx(classes.ml1, classes.textbold)} color="primary" component="span">
+              <ContactSupportIcon/>
+            </IconButton>
+          </Toolbar>
+          <Toolbar className={classes.nav}>
+            <Typography variant="h6" >
+              {NamePage}
+            </Typography>
+            
+            <Button 
+              onClick={(e) => setNamePage("HOME")}
+              className={clsx(classes.mlauto, classes.textbold)} 
+              href="/"
+            ><HomeIcon/></Button>
+            <Button 
+              onClick={(e) => setNamePage("Products")}
+              className={clsx(classes.ml1, classes.textbold)} 
+              href="/products"
+            >Products</Button>
+            <Button 
+              onClick={(e) => setNamePage("Orders")}
+              className={clsx(classes.ml1, classes.textbold)} 
+              href="/orders"
+            >Orders</Button>
+            <Button 
+              onClick={(e) => setNamePage("Delivery Refund")}
+              className={clsx(classes.ml1, classes.textbold)} 
+              href="/"
+            >Delivery Refund</Button>
           </Toolbar>
         </AppBar>
+        
       </Router>
     </div>
   );
