@@ -121,7 +121,7 @@ export default function Products({ match, history }) {
                     <Col style={{alignSelf: 'center'}}>
                       {/* {console.log(product)} */}
                       { product.category ? product.category.map( (item, index) =>
-                    <Col key={index}>{item} abc</Col>) 
+                    <Col key={index}>{item}</Col>) 
                   :
                   null}
                     </Col>

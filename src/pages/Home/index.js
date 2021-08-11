@@ -104,6 +104,7 @@ export default function Home({ history, location }) {
   const classes = useStyles();
   const color = ["#03a9f4","#8bc34a","#ff9800", "#009688", "#3f51b5", "#f44336"];
   const [indexColor, setindexColor] = useState(0);
+  const [seemore, setseemore] = useState("");
   const [hasErrors, setErrors] = useState(false);
   const [categories, setCategories] = useState([]);
   async function fetchData() {
@@ -140,8 +141,12 @@ export default function Home({ history, location }) {
     }
   }, []);
 
-  const increaseIndex = (cnt) => {
-    setindexColor(cnt);
+  const handleseemore = (category) => {
+    setseemore(category);
+  }
+
+  const handleseeless = () => {
+    setseemore("");
   }
  
   return (
@@ -167,7 +172,16 @@ export default function Home({ history, location }) {
                   <Typography style={{textTransform: "uppercase", fontWeight: "bolder"}} variant="h3" gutterBottom> 
                     {category}
                   </Typography>
-                  <Button variant="contained" style={{backgroundColor: "rgba(255, 255, 255, 0.3)"}} >Xem thêm</Button>
+                  {seemore == category ? (
+                    <Button onClick={handleseeless} variant="contained" style={{backgroundColor: "rgba(255, 255, 255, 0.3)"}} >
+                      See less
+                    </Button>
+                  ) : (
+                    <Button onClick={() => handleseemore(category)} variant="contained" style={{backgroundColor: "rgba(255, 255, 255, 0.3)"}} >
+                      See more
+                    </Button>
+                  )}
+                  
                 </div>
                 <Grid
                   className={classes.grid}
@@ -182,7 +196,7 @@ export default function Home({ history, location }) {
                       No product
                     </Typography>
                   ) : List.get(category).map((product) => {
-                    if(List.get(category).indexOf(product) >= 4){
+                    if(List.get(category).indexOf(product) >= 4 && category != seemore){
                       return;
                     } 
                     return (
