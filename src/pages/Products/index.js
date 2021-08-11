@@ -14,6 +14,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
+import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
@@ -60,14 +61,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   cardContainer: {
-    borderRadius: "8px",
-    borderStyle: "solid",
-    borderWidth: "1px",
-    borderColor: "black",
-    borderCollapse: "separate",
+    borderRadius: "3px",
+    border: "1px solid #f2f2f2",
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
+    textAlign: "center",
   },
   bodyBtnOrder: {
-    position: "absolute",
+    position: "fixed",
     right: 0,
     bottom: 0,
     marginRight: '30px',
@@ -110,8 +110,6 @@ export default function Products({ history, location }) {
 
   const [hasErrors, setErrors] = useState(false);
   const [products, setProducts] = useState([]);
-
-  
 
   async function fetchData(productId) {
     try {
@@ -159,7 +157,7 @@ export default function Products({ history, location }) {
           >
             {products.map((product) => {
               return (
-                <Grid key={product.id} item lg={2} md={3} xs={6}>
+                <Grid key={product.id} item md={3} xs={3}>
                   <Card
                     onClick={() => {
                       history.push(`/products/${product.id}`);
@@ -168,24 +166,37 @@ export default function Products({ history, location }) {
                     variant="outlined"
                     elevation={10}
                   >
-                    <CardHeader
-                      classes={{ title: classes.titleStyle }}
-                      className={classes.titleContainer}
-                      title={product.name}
-                    />
-                    <CardMedia
-                      className={classes.media}
-                      image={`${product.picture}/preview.jpg`}
-                      title={product.name}
-                    />
-                    <CardContent
-                      style={{
-                        backgroundColor: product.quantity > 0 ? "green" : "red",
-                      }}
-                      className={classes.contentContainer}
-                    >
-                      {product.quantity > 0 ? "AVAILABLE" : "UNAVAILABLE"}
-                    </CardContent>
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.media}
+                        image={`${product.picture}/preview.jpg`}
+                        title={product.name}
+                      />
+                      <CardContent 
+                        style={{
+                          borderTop: "1px solid #f3f3f3",
+                          backgroundColor: product.quantity > 0 ? "#fff" : "#f1f1f1",
+                        }}
+                      >
+                        <Typography 
+                          gutterBottom 
+                          variant="body1" 
+                          style={{
+                            fontSize: "16px", fontWeight: "bold", textAlign: "center",
+                          }}
+                          noWrap
+                        >
+                          {product.name}
+                        </Typography>
+                        <Typography 
+                          variant="h6" 
+                          component="h2"
+                          color={product.quantity > 0 ? "primary" : "secondary"}
+                        >
+                          {product.quantity > 0 ? "AVAILABLE" : "UNAVAILABLE"}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
                   </Card>
                 </Grid>
               );

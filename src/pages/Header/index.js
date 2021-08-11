@@ -73,10 +73,10 @@ export default function ClippedDrawer() {
             {checklogin == 0 ? (
               <div className={classes.mlauto}>
                 <Button onClick={handleSignin} variant="outlined" color="primary">
-                  Đăng nhập
+                  Log in
                 </Button>
                 <Button className={classes.ml1} variant="outlined" color="secondary">
-                  Đăng kí
+                  Sign up
                 </Button>
               </div>
             ) : (
