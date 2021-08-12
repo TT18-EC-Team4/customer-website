@@ -7,11 +7,6 @@ import {
   Button,
   Chip,
   ThemeProvider,
-  Tabs,
-  Tab,
-  Divider,
-  TextareaAutosize,
-  Avatar,
 } from "@material-ui/core";
 import { Row, Col, Image, ListGroup } from "react-bootstrap";
 import CheckIcon from "@material-ui/icons/Check";
@@ -20,7 +15,7 @@ import { createTheme } from "@material-ui/core/styles";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 // import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import { Rating, TabPanel } from "@material-ui/lab";
+import { Rating } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   root: {

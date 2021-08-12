@@ -11,6 +11,8 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 import { createTheme } from "@material-ui/core/styles";
+import axios from 'axios';
+import Cookie from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,11 +51,32 @@ const mainTheme = createTheme({
   },
 });
 
-export default function AuthenticationForm({ match }) {
+export default function Login({ match }) {
   const classes = useStyles();
 
   const [hasErrors, setErrors] = useState(false);
-  const [product, setProduct] = useState({});
+  const [user, setUser] = useState({
+    email: "",
+    password: ""
+  });
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:5000/user/login", { ...user });
+      Cookie.set('refreshtoken', res.data.accesstoken);
+      localStorage.setItem("firstLogin", true);
+  
+      window.location.href = "/";
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -70,16 +93,22 @@ export default function AuthenticationForm({ match }) {
             <Grid align="center">
               <Avatar></Avatar>
               <h2>Sign Up</h2>
-              <form style={{ padding: "0px 60px 20px 60px" }}>
+              <form onSubmit={handleOnSubmit} style={{ padding: "0px 60px 20px 60px" }}>
                 <TextField
                   fullWidth
+                  name="email"
                   label="Username"
                   placeholder="Enter your username/email address"
+                  onChange={onChangeInput}
                 />
                 <TextField
                   fullWidth
+                  name="password"
+                  type="password"
+                  autoComplete="on"
                   label="Password"
                   placeholder="Enter your password"
+                  onChange={onChangeInput}
                 />
                 <ThemeProvider theme={mainTheme}>
                   <Button type="submit" variant="contained" color="primary">

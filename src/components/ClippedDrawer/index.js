@@ -1,40 +1,23 @@
 import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import ListItem from "@material-ui/core/ListItem";
-import { Divider, ListItemIcon, SvgIcon } from "@material-ui/core";
-import ListItemText from "@material-ui/core/ListItemText";
-import React, { Component, useState }  from 'react';
+import React, {  }  from 'react';
 
 //Import icons
-import HomeIcon from '@material-ui/icons/Home';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import CategoryIcon from '@material-ui/icons/Category';
-import PeopleIcon from '@material-ui/icons/People';
-import ReceiptIcon from '@material-ui/icons/Receipt';
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
-  NavLink
-} from "react-router-dom";
+  Switch} from "react-router-dom";
 
 //Import Pages
 import Home from "../../pages/Home";
+import Login from "../../pages/Login";
+import Register from "../../pages/Register";
 import Products from "../../pages/Products";
 import ProductDetail from "../../pages/ProductDetail"
 import Orders from "../../pages/Orders";
 import OrderDetails from "../../pages/OrderDetails";
 import NotFound from "../../pages/NotFound";
-// import AuthenticationForm from "../../pages/Register";
 import BookingConfirmation from "../../pages/BookingConfirmation"
 import BookingCheckout from "../../pages/CheckOut"
 import Header from "../../pages/Header"
@@ -89,6 +72,8 @@ export default function ClippedDrawer() {
           <div className={classes.toolbar} />
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
             <Route exact path="/products" component={Products} />
             <Route path="/products/:id" component={ProductDetail} />
             <Route path="/order/confirmation" component={BookingConfirmation} />
