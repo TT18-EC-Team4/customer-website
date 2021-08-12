@@ -53,11 +53,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let wlist = new Map();
+
 export default function BookingConfirmation({ history, location }) {
   const classes = useStyles();
-
   const productsInOrder = location.state;
-
   const [hasErrors, setErrors] = useState(false);
   const [products, setProducts] = useState(productsInOrder);
   const [total, setTotal] = useState(0);
@@ -80,16 +80,45 @@ export default function BookingConfirmation({ history, location }) {
     console.log("render 1");
     console.log(products);
     // eslint-disable-next-line
-  }, [count]);
+  }, [total]);
 
   const handleReturn = () => {
-    history.push({ pathname: `/products` });
+    history.push("/products", products);
   };
 
   const handlePurchase = () => {
-    let temp = products.filter((item) => item.quantity > 0);
-    history.push("/order/checkout", temp);
+    history.push("/order/checkout", products);
   };
+
+  const handleDelete = (product) => {
+    const result = products.filter(productItemt => productItemt.id != product.id);
+    product.quantity = 0;
+    setProducts(result);
+    fetchProduct();
+  }
+
+  const handleSub = (product) => {
+    const result = products.copyWithin(0, 0);
+    const findIndex = products.findIndex(productItemt => productItemt.id == product.id);
+    result[findIndex].quantity = result[findIndex].quantity-1;
+    console.log(result);
+    if (result[findIndex] == 0) {
+      handleDelete(product);
+    }
+    else {
+      setProducts(result);
+      fetchProduct();
+    }
+  }
+
+  const handleAdd = (product) => {
+    const result = products.copyWithin(0, 0);
+    const findIndex = products.findIndex(productItemt => productItemt.id == product.id);
+    result[findIndex].quantity = result[findIndex].quantity + 1;
+    console.log(result);
+    setProducts(result);
+    fetchProduct();
+  }
 
   return (
     <div className={classes.root}>
@@ -143,18 +172,7 @@ export default function BookingConfirmation({ history, location }) {
                               variant="outlined"
                               color="primary"
                               type="submit"
-                              onClick={() => {
-                                for (let i = 0; i < products.length; i++) {
-                                  if (
-                                    !products[i].id.localeCompare(product.id)
-                                  ) {
-                                    let temp = products;
-                                    temp[i].quantity--;
-                                    setProducts(temp);
-                                    setCount(count - 1);
-                                  }
-                                }
-                              }}
+                              onClick={() => {handleSub(product)}}
                             >
                               <RemoveIcon />
                             </Button>
@@ -163,18 +181,7 @@ export default function BookingConfirmation({ history, location }) {
                               variant="outlined"
                               color="primary"
                               type="submit"
-                              onClick={() => {
-                                for (let i = 0; i < products.length; i++) {
-                                  if (
-                                    !products[i].id.localeCompare(product.id)
-                                  ) {
-                                    let temp = products;
-                                    temp[i].quantity++;
-                                    setProducts(temp);
-                                    setCount(count + 1);
-                                  }
-                                }
-                              }}
+                              onClick={() => {handleAdd(product)}}
                             >
                               <AddIcon />
                             </Button>
@@ -183,18 +190,7 @@ export default function BookingConfirmation({ history, location }) {
                               variant="contained"
                               color="secondary"
                               type="submit"
-                              onClick={() => {
-                                for (let i = 0; i < products.length; i++) {
-                                  if (
-                                    !products[i].id.localeCompare(product.id)
-                                  ) {
-                                    let temp = products;
-                                    temp[i].quantity = 0;
-                                    setProducts(temp);
-                                    setCount(0);
-                                  }
-                                }
-                              }}
+                              onClick={() => {handleDelete(product)}}
                             >
                               Delete
                             </Button>

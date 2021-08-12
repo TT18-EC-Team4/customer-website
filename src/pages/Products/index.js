@@ -1,15 +1,4 @@
-/*
-Copyright 2019 Google LLC
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-    https://www.apache.org/licenses/LICENSE-2.0
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.import React from "react";
-*/
+
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
@@ -30,6 +19,9 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Checkbox from "@material-ui/core/Checkbox";
 // import { useHistory } from "react-router-dom";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import CssBaseline from "@material-ui/core/CssBaseline";
+//import pages
+import Header from "../../pages/Header"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -97,6 +89,13 @@ const useStyles = makeStyles((theme) => ({
     padding: "15px",
     marginTop: "8px",
   },
+  content: {
+    flexGrow: 1,
+    paddingTop: "150px",
+    paddingLeft: "50px",
+    paddingRight: "50px",
+    paddingBottom: "50px"
+  }
 }));
 
 // const CustomButton = withStyles((theme) => ({
@@ -115,19 +114,27 @@ const useStyles = makeStyles((theme) => ({
 //   }
 // }))(Button);
 
-let wlist = new Map();
-
 export default function Products({ history, location }) {
+  let sum = 0;
+  let productsOrder = [];
   const classes = useStyles();
   const [hasErrors, setErrors] = useState(false);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState({});
   const [Listcategories, setListcategories] = useState([]);
-
+  const [totalQuality, setTotalQuality] = useState(0);
   const handleChange = (event) => {
     setCategories({ ...categories, [event.target.name]: event.target.checked });
   };
-  // console.log(categories);
+
+  async function fetchTotalQuality() {
+    let temp = 0;
+    for (var i = 0; i < productsOrder.length; i++) {
+      temp += productsOrder[i].quantity;
+    }
+    setTotalQuality(temp);
+  }
+
   async function fetchData(productId) {
     try {
       // const response = await fetch(`${process.env.REACT_APP_PRODUCTS_URL}`);
@@ -147,21 +154,22 @@ export default function Products({ history, location }) {
       setErrors(true);
     }
   }
+
   useEffect(() => {
     fetchData();
-    if (location.state) {
-      if (!wlist.has(location.state)) {
-        wlist.set(location.state, 1);
-      } else {
-        wlist.set(location.state, wlist.get(location.state) + 1);
-      }
-      console.log(wlist);
+    if (location.state)
+    {
+      productsOrder = location.state;
     }
-    // eslint-disable-next-line
+    fetchTotalQuality();
   }, []);
 
+  const handleSeeOrder = () => {
+    history.push("/order/confirmation", productsOrder);
+  }
   return (
     <div className={classes.root}>
+      <Header />
       {hasErrors && (
         <Paper className={classes.paper}>
           <Typography component="p">
@@ -170,163 +178,148 @@ export default function Products({ history, location }) {
         </Paper>
       )}
       {!hasErrors && (
-        <div style={{ display: "flex" }}>
-          <div className={clsx(classes.cardContainer, classes.selectbody)}>
-            <FormControl component="fieldset" className={classes.formControl}>
-              <FormLabel component="legend">Categories</FormLabel>
-              <FormGroup>
-                {Listcategories.map((category) => {
-                  return (
-                    <FormControlLabel
-                      control={
-                        <Checkbox onChange={handleChange} name={category} />
-                      }
-                      label={category}
-                    />
-                  );
-                })}
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={categories["All"] === true ? true : false}
-                      onChange={handleChange}
-                      name="All"
-                    />
-                  }
-                  label="All"
-                />
-              </FormGroup>
-            </FormControl>
-          </div>
-          <Grid
-            className={classes.grid}
-            container
-            spacing={2}
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="flex-start"
-          >
-            {products.map((product) => {
-              let ok = 0;
-              for (let i in product.category) {
-                if (categories[product.category[i]] === true) {
-                  ok = 1;
-                  break;
-                }
-              }
-              if (ok === 0 && categories["All"] === false) {
-                return;
-              }
-              return (
-                <Grid key={product.id} item style={{ width: "20%" }}>
-                  <Card
-                    onClick={() => {
-                      history.push(`/products/${product.id}`);
-                    }}
-                    className={classes.cardContainer}
-                    variant="outlined"
-                    elevation={10}
-                    title={product.name}
-                  >
-                    <CardActionArea>
-                      <CardMedia
-                        className={classes.media}
-                        image={`${product.picture}/preview.jpg`}
-                        title={product.name}
+        <div className={classes.content}>
+          <div style={{ display: "flex" }}>
+            <div className={clsx(classes.cardContainer, classes.selectbody)}>
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel component="legend">Categories</FormLabel>
+                <FormGroup>
+                  {Listcategories.map((category) => {
+                    return (
+                      <FormControlLabel
+                        control={
+                          <Checkbox onChange={handleChange} name={category} />
+                        }
+                        label={category}
                       />
-                      <CardContent
-                        style={{
-                          borderTop: "1px solid #f3f3f3",
-                          backgroundColor:
-                            product.quantity > 0 ? "#fff" : "#f1f1f1",
-                        }}
-                      >
-                        <Typography
-                          variant="body1"
+                    );
+                  })}
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={categories["All"] === true ? true : false}
+                        onChange={handleChange}
+                        name="All"
+                      />
+                    }
+                    label="All"
+                  />
+                </FormGroup>
+              </FormControl>
+            </div>
+            <Grid
+              className={classes.grid}
+              container
+              spacing={2}
+              direction="row"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+            >
+              {products.map((product) => {
+                let ok = 0;
+                for (let i in product.category) {
+                  if (categories[product.category[i]] === true) {
+                    ok = 1;
+                    break;
+                  }
+                }
+                if (ok === 0 && categories["All"] === false) {
+                  return;
+                }
+                return (
+                  <Grid key={product.id} item style={{ width: "20%" }}>
+                    <Card
+                      onClick={() => {
+                        history.push(`/products/${product.id}`);
+                      }}
+                      className={classes.cardContainer}
+                      variant="outlined"
+                      elevation={10}
+                      title={product.name}
+                    >
+                      <CardActionArea>
+                        <CardMedia
+                          className={classes.media}
+                          image={`${product.picture}/preview.jpg`}
+                          title={product.name}
+                        />
+                        <CardContent
                           style={{
-                            fontSize: "16px",
-                            fontWeight: "bold",
-                            textAlign: "left",
+                            borderTop: "1px solid #f3f3f3",
+                            backgroundColor:
+                              product.quantity > 0 ? "#fff" : "#f1f1f1",
                           }}
-                          noWrap
                         >
-                          {product.name}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          style={{
-                            fontSize: "13px",
-                            color: "#787878",
-                            textAlign: "left",
-                          }}
-                          noWrap
-                        >
-                          {product.author}
-                        </Typography>
-                        <div style={{ display: "flex", marginTop: "10px" }}>
                           <Typography
-                            variant="body2"
-                            style={{
-                              fontSize: "13px",
-                              fontWeight: "bold",
-                              textAlign: "left",
-                              marginRight: "auto",
-                            }}
-                            color={
-                              product.quantity > 0 ? "primary" : "secondary"
-                            }
-                          >
-                            {product.quantity > 0 ? "AVAILABLE" : "UNAVAILABLE"}
-                          </Typography>
-                          <Typography
-                            gutterBottom
                             variant="body1"
                             style={{
-                              fontSize: "13px",
-                              textAlign: "right",
+                              fontSize: "16px",
+                              fontWeight: "bold",
+                              textAlign: "left",
                             }}
                             noWrap
                           >
-                            {product.cost}
+                            {product.name}
                           </Typography>
-                        </div>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              );
-            })}
-          </Grid>
+                          <Typography
+                            variant="body1"
+                            style={{
+                              fontSize: "13px",
+                              color: "#787878",
+                              textAlign: "left",
+                            }}
+                            noWrap
+                          >
+                            {product.author}
+                          </Typography>
+                          <div style={{ display: "flex", marginTop: "10px" }}>
+                            <Typography
+                              variant="body2"
+                              style={{
+                                fontSize: "13px",
+                                fontWeight: "bold",
+                                textAlign: "left",
+                                marginRight: "auto",
+                              }}
+                              color={
+                                product.quantity > 0 ? "primary" : "secondary"
+                              }
+                            >
+                              {product.quantity > 0 ? "AVAILABLE" : "UNAVAILABLE"}
+                            </Typography>
+                            <Typography
+                              gutterBottom
+                              variant="body1"
+                              style={{
+                                fontSize: "13px",
+                                textAlign: "right",
+                              }}
+                              noWrap
+                            >
+                              {product.cost}
+                            </Typography>
+                          </div>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Grid>
+                );
+              })}
+            </Grid>
+          </div>
+          <div className={classes.bodyBtnOrder}>
+            {totalQuality  == 0 ? (
+            <Button className={classes.btnOrder} variant="contained" color="secondary">
+              <AddShoppingCartIcon />
+            </Button>
+            ) : (
+            <Button onClick={handleSeeOrder} className={classes.btnOrder} variant="contained" color="secondary">
+              {totalQuality}
+            </Button>
+            )}
+          </div>
         </div>
       )}
-      <div className={classes.bodyBtnOrder}>
-        {wlist.size === 0 ? (
-          <Button
-            className={classes.btnOrder}
-            variant="contained"
-            color="secondary"
-          >
-            <AddShoppingCartIcon />
-          </Button>
-        ) : (
-          <Button
-            onClick={() => {
-              let list = Array.from(wlist.keys());
-              let count = Array.from(wlist.values());
-              for (let i = 0; i < list.length; i++) {
-                list[i] = JSON.parse(list[i]);
-                list[i].quantity = count[i];
-              }
-              history.push("/order/confirmation", list);
-            }}
-            className={classes.btnOrder}
-            variant="contained"
-            color="secondary"
-          >
-            {wlist.size}
-          </Button>
-        )}
-      </div>
     </div>
-  );
+  );  
 }

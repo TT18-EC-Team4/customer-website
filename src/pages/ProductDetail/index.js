@@ -21,6 +21,8 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 // import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import { Rating, TabPanel } from "@material-ui/lab";
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +44,24 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "large",
     fontWeight: "bold",
   },
+  bodyBtnOrder: {
+    position: "fixed",
+    right: 0,
+    bottom: 0,
+    marginRight: '30px',
+    marginBottom: '30px',
+    boxShadow: '0 0 5px rgba(0, 0, 0.3)',
+    height: '66px',
+    width: '66px',
+    borderRadius: '33px',
+  },
+  btnOrder: {
+    height: '66px',
+    width: '66px',
+    borderRadius: '33px',
+    fontWeight: 'bold',
+    fontSize: '20px',
+  },
 }));
 
 const mainTheme = createTheme({
@@ -56,13 +76,27 @@ const mainTheme = createTheme({
   },
 });
 
-export default function Products({ match, history }) {
-  const classes = useStyles();
+let productsOrder = [];
 
+export default function Products({ match, history, location}) {
+  const classes = useStyles();
   const [hasErrors, setErrors] = useState(false);
   const [product, setProduct] = useState({});
-
+  const [click, setClick] = useState(0);
   const productId = match.params.id;
+  const [totalQuality, setTotalQuality] = useState(0);
+
+  async function fetchTotalQuality() {
+    try {
+      let temp = 0;
+      for (var i = 0; i < productsOrder.length; i++) {
+        temp += productsOrder[i].quantity;
+      }
+      setTotalQuality(temp);
+    } catch (err) {
+      setErrors(true);
+    }
+  }
 
   async function fetchProduct(productId) {
     try {
@@ -80,7 +114,11 @@ export default function Products({ match, history }) {
 
   useEffect(() => {
     fetchProduct(productId);
-  }, [productId]);
+    if (location.state) {
+      productsOrder = location.productsOrder;
+    }
+    fetchTotalQuality();
+  }, [totalQuality]);
 
   function handleAddWishlist() {
     let temp = {
@@ -90,8 +128,20 @@ export default function Products({ match, history }) {
       cost: product.cost,
       quantity: 1,
     };
-    temp = JSON.stringify(temp);
-    history.push({ pathname: `/products`, state: temp });
+    const found = productsOrder.findIndex(productItemt => productItemt.id == product.id);
+    if (found == -1) {
+      productsOrder.push(temp);
+    } else {
+      productsOrder[found].quantity++;
+    }
+    fetchTotalQuality();
+  }
+
+  const handleBack = () => {
+    history.push("/products", productsOrder);
+  }
+  const handleSeeOrder = () => {
+    history.push("/order/confirmation", productsOrder);
   }
 
   return (
@@ -139,7 +189,6 @@ export default function Products({ match, history }) {
                 <Row>
                   <Col className={classes.neededInfo}>Category</Col>
                   <Col style={{ alignSelf: "center" }}>
-                    {/* {console.log(product)} */}
                     {product.category
                       ? product.category.map((item, index) => (
                           <Col key={index}>{item}</Col>
@@ -202,11 +251,11 @@ export default function Products({ match, history }) {
                 </Row>
               </ListGroup.Item>
               <Row align="center" style={{ paddingTop: "1.75%" }}>
-                <Col md={1} align="right" style={{ width: "100%" }}>
+                <Col md={1} align="left" style={{ width: "75%"}}>
                   {product.quantity > 0 ? (
                     <ThemeProvider theme={mainTheme}>
                       <Button
-                        style={{ padding: "4%", width: "100%" }}
+                        style={{ padding: "20px 10px", width: "100%" }}
                         startIcon={<ShoppingCartIcon />}
                         color="primary"
                         variant="contained"
@@ -219,7 +268,7 @@ export default function Products({ match, history }) {
                   ) : (
                     <ThemeProvider theme={mainTheme}>
                       <Button
-                        style={{ padding: "4%", width: "100%" }}
+                        style={{ padding: "20px 10px", width: "100%"}}
                         startIcon={<ShoppingCartIcon />}
                         variant="contained"
                         size="large"
@@ -229,6 +278,20 @@ export default function Products({ match, history }) {
                       </Button>
                     </ThemeProvider>
                   )}
+                </Col>
+                <Col md={1} align="right" style={{ width: "25%"}}>
+                  <ThemeProvider theme={mainTheme}>
+                      <Button
+                        style={{ padding: "20px 10px", width: "100%" }}
+                        endIcon={<ChevronRightIcon />}
+                        color="secondary"
+                        variant="contained"
+                        size="large"
+                        onClick={handleBack}
+                      >
+                        Back
+                      </Button>
+                  </ThemeProvider>
                 </Col>
                 {/* <Col md={1} style={{width: '30%'}}>
                   <ThemeProvider theme={mainTheme}>
@@ -267,6 +330,17 @@ export default function Products({ match, history }) {
           </Col>
         </Row>
       )}
+      <div className={classes.bodyBtnOrder}>
+        {totalQuality  == 0 ? (
+        <Button className={classes.btnOrder} variant="contained" color="secondary">
+          <AddShoppingCartIcon />
+        </Button>
+        ) : (
+        <Button onClick={handleSeeOrder} className={classes.btnOrder} variant="contained" color="secondary">
+          {totalQuality}
+        </Button>
+        )}
+      </div>
     </div>
   );
 }

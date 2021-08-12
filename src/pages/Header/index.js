@@ -53,9 +53,6 @@ import { auto } from "@popperjs/core";
 const drawerWidth = 238;
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex"
-  },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     background: "#fff",
@@ -82,7 +79,7 @@ const useStyles = makeStyles(theme => ({
 
 let Name;
 
-export default function ClippedDrawer({history, location}) {
+export default function Header({history, location}) {
   const classes = useStyles();
   const [checklogin, setchecklogin] = useState(0);
   const handleLogin = () => {
@@ -100,7 +97,7 @@ export default function ClippedDrawer({history, location}) {
   };
 
   return (
-    <div className={classes.root}>
+    <div>
       <Router>
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>

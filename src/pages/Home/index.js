@@ -27,11 +27,12 @@ import DoneAllIcon from '@material-ui/icons/DoneAll';
 // import { useHistory } from "react-router-dom";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { ListTwoTone } from "@material-ui/icons";
+import CssBaseline from "@material-ui/core/CssBaseline";
+//import pages
+import Header from "../../pages/Header"
+
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   grid: {
     margin: "0 auto",
     width: "100%",
@@ -94,10 +95,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center", 
     paddingTop: "20px",
     paddingBottom: "20px"
+  },
+  content: {
+    paddingTop: "150px",
+    paddingLeft: "50px",
+    paddingRight: "50px",
+    paddingBottom: "50px"
   }
 }));
 
-let wlist = new Map();
 let List = new Map();
 
 export default function Home({ history, location }) {
@@ -107,6 +113,26 @@ export default function Home({ history, location }) {
   const [seemore, setseemore] = useState("");
   const [hasErrors, setErrors] = useState(false);
   const [categories, setCategories] = useState([]);
+
+  const productsOrder = location.state;
+  const [totalQuality, setTotalQuality] = useState(0);
+
+  async function fetchTotalQuality() {
+    try {
+      let temp = 0;
+      for (var i = 0; i < productsOrder.length; i++) {
+        temp += productsOrder[i].quantity;
+      }
+      setTotalQuality(temp);
+    } catch (err) {
+      setErrors(true);
+    }
+  }
+
+  const handleSeeOrder = () => {
+    history.push("/order/confirmation", productsOrder);
+  }
+
   async function fetchData() {
     try {
       const products = require("../../data/products.json").products;
@@ -130,15 +156,6 @@ export default function Home({ history, location }) {
   }
   useEffect(() => {
     fetchData();
-    if (location.state) {
-      if (!wlist.has(location.state)) {
-        wlist.set(location.state, 1);
-      }
-      else {
-        wlist.set(location.state, wlist.get(location.state) + 1)
-      }
-      console.log(wlist) 
-    }
   }, []);
 
   const handleseemore = (category) => {
@@ -150,7 +167,9 @@ export default function Home({ history, location }) {
   }
  
   return (
-    <div className={classes.root}>
+    <div>
+      <CssBaseline />
+      <Header />
       {hasErrors && (
         <Paper className={classes.paper}>
           <Typography component="p">
@@ -159,7 +178,7 @@ export default function Home({ history, location }) {
         </Paper>
       )}
       {!hasErrors && (
-        <div>
+        <main className={classes.content}>
           {categories.map((category) => {
             return (
               <div 
@@ -248,19 +267,19 @@ export default function Home({ history, location }) {
               </div>
             )
           })}
-        </div>
+          <div className={classes.bodyBtnOrder}>
+            {totalQuality  == 0 ? (
+            <Button className={classes.btnOrder} variant="contained" color="secondary">
+              <AddShoppingCartIcon />
+            </Button>
+            ) : (
+            <Button onClick={handleSeeOrder} className={classes.btnOrder} variant="contained" color="secondary">
+              {totalQuality}
+            </Button>
+            )}
+          </div>
+        </main>
       )}
-      <div className={classes.bodyBtnOrder}>
-        {wlist.size  == 0 ? (
-          <Button className={classes.btnOrder} variant="contained" color="secondary">
-            <AddShoppingCartIcon />
-          </Button>
-        ) : (
-        <Button onClick={() => {history.push("/order/confirmation", wlist)}} className={classes.btnOrder} variant="contained" color="secondary">
-          {wlist.size}
-        </Button>
-        )}
-      </div>
     </div>
   );  
 }

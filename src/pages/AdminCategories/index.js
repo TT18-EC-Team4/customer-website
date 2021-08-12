@@ -25,15 +25,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function AdminProducts() {
+export default function AdminCategories() {
   const classes = useStyles();
-  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [hasErrors, setErrors] = useState(false);
 
   async function fetchData() {
     try {
-      const products = require("../../data/products.json").products;
-      setProducts(products);
+        const categories = require("../../data/categories.json").categories;
+        setCategories(categories);
     } catch (err) {
       setErrors(true);
     }
@@ -58,20 +58,16 @@ export default function AdminProducts() {
           <TableHead>
             <TableRow>
               <TableCell style={{width: "20px"}}>#ID</TableCell>
-              <TableCell style={{width: "35px"}}>Hình</TableCell>
-              <TableCell >Tên sản phẩm</TableCell>
+              <TableCell >Tên thể loại</TableCell>
               <TableCell style={{width: "50px"}}></TableCell>
               <TableCell style={{width: "50px"}}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {products.map((product) => (
-              <TableRow key={product.id}>
-                <TableCell align="right">{product.id}</TableCell>
-                <TableCell align="center">
-                  <img src={`../../${product.picture}/main.jpg`} alt={product.name} style={{width: "100%"}} />
-                </TableCell>
-                <TableCell align="left">{product.name}</TableCell>
+            {categories.map((category) => (
+              <TableRow key={categories.indexOf(category)}>
+                <TableCell align="right">{categories.indexOf(category)}</TableCell>
+                <TableCell align="left">{category}</TableCell>
                 <TableCell align="center">
                   <Button variant="contained" color="secondary">
                     Xóa
