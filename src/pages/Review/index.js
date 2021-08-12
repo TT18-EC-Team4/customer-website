@@ -45,7 +45,7 @@ export default function Review({ products }) {
       // console.log(products);
       let temp = 0;
       for (var i = 0; i < products.length; i++) {
-        temp += products[i].cost;
+        temp += products[i].cost * products[i].quantity;
       }
       setTotal(temp);
     } catch (err) {
@@ -73,7 +73,7 @@ export default function Review({ products }) {
                   primary={product.name}
                   secondary={product.author}
                 />
-                <Typography variant="body2">{product.cost}</Typography>
+                <Typography variant="body2">{product.cost} x {product.quantity}</Typography>
               </ListItem>
             ))}
             <ListItem className={classes.listItem}>
