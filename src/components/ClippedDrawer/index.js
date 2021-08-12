@@ -1,29 +1,32 @@
-import React, { Component, useState }  from 'react';
-
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  NavLink
-} from "react-router-dom";
-
+import React, { useState, useEffect } from "react";
 //Import Pages
 import Home from "../../pages/Home";
+import Login from "../../pages/Login";
+import Register from "../../pages/Register";
 import Products from "../../pages/Products";
 import ProductDetail from "../../pages/ProductDetail"
 import Orders from "../../pages/Orders";
 import OrderDetails from "../../pages/OrderDetails";
 import NotFound from "../../pages/NotFound";
-// import AuthenticationForm from "../../pages/Register";
 import BookingConfirmation from "../../pages/BookingConfirmation"
 import BookingCheckout from "../../pages/CheckOut"
 import AdminPage from "../../pages/AdminPage"
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from "react-router-dom";
+
+
 
 export default function ClippedDrawer() {
   return (
     <div>
       <Router>
         <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
           <Route exact path="/admin" component={AdminPage} />
           <Route exact path="/admin/:page" component={AdminPage} />
           <Route exact path="/" component={Home} />

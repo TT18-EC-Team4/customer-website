@@ -8,8 +8,10 @@
     "@material-ui/data-grid": "^4.0.0-alpha.35",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
+    "axios": "^0.21.1",
     "env-cmd": "^10.1.0",
     "express": "^4.17.1",
+    "js-cookie": "^3.0.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
     "react-dom": "^17.0.2",
@@ -38,9 +40,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "ncp": "^2.0.0",
-    "rimraf": "^3.0.2"
   }
 }

@@ -7,11 +7,6 @@ import {
   Button,
   Chip,
   ThemeProvider,
-  Tabs,
-  Tab,
-  Divider,
-  TextareaAutosize,
-  Avatar,
 } from "@material-ui/core";
 import { Row, Col, Image, ListGroup } from "react-bootstrap";
 import CheckIcon from "@material-ui/icons/Check";
