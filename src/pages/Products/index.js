@@ -20,7 +20,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import CssBaseline from "@material-ui/core/CssBaseline";
 //import pages
-import Header from "../../pages/Header"
+import Header from "../../pages/Header";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,8 +93,8 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "150px",
     paddingLeft: "50px",
     paddingRight: "50px",
-    paddingBottom: "50px"
-  }
+    paddingBottom: "50px",
+  },
 }));
 
 // const CustomButton = withStyles((theme) => ({
@@ -114,8 +114,8 @@ const useStyles = makeStyles((theme) => ({
 // }))(Button);
 
 export default function Products({ history, location }) {
-  let sum = 0;
-  let productsOrder = [];
+  var sum = 0;
+  var productsOrder = [];
   const classes = useStyles();
   const [hasErrors, setErrors] = useState(false);
   const [products, setProducts] = useState([]);
@@ -128,6 +128,7 @@ export default function Products({ history, location }) {
 
   async function fetchTotalQuality() {
     let temp = 0;
+    console.log(productsOrder);
     for (var i = 0; i < productsOrder.length; i++) {
       temp += productsOrder[i].quantity;
     }
@@ -156,16 +157,19 @@ export default function Products({ history, location }) {
 
   useEffect(() => {
     fetchData();
-    if (location.state)
-    {
+    if (location.state) {
+      console.log(location.state);
       productsOrder = location.state;
+      console.log(productsOrder);
     }
     fetchTotalQuality();
   }, []);
 
   const handleSeeOrder = () => {
-    history.push("/order/confirmation", productsOrder);
-  }
+    let temp = productsOrder;
+    console.log(temp);
+    history.push("/order/confirmation", temp);
+  };
   return (
     <div className={classes.root}>
       <Header />
@@ -284,7 +288,9 @@ export default function Products({ history, location }) {
                                 product.quantity > 0 ? "primary" : "secondary"
                               }
                             >
-                              {product.quantity > 0 ? "AVAILABLE" : "UNAVAILABLE"}
+                              {product.quantity > 0
+                                ? "AVAILABLE"
+                                : "UNAVAILABLE"}
                             </Typography>
                             <Typography
                               gutterBottom
@@ -307,18 +313,27 @@ export default function Products({ history, location }) {
             </Grid>
           </div>
           <div className={classes.bodyBtnOrder}>
-            {totalQuality  == 0 ? (
-            <Button className={classes.btnOrder} variant="contained" color="secondary">
-              <AddShoppingCartIcon />
-            </Button>
+            {totalQuality == 0 ? (
+              <Button
+                className={classes.btnOrder}
+                variant="contained"
+                color="secondary"
+              >
+                <AddShoppingCartIcon />
+              </Button>
             ) : (
-            <Button onClick={handleSeeOrder} className={classes.btnOrder} variant="contained" color="secondary">
-              {totalQuality}
-            </Button>
+              <Button
+                onClick={handleSeeOrder}
+                className={classes.btnOrder}
+                variant="contained"
+                color="secondary"
+              >
+                {totalQuality}
+              </Button>
             )}
           </div>
         </div>
       )}
     </div>
-  );  
+  );
 }

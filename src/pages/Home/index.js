@@ -2,20 +2,20 @@ import React, { useState, useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
-import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { CardHeader, Button } from "@material-ui/core";
-import DoneAllIcon from '@material-ui/icons/DoneAll';
+import DoneAllIcon from "@material-ui/icons/DoneAll";
 // import { useHistory } from "react-router-dom";
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { ListTwoTone } from "@material-ui/icons";
 import CssBaseline from "@material-ui/core/CssBaseline";
 //import pages
-import Header from "../../pages/Header"
-
+import Header from "../../pages/Header";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -60,40 +60,47 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     right: 0,
     bottom: 0,
-    marginRight: '30px',
-    marginBottom: '30px',
-    boxShadow: '0 0 5px rgba(0, 0, 0.3)',
-    height: '66px',
-    width: '66px',
-    borderRadius: '33px',
+    marginRight: "30px",
+    marginBottom: "30px",
+    boxShadow: "0 0 5px rgba(0, 0, 0.3)",
+    height: "66px",
+    width: "66px",
+    borderRadius: "33px",
   },
   btnOrder: {
-    height: '66px',
-    width: '66px',
-    borderRadius: '33px',
-    fontWeight: 'bold',
-    fontSize: '20px',
+    height: "66px",
+    width: "66px",
+    borderRadius: "33px",
+    fontWeight: "bold",
+    fontSize: "20px",
   },
   contentCategory: {
-    display: "flex", 
-    justifyContent: "center", 
-    alignItems: "center", 
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     paddingTop: "20px",
-    paddingBottom: "20px"
+    paddingBottom: "20px",
   },
   content: {
     paddingTop: "150px",
     paddingLeft: "50px",
     paddingRight: "50px",
-    paddingBottom: "50px"
-  }
+    paddingBottom: "50px",
+  },
 }));
 
 let List = new Map();
 
 export default function Home({ history, location }) {
   const classes = useStyles();
-  const color = ["#03a9f4","#8bc34a","#ff9800", "#009688", "#3f51b5", "#f44336"];
+  const color = [
+    "#03a9f4",
+    "#8bc34a",
+    "#ff9800",
+    "#009688",
+    "#3f51b5",
+    "#f44336",
+  ];
   const [indexColor, setindexColor] = useState(0);
   const [seemore, setseemore] = useState("");
   const [hasErrors, setErrors] = useState(false);
@@ -116,25 +123,28 @@ export default function Home({ history, location }) {
 
   const handleSeeOrder = () => {
     history.push("/order/confirmation", productsOrder);
-  }
+  };
 
   async function fetchData() {
     try {
-      const products = require("../../data/products.json").products;
-      const categories = require("../../data/categories.json").categories;
-      setCategories(categories);
-      for (let i in categories)
-      {
-        let productsCategory = [];
-        for (let j in products) {
-          const found = products[j].category.find(element => element == categories[i]);
-          if (found != undefined)
-          {
-            productsCategory.push(products[j]);
-          }
-        }
-        List.set(categories[i], productsCategory);
-      }
+      // const products = require("../../data/products.json").products;
+      // const categories = require("../../data/categories.json").categories;
+      // setCategories(categories);
+      // for (let i in categories) {
+      //   let productsCategory = [];
+      //   for (let j in products) {
+      //     const found = products[j].category.find(
+      //       (element) => element == categories[i]
+      //     );
+      //     if (found != undefined) {
+      //       productsCategory.push(products[j]);
+      //     }
+      //   }
+      //   List.set(categories[i], productsCategory);
+      // }
+      axios.get("http://localhost:5000/api/products").then((res) => {
+        console.log(res);
+      });
     } catch (err) {
       setErrors(true);
     }
@@ -145,12 +155,12 @@ export default function Home({ history, location }) {
 
   const handleseemore = (category) => {
     setseemore(category);
-  }
+  };
 
   const handleseeless = () => {
     setseemore("");
-  }
- 
+  };
+
   return (
     <div>
       <CssBaseline />
@@ -166,26 +176,37 @@ export default function Home({ history, location }) {
         <main className={classes.content}>
           {categories.map((category) => {
             return (
-              <div 
+              <div
                 className={classes.contentCategory}
                 style={{
-                  backgroundColor: color[categories.indexOf(category)%6],
+                  backgroundColor: color[categories.indexOf(category) % 6],
                 }}
               >
-                <div style={{width: "40%", textAlign: "center"}}>
-                  <Typography style={{textTransform: "uppercase", fontWeight: "bolder"}} variant="h3" gutterBottom> 
+                <div style={{ width: "40%", textAlign: "center" }}>
+                  <Typography
+                    style={{ textTransform: "uppercase", fontWeight: "bolder" }}
+                    variant="h3"
+                    gutterBottom
+                  >
                     {category}
                   </Typography>
                   {seemore == category ? (
-                    <Button onClick={handleseeless} variant="contained" style={{backgroundColor: "rgba(255, 255, 255, 0.3)"}} >
+                    <Button
+                      onClick={handleseeless}
+                      variant="contained"
+                      style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
+                    >
                       See less
                     </Button>
                   ) : (
-                    <Button onClick={() => handleseemore(category)} variant="contained" style={{backgroundColor: "rgba(255, 255, 255, 0.3)"}} >
+                    <Button
+                      onClick={() => handleseemore(category)}
+                      variant="contained"
+                      style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
+                    >
                       See more
                     </Button>
                   )}
-                  
                 </div>
                 <Grid
                   className={classes.grid}
@@ -196,75 +217,101 @@ export default function Home({ history, location }) {
                   alignItems="flex-start"
                 >
                   {List.get(category).length == 0 ? (
-                    <Typography variant="h6" style={{marginLeft: "auto", marginRight: "auto"}}> 
+                    <Typography
+                      variant="h6"
+                      style={{ marginLeft: "auto", marginRight: "auto" }}
+                    >
                       No product
                     </Typography>
-                  ) : List.get(category).map((product) => {
-                    if(List.get(category).indexOf(product) >= 4 && category != seemore){
-                      return;
-                    } 
-                    return (
-                      <Grid key={product.id} item md={3} xs={3}>
-                        <Card
-                          onClick={() => {
-                            history.push(`/products/${product.id}`);
-                          }}
-                          className={classes.cardContainer}
-                          variant="outlined"
-                          elevation={10}
-                        >
-                          <CardActionArea>
-                            <CardMedia
-                              className={classes.media}
-                              image={`${product.picture}/preview.jpg`}
-                              title={product.name}
-                            />
-                            <CardContent 
-                              style={{
-                                borderTop: "1px solid #f3f3f3",
-                                backgroundColor: product.quantity > 0 ? "#fff" : "#f1f1f1",
-                              }}
-                            >
-                              <Typography 
-                                gutterBottom 
-                                variant="body1" 
+                  ) : (
+                    List.get(category).map((product) => {
+                      if (
+                        List.get(category).indexOf(product) >= 4 &&
+                        category != seemore
+                      ) {
+                        return;
+                      }
+                      return (
+                        <Grid key={product.id} item md={3} xs={3}>
+                          <Card
+                            onClick={() => {
+                              history.push(`/products/${product.id}`);
+                            }}
+                            className={classes.cardContainer}
+                            variant="outlined"
+                            elevation={10}
+                          >
+                            <CardActionArea>
+                              <CardMedia
+                                className={classes.media}
+                                image={`${product.picture}/preview.jpg`}
+                                title={product.name}
+                              />
+                              <CardContent
                                 style={{
-                                  fontSize: "16px", fontWeight: "bold", textAlign: "center",
+                                  borderTop: "1px solid #f3f3f3",
+                                  backgroundColor:
+                                    product.quantity > 0 ? "#fff" : "#f1f1f1",
                                 }}
-                                noWrap
                               >
-                                {product.name}
-                              </Typography>
-                              <Typography 
-                                variant="h6" 
-                                component="h2"
-                                color={product.quantity > 0 ? "primary" : "secondary"}
-                              >
-                                {product.quantity > 0 ? "AVAILABLE" : "UNAVAILABLE"}
-                              </Typography>
-                            </CardContent>
-                          </CardActionArea>
-                        </Card>
-                      </Grid>
-                    );
-                  })}
+                                <Typography
+                                  gutterBottom
+                                  variant="body1"
+                                  style={{
+                                    fontSize: "16px",
+                                    fontWeight: "bold",
+                                    textAlign: "center",
+                                  }}
+                                  noWrap
+                                >
+                                  {product.name}
+                                </Typography>
+                                <Typography
+                                  variant="h6"
+                                  component="h2"
+                                  color={
+                                    product.quantity > 0
+                                      ? "primary"
+                                      : "secondary"
+                                  }
+                                >
+                                  {product.quantity > 0
+                                    ? "AVAILABLE"
+                                    : "UNAVAILABLE"}
+                                </Typography>
+                              </CardContent>
+                            </CardActionArea>
+                          </Card>
+                        </Grid>
+                      );
+                    })
+                  )}
                 </Grid>
               </div>
-            )
+            );
           })}
           <div className={classes.bodyBtnOrder}>
-            {totalQuality  == 0 ? (
-            <Button className={classes.btnOrder} variant="contained" color="secondary">
-              <AddShoppingCartIcon />
-            </Button>
+            {totalQuality == 0 ? (
+              <Button
+                className={classes.btnOrder}
+                variant="contained"
+                color="secondary"
+              >
+                <AddShoppingCartIcon />
+              </Button>
             ) : (
-            <Button onClick={handleSeeOrder} className={classes.btnOrder} variant="contained" color="secondary">
-              {totalQuality}
-            </Button>
+              <Button
+                onClick={handleSeeOrder}
+                className={classes.btnOrder}
+                variant="contained"
+                color="secondary"
+              >
+                {totalQuality}
+              </Button>
             )}
           </div>
         </main>
       )}
     </div>
-  );  
+  );
 }

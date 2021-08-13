@@ -11,8 +11,8 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 import { createTheme } from "@material-ui/core/styles";
-import axios from 'axios';
-import Cookie from "js-cookie";
+import axios from "axios";
+import Cookie, { set } from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +57,7 @@ export default function Login({ match }) {
   const [hasErrors, setErrors] = useState(false);
   const [user, setUser] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const onChangeInput = (e) => {
@@ -68,13 +68,17 @@ export default function Login({ match }) {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/user/login", { ...user });
-      Cookie.set('refreshtoken', res.data.accesstoken);
+      const res = await axios.post("http://localhost:5000/user/login", {
+        ...user,
+      });
+      console.log(res.headers);
+      Cookie.set("refreshtoken", res.data.accesstoken);
       localStorage.setItem("firstLogin", true);
-  
+
       window.location.href = "/";
     } catch (err) {
       alert(err.response.data.msg);
+      setErrors(err);
     }
   };
 
@@ -93,7 +97,10 @@ export default function Login({ match }) {
             <Grid align="center">
               <Avatar></Avatar>
               <h2>Sign Up</h2>
-              <form onSubmit={handleOnSubmit} style={{ padding: "0px 60px 20px 60px" }}>
+              <form
+                onSubmit={handleOnSubmit}
+                style={{ padding: "0px 60px 20px 60px" }}
+              >
                 <TextField
                   fullWidth
                   name="email"
