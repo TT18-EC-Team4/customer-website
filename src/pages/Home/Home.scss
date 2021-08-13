@@ -1,0 +1,21 @@
+@import "./src/App.scss";
+$p: 20px;
+
+.btn-see {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.content-category {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: $p;
+  padding-bottom: $p;
+}
+
+.content {
+  padding-top: 150px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+}

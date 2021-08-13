@@ -81,7 +81,7 @@ export default function BookingCheckout({ history, location }) {
         for (var i = 0; i < location.state.length; i++) {
           temp += location.state[i].cost;
         }
-        return <PaymentForm total={temp}/>;
+        return <PaymentForm total={temp} />;
       default:
         throw new Error("Unknown step");
     }

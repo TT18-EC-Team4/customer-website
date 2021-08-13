@@ -1,0 +1,29 @@
+$box-size: 66px;
+$m-3: 30px;
+
+.btn {
+  height: $box-size;
+  width: $box-size;
+  border-radius: $box-size/2;
+  &:hover {
+    opacity: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.body-btn-order {
+  @extend .btn;
+
+  position: fixed;
+
+  right: 0;
+  bottom: 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  margin-right: $m-3;
+  margin-bottom: $m-3;
+
+  .btn-order {
+    @extend .btn;
+    font-weight: bold;
+    font-size: 20px;
+  }
+}

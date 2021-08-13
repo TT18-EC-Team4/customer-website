@@ -16,15 +16,9 @@ import {
   // Avatar,
 } from "@material-ui/core";
 import { Row, Col, Image, ListGroup } from "react-bootstrap";
-// import CheckIcon from "@material-ui/icons/Check";
-// import ClearIcon from "@material-ui/icons/Clear";
-// import { createTheme } from "@material-ui/core/styles";
-// import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-// import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-// import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
-// import { Rating, TabPanel } from "@material-ui/lab";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
+import Header from "../../pages/Header";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,9 +45,13 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
   },
+  content: {
+    paddingTop: "150px",
+    paddingLeft: "50px",
+    paddingRight: "50px",
+    paddingBottom: "50px"
+  }
 }));
-
-let wlist = new Map();
 
 export default function BookingConfirmation({ history, location }) {
   const classes = useStyles();
@@ -77,9 +75,6 @@ export default function BookingConfirmation({ history, location }) {
 
   useEffect(() => {
     fetchProduct();
-    console.log("render 1");
-    console.log(products);
-    // eslint-disable-next-line
   }, [total]);
 
   const handleReturn = () => {
@@ -100,7 +95,7 @@ export default function BookingConfirmation({ history, location }) {
   const handleSub = (product) => {
     const result = products.copyWithin(0, 0);
     const findIndex = products.findIndex(productItemt => productItemt.id == product.id);
-    result[findIndex].quantity = result[findIndex].quantity-1;
+    result[findIndex].quantity = result[findIndex].quantity - 1;
     console.log(result);
     if (result[findIndex] == 0) {
       handleDelete(product);
@@ -122,6 +117,7 @@ export default function BookingConfirmation({ history, location }) {
 
   return (
     <div className={classes.root}>
+      <Header />
       {hasErrors && (
         <Paper className={classes.paper}>
           <Typography component="p">
@@ -130,7 +126,7 @@ export default function BookingConfirmation({ history, location }) {
         </Paper>
       )}
       {!hasErrors && (
-        <Grid container>
+        <Grid container className={classes.content}>
           <Grid xs={10} style={{ paddingLeft: "20%" }}>
             <div>
               {products.map((product) => {
@@ -172,7 +168,7 @@ export default function BookingConfirmation({ history, location }) {
                               variant="outlined"
                               color="primary"
                               type="submit"
-                              onClick={() => {handleSub(product)}}
+                              onClick={() => { handleSub(product) }}
                             >
                               <RemoveIcon />
                             </Button>
@@ -181,7 +177,7 @@ export default function BookingConfirmation({ history, location }) {
                               variant="outlined"
                               color="primary"
                               type="submit"
-                              onClick={() => {handleAdd(product)}}
+                              onClick={() => { handleAdd(product) }}
                             >
                               <AddIcon />
                             </Button>
@@ -190,7 +186,7 @@ export default function BookingConfirmation({ history, location }) {
                               variant="contained"
                               color="secondary"
                               type="submit"
-                              onClick={() => {handleDelete(product)}}
+                              onClick={() => { handleDelete(product) }}
                             >
                               Delete
                             </Button>

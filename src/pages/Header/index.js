@@ -24,6 +24,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
+  useHistory,
   useParams,
 } from "react-router-dom";
 
@@ -59,12 +60,15 @@ const useStyles = makeStyles((theme) => ({
 
 let Name;
 
-export default function Header({history, location}) {
+export default function Header(props) {
   const classes = useStyles();
   const state = useContext(GlobalState);
   const [isLogged] = state.userAPI.isLogged;
   const [isAdmin] = state.userAPI.isAdmin;
   const [cart] = state.userAPI.cart;
+
+  const productsOrder = props.dataProductsOrder || [];
+  let history = useHistory();
 
   const handleLogout = async () => {
     await axios.get("/user/logout");
@@ -73,6 +77,10 @@ export default function Header({history, location}) {
 
     window.location.href = "/";
   };
+
+  const handleLink = (href) => {
+    history.push(`/${href}`, productsOrder);
+  }
 
   return (
     <div>
@@ -104,7 +112,7 @@ export default function Header({history, location}) {
                   variant="contained"
                   color="primary"
                 >
-                  <PersonIcon /> {}
+                  <PersonIcon /> { }
                 </Button>
                 <Button
                   onClick={handleLogout}
@@ -137,18 +145,21 @@ export default function Header({history, location}) {
               <Route children={<Typography variant="h6">HOME</Typography>} />
             </Switch>
 
-            <Button className={clsx(classes.mlauto, classes.textbold)} href="/">
+            <Button
+              className={clsx(classes.mlauto, classes.textbold)}
+              onClick={() => handleLink("")}
+            >
               <HomeIcon />
             </Button>
             <Button
               className={clsx(classes.ml1, classes.textbold)}
-              href="/products"
+              onClick={() => handleLink("products")}
             >
               Products
             </Button>
             <Button
               className={clsx(classes.ml1, classes.textbold)}
-              href="/orders"
+              onClick={() => handleLink("orders")}
             >
               Orders
             </Button>
