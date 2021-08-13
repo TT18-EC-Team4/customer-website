@@ -101,12 +101,14 @@ export default function Home({ history, location }) {
     "#3f51b5",
     "#f44336",
   ];
+
+  const productsOrder = location.state;
+
   const [indexColor, setindexColor] = useState(0);
   const [seemore, setseemore] = useState("");
   const [hasErrors, setErrors] = useState(false);
-  const [categories, setCategories] = useState([]);
 
-  const productsOrder = location.state;
+  const [categories, setCategories] = useState([]);
   const [totalQuality, setTotalQuality] = useState(0);
 
   async function fetchTotalQuality() {
@@ -126,31 +128,49 @@ export default function Home({ history, location }) {
   };
 
   async function fetchData() {
-    try {
-      // const products = require("../../data/products.json").products;
-      // const categories = require("../../data/categories.json").categories;
-      // setCategories(categories);
-      // for (let i in categories) {
-      //   let productsCategory = [];
-      //   for (let j in products) {
-      //     const found = products[j].category.find(
-      //       (element) => element == categories[i]
-      //     );
-      //     if (found != undefined) {
-      //       productsCategory.push(products[j]);
-      //     }
-      //   }
-      //   List.set(categories[i], productsCategory);
-      // }
-      axios.get("http://localhost:5000/api/products").then((res) => {
-        console.log(res);
+    axios
+      .get("http://localhost:5000/api/products")
+      .then((res) => {
+        const products = res.data.products;
+        console.log(products);
+        axios
+          .get("http://localhost:5000/api/category")
+          .then((res1) => {
+            const temp = res1.data;
+            for (let i in temp) {
+              console.log("Hello");
+              let productsCategory = [];
+              for (let j in products) {
+                const found = products[j].category.find(
+                  (element) => element === temp[i].name
+                );
+                if (found !== undefined) {
+                  productsCategory.push(products[j]);
+                }
+              }
+              List.set(temp[i].name, productsCategory);
+            }
+            console.log(List);
+            console.log(temp);
+            var listcategory = [];
+            for (let i in temp) {
+              console.log(temp[i].name);
+              listcategory = [...listcategory, temp[i].name];
+            }
+            console.log(listcategory);
+            setCategories(listcategory);
+          })
+          .catch((err) => {
+            setErrors(true);
+          });
+      })
+      .catch((err) => {
+        setErrors(true);
       });
-    } catch (err) {
-      setErrors(true);
-    }
   }
   useEffect(() => {
     fetchData();
+    console.log(categories);
   }, []);
 
   const handleseemore = (category) => {
@@ -244,7 +264,7 @@ export default function Home({ history, location }) {
                             <CardActionArea>
                               <CardMedia
                                 className={classes.media}
-                                image={`${product.picture}/preview.jpg`}
+                                image={product.picture}
                                 title={product.name}
                               />
                               <CardContent

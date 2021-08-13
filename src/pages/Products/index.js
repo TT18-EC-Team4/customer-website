@@ -114,8 +114,8 @@ const useStyles = makeStyles((theme) => ({
 // }))(Button);
 
 export default function Products({ history, location }) {
-  var sum = 0;
-  var productsOrder = [];
+  let sum = 0;
+  let productsOrder = location.state;
   const classes = useStyles();
   const [hasErrors, setErrors] = useState(false);
   const [products, setProducts] = useState([]);
@@ -157,11 +157,6 @@ export default function Products({ history, location }) {
 
   useEffect(() => {
     fetchData();
-    if (location.state) {
-      console.log(location.state);
-      productsOrder = location.state;
-      console.log(productsOrder);
-    }
     fetchTotalQuality();
   }, []);
 
