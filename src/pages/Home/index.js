@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -14,12 +16,6 @@ import "../Home/Home.scss";
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(3, 2),
-  },
-  content: {
-    paddingTop: "150px",
-    paddingLeft: "50px",
-    paddingRight: "50px",
-    paddingBottom: "50px"
   }
 }));
 
@@ -35,38 +31,60 @@ export default function Home(location) {
   const color = ["#03a9f4", "#8bc34a", "#ff9800", "#009688", "#3f51b5", "#f44336"];
 
   async function fetchData() {
-    try {
-      const products = require("../../data/products.json").products;
-      const categories = require("../../data/categories.json").categories;
-      setCategories(categories);
-      for (let i in categories) {
-        let productsCategory = [];
-        for (let j in products) {
-          const found = products[j].category.find(element => element == categories[i]);
-          if (found != undefined) {
-            productsCategory.push(products[j]);
-          }
-        }
-        List.set(categories[i], productsCategory);
-      }
-    } catch (err) {
-      setErrors(true);
-    }
+    axios
+      .get("http://localhost:5000/api/products")
+      .then((res) => {
+        const products = res.data.products;
+        console.log(products);
+        axios
+          .get("http://localhost:5000/api/category")
+          .then((res1) => {
+            const temp = res1.data;
+            for (let i in temp) {
+              console.log("Hello");
+              let productsCategory = [];
+              for (let j in products) {
+                const found = products[j].category.find(
+                  (element) => element === temp[i].name
+                );
+                if (found !== undefined) {
+                  productsCategory.push(products[j]);
+                }
+              }
+              List.set(temp[i].name, productsCategory);
+            }
+            console.log(List);
+            console.log(temp);
+            var listcategory = [];
+            for (let i in temp) {
+              console.log(temp[i].name);
+              listcategory = [...listcategory, temp[i].name];
+            }
+            console.log(listcategory);
+            setCategories(listcategory);
+          })
+          .catch((err) => {
+            setErrors(true);
+          });
+      })
+      .catch((err) => {
+        setErrors(true);
+      });
   }
 
   useEffect(() => {
     fetchData();
+    console.log(categories, List);
   }, []);
 
   const handleSeeMore = (category) => {
     setSeeMore(category);
   }
 
-  const handleseeless = () => {
+  const handleSeeLess = () => {
     setSeeMore("");
   }
 
-  console.log(categories, List);
   return (
     <div>
       <Header dataProductsOrder={productsOrder} />
@@ -78,7 +96,7 @@ export default function Home(location) {
         </Paper>
       )}
       {!hasErrors && (
-        <div className={classes.content}>
+        <div className="content">
           {categories.map((category) => {
             return (
               <div
@@ -92,7 +110,7 @@ export default function Home(location) {
                     {category}
                   </Typography>
                   {seeMore == category ? (
-                    <Button onClick={handleseeless} variant="contained" className="btn-see" >
+                    <Button onClick={handleSeeLess} variant="contained" className="btn-see" >
                       See less
                     </Button>
                   ) : (
@@ -123,7 +141,7 @@ export default function Home(location) {
                   })}
                 </Grid>
               </div>
-            )
+            );
           })}
           <CardShoppingIcon dataProductsOrder={productsOrder} />
         </div>

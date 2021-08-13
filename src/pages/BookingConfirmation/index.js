@@ -86,34 +86,37 @@ export default function BookingConfirmation({ history, location }) {
   };
 
   const handleDelete = (product) => {
-    const result = products.filter(productItemt => productItemt.id != product.id);
+    const result = products.filter(
+      (productItemt) => productItemt.id != product.id
+    );
     product.quantity = 0;
     setProducts(result);
     fetchProduct();
-  }
+  };
 
   const handleSub = (product) => {
     const result = products.copyWithin(0, 0);
     const findIndex = products.findIndex(productItemt => productItemt.id == product.id);
     result[findIndex].quantity = result[findIndex].quantity - 1;
     console.log(result);
-    if (result[findIndex] == 0) {
+    if (result[findIndex] === 0) {
       handleDelete(product);
-    }
-    else {
+    } else {
       setProducts(result);
       fetchProduct();
     }
-  }
+  };
 
   const handleAdd = (product) => {
     const result = products.copyWithin(0, 0);
-    const findIndex = products.findIndex(productItemt => productItemt.id == product.id);
+    const findIndex = products.findIndex(
+      (productItemt) => productItemt.id == product.id
+    );
     result[findIndex].quantity = result[findIndex].quantity + 1;
     console.log(result);
     setProducts(result);
     fetchProduct();
-  }
+  };
 
   return (
     <div className={classes.root}>
@@ -139,7 +142,7 @@ export default function BookingConfirmation({ history, location }) {
                         <Row>
                           <Col>
                             <Image
-                              src={`../../${product.picture}/preview.jpg`}
+                              src={product.picture}
                               width="80px"
                               height="145px"
                             />

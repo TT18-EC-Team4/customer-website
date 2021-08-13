@@ -35,7 +35,7 @@ export default function Products(location) {
     setCategories({ ...categories, [event.target.name]: event.target.checked });
   };
 
-  async function fetchData() {
+  async function fetchData(productId) {
     try {
       const products = require("../../data/products.json").products;
       const listcategory = require("../../data/categories.json").categories;
