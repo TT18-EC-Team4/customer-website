@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Products({ history, location }) {
   let sum = 0;
-  let productsOrder = [];
+  let productsOrder = location.state;
   const classes = useStyles();
   const [hasErrors, setErrors] = useState(false);
   const [products, setProducts] = useState([]);
@@ -156,10 +156,6 @@ export default function Products({ history, location }) {
 
   useEffect(() => {
     fetchData();
-    if (location.state)
-    {
-      productsOrder = location.state;
-    }
     fetchTotalQuality();
   }, []);
 
@@ -307,18 +303,18 @@ export default function Products({ history, location }) {
             </Grid>
           </div>
           <div className={classes.bodyBtnOrder}>
-            {totalQuality  == 0 ? (
-            <Button className={classes.btnOrder} variant="contained" color="secondary">
-              <AddShoppingCartIcon />
-            </Button>
+            {totalQuality == 0 ? (
+              <Button className={classes.btnOrder} variant="contained" color="secondary">
+                <AddShoppingCartIcon />
+              </Button>
             ) : (
-            <Button onClick={handleSeeOrder} className={classes.btnOrder} variant="contained" color="secondary">
-              {totalQuality}
-            </Button>
+              <Button onClick={handleSeeOrder} className={classes.btnOrder} variant="contained" color="secondary">
+                {totalQuality}
+              </Button>
             )}
           </div>
         </div>
       )}
     </div>
-  );  
+  );
 }
