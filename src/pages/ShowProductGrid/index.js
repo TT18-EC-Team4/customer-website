@@ -8,19 +8,19 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-function ShowProductGrid(props, location) {
+function ShowProductGrid(props) {
   const product = props.dataProduct;
-  const productsOrder = props.productsOrder;
+  const productsOrder = props.dataProductsOrder;
   let history = useHistory();
 
-  const handleProductDetails = (productId) => {
+  const handleProductDetail = (productId) => {
     history.push(`/products/${productId}`, productsOrder);
   }
 
   return (
-    <Grid key={product.id} item className={window.location.pathname == "/" ? "col-4" : "col-5"}>
+    <Grid key={product.id} item className={window.location.pathname === "/" ? "col-4" : "col-5"}>
       <Card
-        onClick={() => { handleProductDetails(product.id) }}
+        onClick={() => { handleProductDetail(product.id) }}
         className="cardContainer"
         variant="outlined"
         elevation={10}
@@ -29,7 +29,7 @@ function ShowProductGrid(props, location) {
         <CardActionArea>
           <CardMedia
             className="card-media"
-            image={`${product.picture}/preview.jpg`}
+            image={product.picture}
             title={product.name}
           />
           <CardContent
@@ -41,14 +41,14 @@ function ShowProductGrid(props, location) {
           >
             <Typography
               variant="body1"
-              className="h7 font-weight-bold"
+              className="h7 font-weight-bold text-capitalize"
               noWrap
             >
               {product.name}
             </Typography>
             <Typography
               variant="body1"
-              className="h8 text-muted text-left"
+              className="h8 text-muted text-left text-capitalize"
               noWrap
             >
               {product.author}

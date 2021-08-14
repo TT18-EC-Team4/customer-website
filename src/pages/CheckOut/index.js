@@ -1,8 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import clsx from "clsx";
 import Paper from "@material-ui/core/Paper";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -14,19 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import AddressForm from "../AddressForm";
 import PaymentForm from "../PaymentForm";
 import Review from "../Review";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import Header from "../Header";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -63,23 +50,28 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  content: {
+    paddingTop: "100px",
+    marginLeft: "auto",
+    marginRight: "auto"
+  }
 }));
 
 export default function BookingCheckout({ history, location }) {
   const steps = ["Delivery Address", "Order Detail", "Payment Method"];
+  const productsOrder = location.state || [];
 
   function getStepContent(step) {
     switch (step) {
       case 0:
-        console.log(location);
         return <AddressForm />;
       case 1:
         // console.log(location.state);
-        return <Review products={location.state} />;
+        return <Review products={productsOrder} />;
       case 2:
         let temp = 0;
-        for (var i = 0; i < location.state.length; i++) {
-          temp += location.state[i].cost;
+        for (var i = 0; i < productsOrder.length; i++) {
+          temp += productsOrder[i].cost;
         }
         return <PaymentForm total={temp} />;
       default:
@@ -104,7 +96,8 @@ export default function BookingCheckout({ history, location }) {
   return (
     <Fragment>
       <CssBaseline />
-      <main className={classes.layout}>
+      <Header dataProductsOrder={productsOrder} />
+      <main className={clsx(classes.layout, classes.content)}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
             CHECKOUT
@@ -152,7 +145,6 @@ export default function BookingCheckout({ history, location }) {
             )}
           </Fragment>
         </Paper>
-        <Copyright />
       </main>
     </Fragment>
   );

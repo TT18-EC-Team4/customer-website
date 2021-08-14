@@ -93,11 +93,11 @@ export default function Header(props) {
             </Typography>
             {isLogged == 0 ? (
               <div className={classes.mlauto}>
-                <Button href="/login" variant="outlined" color="primary">
+                <Button onClick={() => handleLink("login")} variant="outlined" color="primary">
                   Log in
                 </Button>
                 <Button
-                  href="/register"
+                  onClick={() => handleLink("register")}
                   className={classes.ml1}
                   variant="outlined"
                   color="secondary"

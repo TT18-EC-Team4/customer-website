@@ -5,9 +5,6 @@ $m-3: 30px;
   height: $box-size;
   width: $box-size;
   border-radius: $box-size/2;
-  &:hover {
-    opacity: rgba(0, 0, 0, 0.3);
-  }
 }
 
 .body-btn-order {

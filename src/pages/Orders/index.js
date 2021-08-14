@@ -7,6 +7,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import Header from "../Header";
+import "../Orders/Orders.scss"
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,11 +28,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Orders({ history }) {
+export default function Orders({ location }) {
   const classes = useStyles();
 
   const [hasErrors, setErrors] = useState(false);
   const [orders, setOrders] = useState([]);
+
+  const productsOrder = location.state || [];
+
+  let history = useHistory();
 
   async function fetchOrders() {
     try {
@@ -48,6 +55,7 @@ export default function Orders({ history }) {
 
   return (
     <div className={classes.root}>
+      <Header dataProductsOrder={productsOrder} />
       {hasErrors && (
         <Paper className={classes.paper}>
           <Typography component="p">
@@ -56,40 +64,42 @@ export default function Orders({ history }) {
         </Paper>
       )}
       {!hasErrors && (
-        <Paper className={classes.paper}>
-          <Typography variant="h5">Orders</Typography>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Order Id</TableCell>
-                <TableCell>Date</TableCell>
-                <TableCell>Total Items</TableCell>
-                <TableCell>Cost</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {orders.map(order => (
-                <TableRow
-                  hover
-                  className={classes.tableRow}
-                  key={order.id}
-                  onClick={() => {
-                    history.push(`/orders/${order.id}`);
-                  }}
-                >
-                  <TableCell component="th" scope="row">
-                    {order.id}
-                  </TableCell>
-                  <TableCell>{order.date}</TableCell>
-                  <TableCell>
-                    {(order.items && order.items.length) || 0}
-                  </TableCell>
-                  <TableCell>${order.cost}</TableCell>
+        <div className="content">
+          <Paper className={classes.paper}>
+            <Typography variant="h5">Orders</Typography>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Order Id</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Total Items</TableCell>
+                  <TableCell>Cost</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Paper>
+              </TableHead>
+              <TableBody>
+                {orders.map(order => (
+                  <TableRow
+                    hover
+                    className={classes.tableRow}
+                    key={order.id}
+                    onClick={() => {
+                      history.push(`/orders/${order.id}`);
+                    }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {order.id}
+                    </TableCell>
+                    <TableCell>{order.date}</TableCell>
+                    <TableCell>
+                      {(order.items && order.items.length) || 0}
+                    </TableCell>
+                    <TableCell>${order.cost}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Paper>
+        </div>
       )}
     </div>
   );

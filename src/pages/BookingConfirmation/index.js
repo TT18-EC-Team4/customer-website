@@ -6,62 +6,34 @@ import Typography from "@material-ui/core/Typography";
 import {
   Grid,
   Button,
-  TextField,
-  // Box,
-  // ThemeProvider,
-  // Tabs,
-  // Tab,
-  // Divider,
-  // TextareaAutosize,
-  // Avatar,
 } from "@material-ui/core";
 import { Row, Col, Image, ListGroup } from "react-bootstrap";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import Header from "../../pages/Header";
+import { useHistory, useLocation } from "react-router-dom";
+import "../BookingConfirmation/BookingConfirmation.scss"
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  grid: {
-    margin: "0 auto",
-    width: "100%",
-  },
   paper: {
     padding: theme.spacing(3, 2),
-  },
-  media: {
-    backgroundSize: "contain",
-    margin: "2.5%",
-    paddingTop: "56.25%", // 16:9
-  },
-  textField: {
-    [`& fieldset`]: {
-      borderRadius: "6px",
-    },
-  },
-  form: {},
-  button: {
-    margin: theme.spacing(1),
-  },
-  content: {
-    paddingTop: "150px",
-    paddingLeft: "50px",
-    paddingRight: "50px",
-    paddingBottom: "50px"
   }
 }));
 
-export default function BookingConfirmation({ history, location }) {
+export default function BookingConfirmation() {
   const classes = useStyles();
-  const productsInOrder = location.state;
+  let location = useLocation();
+  const productsInOrder = location.state || [];
   const [hasErrors, setErrors] = useState(false);
   const [products, setProducts] = useState(productsInOrder);
   const [total, setTotal] = useState(0);
-  const [count, setCount] = useState(0);
 
-  async function fetchProduct() {
+  let history = useHistory();
+
+  async function fetchTotal() {
     try {
       let temp = 0;
       for (var i = 0; i < products.length; i++) {
@@ -74,7 +46,7 @@ export default function BookingConfirmation({ history, location }) {
   }
 
   useEffect(() => {
-    fetchProduct();
+    fetchTotal();
   }, [total]);
 
   const handleReturn = () => {
@@ -89,21 +61,19 @@ export default function BookingConfirmation({ history, location }) {
     const result = products.filter(
       (productItemt) => productItemt.id != product.id
     );
-    product.quantity = 0;
     setProducts(result);
-    fetchProduct();
+    fetchTotal();
   };
 
   const handleSub = (product) => {
     const result = products.copyWithin(0, 0);
     const findIndex = products.findIndex(productItemt => productItemt.id == product.id);
     result[findIndex].quantity = result[findIndex].quantity - 1;
-    console.log(result);
     if (result[findIndex] === 0) {
       handleDelete(product);
     } else {
       setProducts(result);
-      fetchProduct();
+      fetchTotal();
     }
   };
 
@@ -113,9 +83,8 @@ export default function BookingConfirmation({ history, location }) {
       (productItemt) => productItemt.id == product.id
     );
     result[findIndex].quantity = result[findIndex].quantity + 1;
-    console.log(result);
     setProducts(result);
-    fetchProduct();
+    fetchTotal();
   };
 
   return (
@@ -129,7 +98,7 @@ export default function BookingConfirmation({ history, location }) {
         </Paper>
       )}
       {!hasErrors && (
-        <Grid container className={classes.content}>
+        <Grid container className="content">
           <Grid xs={10} style={{ paddingLeft: "20%" }}>
             <div>
               {products.map((product) => {
@@ -139,35 +108,37 @@ export default function BookingConfirmation({ history, location }) {
                   return (
                     <ListGroup>
                       <ListGroup.Item>
-                        <Row>
-                          <Col>
+                        <Row >
+                          <Col className="text-center">
                             <Image
                               src={product.picture}
                               width="80px"
                               height="145px"
                             />
                           </Col>
-                          <Col style={{ alignSelf: "center" }} align="center">
-                            <Typography noWrap variant="h4" display="inline">
-                              {product.name}
-                            </Typography>
-                          </Col>
-                          <Col style={{ alignSelf: "center" }} align="right">
-                            x{product.quantity}
+                          <Col xs={10}>
+                            <Row>
+                              <Row>
+                                <Typography className="text-capitalize" noWrap variant="h4">
+                                  {product.name}
+                                </Typography>
+                              </Row>
+                              <Row>
+                                <Typography noWrap variant="h6" >
+                                  x{product.quantity}
+                                </Typography>
+                              </Row>
+                            </Row>
                           </Col>
                         </Row>
                       </ListGroup.Item>
                       <ListGroup.Item>
                         <Row>
                           <Col
-                            xs={4}
-                            style={{
-                              alignSelf: "right",
-                              marginLeft: "auto",
-                              display: "flex",
-                            }}
+                            className="d-flex"
                           >
                             <Button
+                              className="ml-auto"
                               variant="outlined"
                               color="primary"
                               type="submit"

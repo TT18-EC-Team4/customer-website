@@ -12,6 +12,9 @@ import {
 } from "@material-ui/core";
 import { createTheme } from "@material-ui/core/styles";
 import axios from 'axios';
+import Header from "../Header";
+import "../Register/Register.scss";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,9 +53,8 @@ const mainTheme = createTheme({
   },
 });
 
-export default function Register({ match }) {
+export default function Register({ location }) {
   const classes = useStyles();
-
   const [hasErrors, setErrors] = useState(false);
   const [user, setUser] = useState({
     name: "",
@@ -60,6 +62,8 @@ export default function Register({ match }) {
     password: "",
     password2: "",
   });
+
+  let productsOrder = location.state || [];
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -83,6 +87,7 @@ export default function Register({ match }) {
 
   return (
     <div className={classes.root}>
+      <Header dataProductsOrder={productsOrder} />
       {hasErrors && (
         <Paper className={classes.paper}>
           <Typography component="p">
@@ -91,7 +96,7 @@ export default function Register({ match }) {
         </Paper>
       )}
       {!hasErrors && (
-        <Grid>
+        <Grid className="content">
           <Paper className={classes.form} elevation={20}>
             <Grid align="center">
               <Avatar></Avatar>

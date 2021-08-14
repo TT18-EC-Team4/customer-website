@@ -1,62 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-
+import { makeStyles } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { Row, Col, Image, ListGroup } from "react-bootstrap";
+import CheckIcon from "@material-ui/icons/Check";
+import ClearIcon from "@material-ui/icons/Clear";
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import axios from "axios";
+import { Rating } from "@material-ui/lab";
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { useHistory, useLocation } from "react-router-dom";
+
 import {
   Button,
   Chip,
   ThemeProvider,
 } from "@material-ui/core";
-import { Row, Col, Image, ListGroup } from "react-bootstrap";
-import CheckIcon from "@material-ui/icons/Check";
-import ClearIcon from "@material-ui/icons/Clear";
-import { createTheme } from "@material-ui/core/styles";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-// import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import { Rating, TabPanel } from "@material-ui/lab";
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+
+import "../ProductDetail/ProductDetail.scss"
+import CardShoppingIcon from "../CardShoppingIcon";
+import Header from "../Header";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  grid: {
-    margin: "0 auto",
-    width: "100%",
-  },
   paper: {
     padding: theme.spacing(3, 2),
-  },
-  media: {
-    backgroundSize: "contain",
-    margin: "2.5%",
-    paddingTop: "56.25%", // 16:9
-  },
-  neededInfo: {
-    fontSize: "large",
-    fontWeight: "bold",
-  },
-  bodyBtnOrder: {
-    position: "fixed",
-    right: 0,
-    bottom: 0,
-    marginRight: '30px',
-    marginBottom: '30px',
-    boxShadow: '0 0 5px rgba(0, 0, 0.3)',
-    height: '66px',
-    width: '66px',
-    borderRadius: '33px',
-  },
-  btnOrder: {
-    height: '66px',
-    width: '66px',
-    borderRadius: '33px',
-    fontWeight: 'bold',
-    fontSize: '20px',
-  },
+  }
 }));
 
 const mainTheme = createTheme({
@@ -71,49 +41,34 @@ const mainTheme = createTheme({
   },
 });
 
-let productsOrder = [];
-
-export default function Products({ match, history, location}) {
+export default function ProductDetail({ match, location }) {
   const classes = useStyles();
   const [hasErrors, setErrors] = useState(false);
   const [product, setProduct] = useState({});
-  const [click, setClick] = useState(0);
   const productId = match.params.id;
-  const [totalQuality, setTotalQuality] = useState(0);
+  let productsOrder = location.state || [];
+  const [products, setProducts] = useState(productsOrder);
+  const [click, setClick] = useState(0);
 
-  async function fetchTotalQuality() {
-    try {
-      let temp = 0;
-      for (var i = 0; i < productsOrder.length; i++) {
-        temp += productsOrder[i].quantity;
-      }
-      setTotalQuality(temp);
-    } catch (err) {
-      setErrors(true);
-    }
-  }
+  let history = useHistory();
 
   async function fetchProduct(productId) {
-    try {
-      // const response = await fetch(
-      //   `${process.env.REACT_APP_ORDERS_URL}/${orderId}`
-      // );
-      // const order = await response.json();
-      const products = require("../../data/products.json").products;
-      const product = products.find((product) => product.id === productId);
-      setProduct(product);
-    } catch (err) {
-      setErrors(true);
-    }
+    axios
+      .get("http://localhost:5000/api/products")
+      .then((res) => {
+        const products = res.data.products;
+        const product = products.find((product) => product.id === productId);
+        setProduct(product);
+      })
+      .catch((err) => {
+        setErrors(true);
+      });
   }
 
   useEffect(() => {
     fetchProduct(productId);
-    if (location.state) {
-      productsOrder = location.productsOrder;
-    }
-    fetchTotalQuality();
-  }, [totalQuality]);
+    console.log(productsOrder);
+  }, []);
 
   function handleAddWishlist() {
     let temp = {
@@ -129,18 +84,17 @@ export default function Products({ match, history, location}) {
     } else {
       productsOrder[found].quantity++;
     }
-    fetchTotalQuality();
+    setProducts(productsOrder);
+    setClick(click + 1);
   }
 
   const handleBack = () => {
     history.push("/products", productsOrder);
   }
-  const handleSeeOrder = () => {
-    history.push("/order/confirmation", productsOrder);
-  }
 
   return (
-    <div className={classes.root}>
+    <div>
+      <Header dataProductsOrder={productsOrder} />
       {hasErrors && (
         <Paper className={classes.paper}>
           <Typography component="p">
@@ -149,18 +103,18 @@ export default function Products({ match, history, location}) {
         </Paper>
       )}
       {!hasErrors && (
-        <Row>
+        <Row className="w-100 content">
           <Col md={4}>
             <Image
-              src={`../../${product.picture}/main.jpg`}
+              className="w-100"
+              src={product.picture}
               alt={product.name}
               fluid
             />
           </Col>
           <Col md={8}>
-            <ListGroup className={classes.restyle}>
+            <ListGroup className="text-capitalize">
               <ListGroup.Item
-                className={classes.restyle}
                 align="center"
                 style={{ fontSize: "xx-large" }}
               >
@@ -168,34 +122,34 @@ export default function Products({ match, history, location}) {
               </ListGroup.Item>
               <ListGroup.Item variant="transparent">
                 <Row>
-                  <Col className={classes.neededInfo}>Author</Col>
-                  <Col style={{ alignSelf: "center" }}>{product.author}</Col>
+                  <Col className="text-lg font-weight-bold">Author</Col>
+                  <Col className="text-center">{product.author}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
-                  <Col className={classes.neededInfo}>Published Year</Col>
-                  <Col style={{ alignSelf: "center" }}>
+                  <Col className="text-lg font-weight-bold">Published Year</Col>
+                  <Col className="text-center">
                     {product.publishedYear}
                   </Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
-                  <Col className={classes.neededInfo}>Category</Col>
-                  <Col style={{ alignSelf: "center" }}>
+                  <Col className="text-lg font-weight-bold">Category</Col>
+                  <Col className="text-center">
                     {product.category
                       ? product.category.map((item, index) => (
-                          <Col key={index}>{item}</Col>
-                        ))
+                        <Col key={index}>{item}</Col>
+                      ))
                       : null}
                   </Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
-                  <Col className={classes.neededInfo}>Rating</Col>
-                  <Col style={{ alignSelf: "center" }}>
+                  <Col className="text-lg font-weight-bold">Rating</Col>
+                  <Col className="text-center">
                     <Rating
                       name="rate"
                       value={
@@ -212,8 +166,8 @@ export default function Products({ match, history, location}) {
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
-                  <Col className={classes.neededInfo}>Status</Col>
-                  <Col style={{ alignSelf: "center" }}>
+                  <Col className="text-lg font-weight-bold">Status</Col>
+                  <Col className="text-center">
                     {product.quantity > 0 ? (
                       <ThemeProvider theme={mainTheme}>
                         <Chip
@@ -246,11 +200,11 @@ export default function Products({ match, history, location}) {
                 </Row>
               </ListGroup.Item>
               <Row align="center" style={{ paddingTop: "1.75%" }}>
-                <Col md={1} align="left" style={{ width: "75%"}}>
+                <Col md={1} align="left" style={{ width: "75%" }}>
                   {product.quantity > 0 ? (
                     <ThemeProvider theme={mainTheme}>
                       <Button
-                        style={{ padding: "20px 10px", width: "100%" }}
+                        className="py-2 w-100"
                         startIcon={<ShoppingCartIcon />}
                         color="primary"
                         variant="contained"
@@ -263,7 +217,7 @@ export default function Products({ match, history, location}) {
                   ) : (
                     <ThemeProvider theme={mainTheme}>
                       <Button
-                        style={{ padding: "20px 10px", width: "100%"}}
+                        className="py-2 w-100"
                         startIcon={<ShoppingCartIcon />}
                         variant="contained"
                         size="large"
@@ -274,32 +228,20 @@ export default function Products({ match, history, location}) {
                     </ThemeProvider>
                   )}
                 </Col>
-                <Col md={1} align="right" style={{ width: "25%"}}>
-                  <ThemeProvider theme={mainTheme}>
-                      <Button
-                        style={{ padding: "20px 10px", width: "100%" }}
-                        endIcon={<ChevronRightIcon />}
-                        color="secondary"
-                        variant="contained"
-                        size="large"
-                        onClick={handleBack}
-                      >
-                        Back
-                      </Button>
-                  </ThemeProvider>
-                </Col>
-                {/* <Col md={1} style={{width: '30%'}}>
+                <Col md={1} align="right" style={{ width: "25%" }}>
                   <ThemeProvider theme={mainTheme}>
                     <Button
-                      style={{padding: '4%', width: '100%', height: '100%'}}
-                      startIcon={<AssignmentTurnedInIcon/>}
-                      color="primary"
+                      className="py-2 w-100"
+                      endIcon={<ChevronRightIcon />}
+                      color="secondary"
                       variant="contained"
-                      size="large">
-                        ADD TO CART
+                      size="large"
+                      onClick={handleBack}
+                    >
+                      Back
                     </Button>
                   </ThemeProvider>
-                </Col> */}
+                </Col>
               </Row>
               {/* <Row style={{paddingTop: '2%'}}>
                 <Col md={1} style={{width: "60%"}}>
@@ -325,17 +267,8 @@ export default function Products({ match, history, location}) {
           </Col>
         </Row>
       )}
-      <div className={classes.bodyBtnOrder}>
-        {totalQuality  == 0 ? (
-        <Button className={classes.btnOrder} variant="contained" color="secondary">
-          <AddShoppingCartIcon />
-        </Button>
-        ) : (
-        <Button onClick={handleSeeOrder} className={classes.btnOrder} variant="contained" color="secondary">
-          {totalQuality}
-        </Button>
-        )}
-      </div>
+      {/* {console.log("render", products)} */}
+      <CardShoppingIcon dataProductsOrder={products} />
     </div>
   );
 }

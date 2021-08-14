@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -15,6 +16,9 @@ import ShowProductGrid from "../ShowProductGrid";
 import CardShoppingIcon from "../CardShoppingIcon";
 
 import "../Products/Products.scss"
+import { useLocation } from "react-router-dom";
+
+let List = new Map();
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -22,11 +26,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Products(location) {
+export default function Products() {
   const classes = useStyles();
   const [hasErrors, setErrors] = useState(false);
 
+  let location = useLocation();
   let productsOrder = location.state || [];
+  console.log(productsOrder);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState({});
   const [Listcategories, setListcategories] = useState([]);
@@ -35,21 +41,34 @@ export default function Products(location) {
     setCategories({ ...categories, [event.target.name]: event.target.checked });
   };
 
-  async function fetchData(productId) {
-    try {
-      const products = require("../../data/products.json").products;
-      const listcategory = require("../../data/categories.json").categories;
-      setProducts(products);
-      const categoryArray = {};
-      for (let i in listcategory) {
-        categoryArray[listcategory[i]] = false;
-      }
-      categoryArray["All"] = true;
-      setListcategories(listcategory);
-      setCategories(categoryArray);
-    } catch (err) {
-      setErrors(true);
-    }
+  async function fetchData() {
+    axios
+      .get("http://localhost:5000/api/products")
+      .then((res) => {
+        const products = res.data.products;
+        setProducts(products);
+      })
+      .catch((err) => {
+        setErrors(true);
+      });
+    axios
+      .get("http://localhost:5000/api/category")
+      .then((res1) => {
+        const cat = res1.data.categories;
+        const categoryArray = {};
+        const listCategory = [];
+        for (let i in cat) {
+          categoryArray[cat[i].name] = false;
+          listCategory.push(cat[i].name);
+        }
+        categoryArray["All"] = true;
+        console.log(listCategory, categoryArray);
+        setListcategories(listCategory);
+        setCategories(categoryArray);
+      })
+      .catch((err) => {
+        setErrors(true);
+      });
   }
 
   useEffect(() => {
@@ -69,7 +88,7 @@ export default function Products(location) {
       {!hasErrors && (
         <div className="content">
           <div className="d-flex">
-            <div>
+            <div className="mr-2">
               <FormControl component="fieldset" className="card-container">
                 <FormLabel component="legend" className="font-weight-bold text-muted">Categories</FormLabel>
                 <FormGroup>

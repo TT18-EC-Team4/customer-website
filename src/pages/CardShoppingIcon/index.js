@@ -5,10 +5,9 @@ import { useHistory } from 'react-router-dom';
 import "../CardShoppingIcon/CardShoppingIcon.scss";
 
 function CardShoppingIcon(props) {
-  const productsOrder = props.dataProductsOrder || [];
   const [totalQuality, setTotalQuality] = useState(0);
   let history = useHistory();
-
+  const productsOrder = props.dataProductsOrder || [];
   function fetchTotalQuality() {
     let temp = 0;
     for (var i = 0; i < productsOrder.length; i++) {
@@ -19,16 +18,17 @@ function CardShoppingIcon(props) {
 
   useEffect(() => {
     fetchTotalQuality();
-  }, []);
+  });
 
   const handleSeeOrder = () => {
+    console.log(productsOrder);
     history.push("/order/confirmation", productsOrder);
   }
 
   return (
     <div className="body-btn-order">
       {totalQuality == 0 ? (
-        <Button className="btn-order" variant="contained" color="secondary">
+        <Button disabled className="btn-order" variant="contained" color="secondary">
           <AddShoppingCartIcon />
         </Button>
       ) : (

@@ -13,6 +13,9 @@ import {
 import { createTheme } from "@material-ui/core/styles";
 import axios from "axios";
 import Cookie, { set } from "js-cookie";
+import { useLocation } from "react-router-dom";
+import Header from "../Header";
+import "../Login/Login.scss";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +54,7 @@ const mainTheme = createTheme({
   },
 });
 
-export default function Login({ match }) {
+export default function Login({ location }) {
   const classes = useStyles();
 
   const [hasErrors, setErrors] = useState(false);
@@ -59,6 +62,8 @@ export default function Login({ match }) {
     email: "",
     password: "",
   });
+
+  let productsOrder = location.state || [];
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -84,6 +89,7 @@ export default function Login({ match }) {
 
   return (
     <div className={classes.root}>
+      <Header dataProductsOrder={productsOrder} />
       {hasErrors && (
         <Paper className={classes.paper}>
           <Typography component="p">
@@ -92,7 +98,7 @@ export default function Login({ match }) {
         </Paper>
       )}
       {!hasErrors && (
-        <Grid>
+        <Grid className="content">
           <Paper className={classes.form} elevation={20}>
             <Grid align="center">
               <Avatar></Avatar>
