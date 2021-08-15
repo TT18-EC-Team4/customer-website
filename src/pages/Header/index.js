@@ -74,13 +74,14 @@ export default function Header(props) {
     await axios.get("/user/logout");
 
     localStorage.removeItem("firstLogin");
+    localStorage.removeItem("userID");
 
     window.location.href = "/";
   };
 
   const handleLink = (href) => {
     history.push(`/${href}`, productsOrder);
-  }
+  };
 
   return (
     <div>
@@ -93,7 +94,11 @@ export default function Header(props) {
             </Typography>
             {isLogged == 0 ? (
               <div className={classes.mlauto}>
-                <Button onClick={() => handleLink("login")} variant="outlined" color="primary">
+                <Button
+                  onClick={() => handleLink("login")}
+                  variant="outlined"
+                  color="primary"
+                >
                   Log in
                 </Button>
                 <Button
@@ -112,7 +117,7 @@ export default function Header(props) {
                   variant="contained"
                   color="primary"
                 >
-                  <PersonIcon /> { }
+                  <PersonIcon /> {}
                 </Button>
                 <Button
                   onClick={handleLogout}

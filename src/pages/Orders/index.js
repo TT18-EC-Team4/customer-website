@@ -8,24 +8,25 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Header from "../Header";
-import "../Orders/Orders.scss"
+import axios from "axios";
+import "../Orders/Orders.scss";
 import { useHistory } from "react-router-dom";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   paper: {
     maxWidth: "800px",
     margin: "0 auto",
-    padding: theme.spacing(3, 2)
+    padding: theme.spacing(3, 2),
   },
   table: {
-    minWidth: 650
+    minWidth: 650,
   },
   tableRow: {
-    cursor: "pointer"
-  }
+    cursor: "pointer",
+  },
 }));
 
 export default function Orders({ location }) {
@@ -40,10 +41,24 @@ export default function Orders({ location }) {
 
   async function fetchOrders() {
     try {
-      // const response = await fetch(`${process.env.REACT_APP_ORDERS_URL}`);
-      // const orders = await response.json();
-      const orders = require("../../data/orders.json").orders;
-      setOrders(orders);
+      const userID = localStorage.getItem("userID");
+      axios
+        .post(
+          "http://localhost:5000/user/orders",
+          { userID: userID },
+          {
+            headers: {
+              "content-type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          const orders = res.data.orders;
+          setOrders(orders);
+        })
+        .catch((err) => {
+          setErrors(true);
+        });
     } catch (err) {
       setErrors(true);
     }
@@ -74,26 +89,28 @@ export default function Orders({ location }) {
                   <TableCell>Date</TableCell>
                   <TableCell>Total Items</TableCell>
                   <TableCell>Cost</TableCell>
+                  <TableCell>Status</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {orders.map(order => (
+                {orders.map((order) => (
                   <TableRow
                     hover
                     className={classes.tableRow}
-                    key={order.id}
+                    key={order._id}
                     onClick={() => {
-                      history.push(`/orders/${order.id}`);
+                      history.push(`/orders/${order._id}`);
                     }}
                   >
                     <TableCell component="th" scope="row">
-                      {order.id}
+                      {order._id}
                     </TableCell>
-                    <TableCell>{order.date}</TableCell>
+                    <TableCell>{order.orderDate}</TableCell>
                     <TableCell>
-                      {(order.items && order.items.length) || 0}
+                      {(order.orders && order.orders.length) || 0}
                     </TableCell>
-                    <TableCell>${order.cost}</TableCell>
+                    <TableCell>{order.total} VND</TableCell>
+                    <TableCell>{order.status}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

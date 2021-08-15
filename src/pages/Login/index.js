@@ -76,9 +76,11 @@ export default function Login({ location }) {
       const res = await axios.post("http://localhost:5000/user/login", {
         ...user,
       });
+      console.log(res.data);
       console.log(res.headers);
       Cookie.set("refreshtoken", res.data.accesstoken);
       localStorage.setItem("firstLogin", true);
+      localStorage.setItem("userID", res.data.userid);
 
       window.location.href = "/";
     } catch (err) {
