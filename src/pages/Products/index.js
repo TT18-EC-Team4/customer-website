@@ -34,7 +34,6 @@ export default function Products() {
 
   let location = useLocation();
   let productsOrder = location.state || [];
-  console.log(productsOrder);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState({});
   const [Listcategories, setListcategories] = useState([]);
@@ -43,12 +42,33 @@ export default function Products() {
     setCategories({ ...categories, [event.target.name]: event.target.checked });
   };
 
+  const [pagination, setPagination] = useState({
+    _page: 1,
+    _limit: 5,
+    _totalRows: 1,
+  });
+
+  const [filter, setFilter] = useState({
+    _limit: 5,
+    _page: 1,
+  });
+
+  function handlePageChange(newPage) {
+    setFilter({ ...filter, _page: newPage });
+  }
+
   async function fetchData() {
+    const param = JSON.stringify({ page: filter._page, limit: filter._limit });
     axios
-      .get("http://localhost:5000/user/products")
+      .post("http://localhost:5000/user/products", param, {
+        headers: {
+          "content-type": "application/json",
+        },
+      })
       .then((res) => {
-        const products = res.data.products;
+        const { products, page, limit, totalRows } = res.data;
         setProducts(products);
+        setPagination({ _page: page, _limit: limit, _totalRows: totalRows });
       })
       .catch((err) => {
         setErrors(true);
@@ -64,7 +84,6 @@ export default function Products() {
           listCategory.push(cat[i].name);
         }
         categoryArray["All"] = true;
-        console.log(listCategory, categoryArray);
         setListcategories(listCategory);
         setCategories(categoryArray);
       })
@@ -76,21 +95,6 @@ export default function Products() {
   useEffect(() => {
     fetchData();
   }, [filter]);
-
-  const [pagination, setPagination] = useState({
-    _page: 1,
-    _limit: 10,
-    _totalRows: 11,
-  });
-
-  const [filter, setFilter] = useState({
-    _limit: 10,
-    _page: 1,
-  });
-
-  function handlePageChange(newPage) {
-    console.log("NewPage:", newPage);
-  }
 
   return (
     <div>
@@ -137,20 +141,7 @@ export default function Products() {
                 </FormGroup>
               </FormControl>
             </div>
-            <Pagination
-              pagination={pagination}
-              onPageChange={handlePageChange}
-            />
-          </div>
-          <CardShoppingIcon dataProductsOrder={productsOrder} />
-        </div>
-      )}
-    </div>
-  );
-}
-
-{
-  /* <Grid
+            <Grid
               className="mx-auto"
               container
               spacing={2}
@@ -176,5 +167,15 @@ export default function Products() {
                   />
                 );
               })}
-            </Grid> */
+            </Grid>
+            <Pagination
+              pagination={pagination}
+              onPageChange={handlePageChange}
+            />
+          </div>
+          <CardShoppingIcon dataProductsOrder={productsOrder} />
+        </div>
+      )}
+    </div>
+  );
 }

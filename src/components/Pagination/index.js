@@ -30,6 +30,8 @@ function Pagination(props) {
       >
         Prev
       </button>
+      <button onClick={() => handlePageChange(1)}>1</button>
+      <button onClick={() => handlePageChange(2)}>2</button>
       <button
         disabled={_page === totalPages}
         onClick={() => handlePageChange(_page + 1)}

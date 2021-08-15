@@ -41,12 +41,10 @@ export default function Home({ location }) {
       .get("http://localhost:5000/user/products")
       .then((res) => {
         const products = res.data.products;
-        console.log(products);
         axios
           .get("http://localhost:5000/user/category")
           .then((res1) => {
             const cat = res1.data;
-            console.log(cat);
             let cnt = 0;
             let catArr = [];
             for (const i in cat) {
