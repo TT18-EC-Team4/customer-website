@@ -11,19 +11,21 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 //import pages
-import Header from "../../pages/Header"
+import Header from "../../pages/Header";
 import ShowProductGrid from "../ShowProductGrid";
 import CardShoppingIcon from "../CardShoppingIcon";
 
-import "../Products/Products.scss"
+import "../Products/Products.scss";
 import { useLocation } from "react-router-dom";
+// import { Pagination } from "@material-ui/lab";
+import Pagination from "../../components/Pagination";
 
-let List = new Map();
+// let List = new Map();
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(3, 2),
-  }
+  },
 }));
 
 export default function Products() {
@@ -43,7 +45,7 @@ export default function Products() {
 
   async function fetchData() {
     axios
-      .get("http://localhost:5000/api/products")
+      .get("http://localhost:5000/user/products")
       .then((res) => {
         const products = res.data.products;
         setProducts(products);
@@ -52,9 +54,9 @@ export default function Products() {
         setErrors(true);
       });
     axios
-      .get("http://localhost:5000/api/category")
+      .get("http://localhost:5000/user/category")
       .then((res1) => {
-        const cat = res1.data.categories;
+        const cat = res1.data;
         const categoryArray = {};
         const listCategory = [];
         for (let i in cat) {
@@ -73,7 +75,22 @@ export default function Products() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [filter]);
+
+  const [pagination, setPagination] = useState({
+    _page: 1,
+    _limit: 10,
+    _totalRows: 11,
+  });
+
+  const [filter, setFilter] = useState({
+    _limit: 10,
+    _page: 1,
+  });
+
+  function handlePageChange(newPage) {
+    console.log("NewPage:", newPage);
+  }
 
   return (
     <div>
@@ -90,7 +107,12 @@ export default function Products() {
           <div className="d-flex">
             <div className="mr-2">
               <FormControl component="fieldset" className="card-container">
-                <FormLabel component="legend" className="font-weight-bold text-muted">Categories</FormLabel>
+                <FormLabel
+                  component="legend"
+                  className="font-weight-bold text-muted"
+                >
+                  Categories
+                </FormLabel>
                 <FormGroup>
                   {Listcategories.map((category) => {
                     return (
@@ -115,7 +137,20 @@ export default function Products() {
                 </FormGroup>
               </FormControl>
             </div>
-            <Grid
+            <Pagination
+              pagination={pagination}
+              onPageChange={handlePageChange}
+            />
+          </div>
+          <CardShoppingIcon dataProductsOrder={productsOrder} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+{
+  /* <Grid
               className="mx-auto"
               container
               spacing={2}
@@ -135,14 +170,11 @@ export default function Products() {
                   return;
                 }
                 return (
-                  <ShowProductGrid dataProduct={product} dataProductsOrder={productsOrder} />
+                  <ShowProductGrid
+                    dataProduct={product}
+                    dataProductsOrder={productsOrder}
+                  />
                 );
               })}
-            </Grid>
-          </div>
-          <CardShoppingIcon dataProductsOrder={productsOrder} />
-        </div>
-      )}
-    </div>
-  );
+            </Grid> */
 }

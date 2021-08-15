@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
 //import pages
-import Header from "../../pages/Header"
+import Header from "../../pages/Header";
 import ShowProductGrid from "../ShowProductGrid";
 import CardShoppingIcon from "../CardShoppingIcon";
 //import scss
@@ -16,7 +16,7 @@ import "../Home/Home.scss";
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(3, 2),
-  }
+  },
 }));
 
 const List = new Map();
@@ -27,26 +27,35 @@ export default function Home({ location }) {
   const productsOrder = location.state || [];
   const [seeMore, setSeeMore] = useState("");
   const [categories, setCategories] = useState([]);
-  const color = ["#03a9f4", "#8bc34a", "#ff9800", "#009688", "#3f51b5", "#f44336"];
+  const color = [
+    "#03a9f4",
+    "#8bc34a",
+    "#ff9800",
+    "#009688",
+    "#3f51b5",
+    "#f44336",
+  ];
 
   async function fetchData() {
     axios
-      .get("http://localhost:5000/api/products")
+      .get("http://localhost:5000/user/products")
       .then((res) => {
         const products = res.data.products;
+        console.log(products);
         axios
-          .get("http://localhost:5000/api/category")
+          .get("http://localhost:5000/user/category")
           .then((res1) => {
-            const cat = res1.data.categories;
+            const cat = res1.data;
+            console.log(cat);
             let cnt = 0;
             let catArr = [];
             for (const i in cat) {
-              catArr.push({ "id": cnt, "name": cat[i].name });
+              catArr.push({ id: cnt, name: cat[i].name });
               cnt++;
               let productsCategory = [];
               for (let j in products) {
                 const found = products[j].category.find(
-                  (element) => element == cat[i].name
+                  (element) => element === cat[i].name
                 );
                 if (found !== undefined) {
                   productsCategory.push(products[j]);
@@ -71,11 +80,11 @@ export default function Home({ location }) {
 
   const handleSeeMore = (category) => {
     setSeeMore(category);
-  }
+  };
 
   const handleSeeLess = () => {
     setSeeMore("");
-  }
+  };
 
   return (
     <div>
@@ -98,15 +107,27 @@ export default function Home({ location }) {
                 }}
               >
                 <div style={{ width: "40%", textAlign: "center" }}>
-                  <Typography style={{ textTransform: "uppercase", fontWeight: "bolder" }} variant="h3" gutterBottom>
+                  <Typography
+                    style={{ textTransform: "uppercase", fontWeight: "bolder" }}
+                    variant="h3"
+                    gutterBottom
+                  >
                     {category.name}
                   </Typography>
                   {seeMore == category.name ? (
-                    <Button onClick={handleSeeLess} variant="contained" className="btn-see" >
+                    <Button
+                      onClick={handleSeeLess}
+                      variant="contained"
+                      className="btn-see"
+                    >
                       See less
                     </Button>
                   ) : (
-                    <Button onClick={() => handleSeeMore(category.name)} variant="contained" className="btn-see" >
+                    <Button
+                      onClick={() => handleSeeMore(category.name)}
+                      variant="contained"
+                      className="btn-see"
+                    >
                       See more
                     </Button>
                   )}
@@ -123,14 +144,22 @@ export default function Home({ location }) {
                     <Typography variant="h6" className="mx-auto">
                       No product
                     </Typography>
-                  ) : List.get(category.name).map((product) => {
-                    if (List.get(category.name).indexOf(product) >= 4 && category.name != seeMore) {
-                      return;
-                    }
-                    return (
-                      <ShowProductGrid dataProduct={product} dataProductsOrder={productsOrder} />
-                    );
-                  })}
+                  ) : (
+                    List.get(category.name).map((product) => {
+                      if (
+                        List.get(category.name).indexOf(product) >= 4 &&
+                        category.name != seeMore
+                      ) {
+                        return;
+                      }
+                      return (
+                        <ShowProductGrid
+                          dataProduct={product}
+                          dataProductsOrder={productsOrder}
+                        />
+                      );
+                    })
+                  )}
                 </Grid>
               </div>
             );

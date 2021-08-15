@@ -1,8 +1,8 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React from "react";
+import { useHistory } from "react-router-dom";
 import "../ShowProductGrid/ShowProductGrid.scss";
 import Card from "@material-ui/core/Card";
-import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
@@ -15,12 +15,18 @@ function ShowProductGrid(props) {
 
   const handleProductDetail = (productId) => {
     history.push(`/products/${productId}`, productsOrder);
-  }
+  };
 
   return (
-    <Grid key={product.id} item className={window.location.pathname === "/" ? "col-4" : "col-5"}>
+    <Grid
+      key={product.id}
+      item
+      className={window.location.pathname === "/" ? "col-4" : "col-5"}
+    >
       <Card
-        onClick={() => { handleProductDetail(product.id) }}
+        onClick={() => {
+          handleProductDetail(product.id);
+        }}
         className="cardContainer"
         variant="outlined"
         elevation={10}
@@ -35,8 +41,7 @@ function ShowProductGrid(props) {
           <CardContent
             style={{
               borderTop: "1px solid #f3f3f3",
-              backgroundColor:
-                product.quantity > 0 ? "#fff" : "#f1f1f1",
+              backgroundColor: product.quantity > 0 ? "#fff" : "#f1f1f1",
             }}
           >
             <Typography
@@ -57,9 +62,7 @@ function ShowProductGrid(props) {
               <Typography
                 variant="body1"
                 className="h8 font-weight-bold text-left"
-                color={
-                  product.quantity > 0 ? "primary" : "secondary"
-                }
+                color={product.quantity > 0 ? "primary" : "secondary"}
               >
                 {product.quantity > 0 ? "AVAILABLE" : "UNAVAILABLE"}
               </Typography>
