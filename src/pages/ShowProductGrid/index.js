@@ -14,7 +14,12 @@ function ShowProductGrid(props) {
   let history = useHistory();
 
   const handleProductDetail = (productId) => {
-    history.push(`/products/${productId}`, productsOrder);
+    console.log(product);
+    console.log(productsOrder);
+    history.push(`/products/${productId}`, {
+      product: product,
+      productsOrder: productsOrder,
+    });
   };
 
   return (

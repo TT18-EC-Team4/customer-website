@@ -38,7 +38,15 @@ export default function Home({ location }) {
 
   async function fetchData() {
     axios
-      .get("http://localhost:5000/user/products")
+      .post(
+        "http://localhost:5000/user/products",
+        { page: 1, limit: 15 },
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         const products = res.data.products;
         axios

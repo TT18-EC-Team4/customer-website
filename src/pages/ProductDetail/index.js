@@ -10,23 +10,19 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import axios from "axios";
 import { Rating } from "@material-ui/lab";
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { useHistory, useLocation } from "react-router-dom";
 
-import {
-  Button,
-  Chip,
-  ThemeProvider,
-} from "@material-ui/core";
+import { Button, Chip, ThemeProvider } from "@material-ui/core";
 
-import "../ProductDetail/ProductDetail.scss"
+import "../ProductDetail/ProductDetail.scss";
 import CardShoppingIcon from "../CardShoppingIcon";
 import Header from "../Header";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(3, 2),
-  }
+  },
 }));
 
 const mainTheme = createTheme({
@@ -44,31 +40,33 @@ const mainTheme = createTheme({
 export default function ProductDetail({ match, location }) {
   const classes = useStyles();
   const [hasErrors, setErrors] = useState(false);
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState(location.state.product);
   const productId = match.params.id;
-  let productsOrder = location.state || [];
+  let productsOrder = location.state.productsOrder || [];
   const [products, setProducts] = useState(productsOrder);
   const [click, setClick] = useState(0);
 
   let history = useHistory();
 
-  async function fetchProduct(productId) {
-    axios
-      .get("http://localhost:5000/api/products")
-      .then((res) => {
-        const products = res.data.products;
-        const product = products.find((product) => product.id === productId);
-        setProduct(product);
-      })
-      .catch((err) => {
-        setErrors(true);
-      });
-  }
+  // async function fetchProduct(productId) {
+  //   // axios
+  //   //   .get("http://localhost:5000/api/products")
+  //   //   .then((res) => {
+  //   //     const products = res.data.products;
+  //   //     const product = products.find((product) => product.id === productId);
+  //   //     setProduct(product);
+  //   //   })
+  //   //   .catch((err) => {
+  //   //     setErrors(true);
+  //   //   });
+  //   console.log(location.state);
+  //   console.log(location.state.product);
+  //   console.log(location.state.order);
+  // }
 
-  useEffect(() => {
-    fetchProduct(productId);
-    console.log(productsOrder);
-  }, []);
+  // useEffect(() => {
+  //   fetchProduct(productId);
+  // }, []);
 
   function handleAddWishlist() {
     let temp = {
@@ -78,7 +76,9 @@ export default function ProductDetail({ match, location }) {
       cost: product.cost,
       quantity: 1,
     };
-    const found = productsOrder.findIndex(productItemt => productItemt.id == product.id);
+    const found = productsOrder.findIndex(
+      (productItemt) => productItemt.id == product.id
+    );
     if (found == -1) {
       productsOrder.push(temp);
     } else {
@@ -90,7 +90,7 @@ export default function ProductDetail({ match, location }) {
 
   const handleBack = () => {
     history.push("/products", productsOrder);
-  }
+  };
 
   return (
     <div>
@@ -114,10 +114,7 @@ export default function ProductDetail({ match, location }) {
           </Col>
           <Col md={8}>
             <ListGroup className="text-capitalize">
-              <ListGroup.Item
-                align="center"
-                style={{ fontSize: "xx-large" }}
-              >
+              <ListGroup.Item align="center" style={{ fontSize: "xx-large" }}>
                 {product.name}
               </ListGroup.Item>
               <ListGroup.Item variant="transparent">
@@ -129,9 +126,7 @@ export default function ProductDetail({ match, location }) {
               <ListGroup.Item>
                 <Row>
                   <Col className="text-lg font-weight-bold">Published Year</Col>
-                  <Col className="text-center">
-                    {product.publishedYear}
-                  </Col>
+                  <Col className="text-center">{product.publishedYear}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
@@ -140,8 +135,8 @@ export default function ProductDetail({ match, location }) {
                   <Col className="text-center">
                     {product.category
                       ? product.category.map((item, index) => (
-                        <Col key={index}>{item}</Col>
-                      ))
+                          <Col key={index}>{item}</Col>
+                        ))
                       : null}
                   </Col>
                 </Row>
