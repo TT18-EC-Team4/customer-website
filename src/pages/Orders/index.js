@@ -99,7 +99,7 @@ export default function Orders({ location }) {
                     className={classes.tableRow}
                     key={order._id}
                     onClick={() => {
-                      history.push(`/orders/${order._id}`);
+                      history.push(`/orders/${order._id}`, order);
                     }}
                   >
                     <TableCell component="th" scope="row">
@@ -107,7 +107,7 @@ export default function Orders({ location }) {
                     </TableCell>
                     <TableCell>{order.orderDate}</TableCell>
                     <TableCell>
-                      {(order.orders && order.orders.length) || 0}
+                      {(order.cart && order.cart.length) || 0}
                     </TableCell>
                     <TableCell>{order.total} VND</TableCell>
                     <TableCell>{order.status}</TableCell>

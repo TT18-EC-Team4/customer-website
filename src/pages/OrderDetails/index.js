@@ -3,46 +3,47 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { Button } from "@material-ui/core";
+import axios from "axios";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   paper: {
     maxWidth: "800px",
     margin: "0 auto",
-    padding: theme.spacing(3, 2)
+    padding: theme.spacing(3, 2),
   },
   table: {
-    minWidth: 650
-  }
+    minWidth: 650,
+  },
 }));
 
-export default function Orders({ match }) {
+export default function Orders({ match, location }) {
   const classes = useStyles();
 
   const [hasErrors, setErrors] = useState(false);
-  const [order, setOrder] = useState({});
+  const [order, setOrder] = useState(location.state);
 
   const orderId = match.params.id;
-  
-  async function fetchOrder(orderId) {
-    try {
-      // const response = await fetch(
-      //   `${process.env.REACT_APP_ORDERS_URL}/${orderId}`
-      // );
-      // const order = await response.json();
-      const orders = require("../../data/orders.json").orders;
-      const order = orders.find(order => order.id === orderId);     
-      setOrder(order);
-    } catch (err) {
-      setErrors(true);
-    }
-  }
+
+  const handleCancel = () => {
+    axios
+      .put(`http://localhost:5000/user/orders/${orderId}`)
+      .then((res) => {
+        const { msg, newStatus } = res.data;
+        setOrder({ ...order, status: newStatus });
+        alert(msg);
+      })
+      .catch((err) => {
+        setErrors(true);
+      });
+  };
 
   useEffect(() => {
-    fetchOrder(orderId);
-  }, [orderId]);
+    console.log(order);
+  }, [order]);
 
   return (
     <div className={classes.root}>
@@ -65,23 +66,43 @@ export default function Orders({ match }) {
             <Grid item xs={12}>
               <Typography variant="h5">{order.id}</Typography>
             </Grid>
-            <Grid item md={6} xs={12}>
+            <Grid item md={5} xs={12}>
               <Typography component="p">
                 <b>Date: </b>
-                {order.date}
+                {order.orderDate}
               </Typography>
               <Typography component="p">
-                <b>Cost: </b>${order.cost}
+                <b>Cost: </b>
+                {order.total} VND
+              </Typography>
+              <Typography component="p">
+                <b>Status: </b>
+                {order.status}
               </Typography>
             </Grid>
-            <Grid item md={6} xs={12}>
+            <Grid item md={5} xs={12}>
               <Typography component="p">
                 <b>Order Items: </b>
               </Typography>
-              {order.items &&
-                order.items.map(item => (
+              {order.cart &&
+                order.cart.map((item) => (
                   <Typography key={item}>{item}</Typography>
                 ))}
+            </Grid>
+            <Grid item md={2} xs={12}>
+              <Typography component="p">
+                <b>Cancel order: </b>
+              </Typography>
+              <Button
+                disabled={
+                  order.status === "Completed" || order.status === "Cancel"
+                }
+                onClick={handleCancel}
+                variant="outlined"
+                color="secondary"
+              >
+                Cancel
+              </Button>
             </Grid>
           </Grid>
         </Paper>
