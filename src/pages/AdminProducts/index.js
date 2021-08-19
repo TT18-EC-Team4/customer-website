@@ -102,7 +102,7 @@ export default function AdminProducts() {
                   <Button variant="contained" color="primary" onClick={handleClickOpen}>
                     Edit
                   </Button>
-                    <Dialog open={open} onClose={handleClose}>
+                    <Dialog open={open} onClose={handleClose} BackdropProps={{style: {backgroundColor: 'transparent'}}}>
                       <form style={{ padding: "20px 60px 20px 60px" }}>
                         <TextField
                           fullWidth
