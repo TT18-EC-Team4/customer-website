@@ -18,6 +18,11 @@ import {
   TextField,
   Dialog,
   InputAdornment,
+  FormControl,
+  FormLabel,
+  FormControlLabel,
+  FormGroup,
+  Checkbox
 } from "@material-ui/core";
 
 import {
@@ -30,6 +35,9 @@ import {
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+  },
+  formControl: {
+    margin: theme.spacing(2),
   },
 }));
 
@@ -50,6 +58,7 @@ export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [hasErrors, setErrors] = useState(false);
   const [open, setOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -62,6 +71,8 @@ export default function AdminProducts() {
     try {
       const products = require("../../data/products.json").products;
       setProducts(products);
+      const categories = require("../../data/categories.json").categories;
+        setCategories(categories);
     } catch (err) {
       setErrors(true);
     }
@@ -144,7 +155,7 @@ export default function AdminProducts() {
                           placeholder={product.publishedYear}
                           style={{ marginBottom: "10px" }}
                         />
-                        {product.category
+                        {/* {product.category
                           ? product.category.map((item) => (
                               <Chip
                                 label={item}
@@ -162,20 +173,15 @@ export default function AdminProducts() {
                                 }}
                               />
                             ))
-                          : null}
-                        <TextField
-                          style={{ width: "30%", marginLeft: "5px" }}
-                          name="new-tag"
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <IconButton>
-                                  <AddIcon />
-                                </IconButton>
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
+                          : null} */}
+                        <FormControl className={classes.formControl}>
+                          <FormGroup row={true}>
+                            {categories.map((item) => (
+                              <FormControlLabel control={<Checkbox name={item}/>} label={item}/>
+                            ))}
+                          </FormGroup>
+                        </FormControl>
+                        
                         <ThemeProvider theme={mainTheme}>
                           <Button
                             type="submit"
