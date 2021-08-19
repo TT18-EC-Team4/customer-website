@@ -23,45 +23,43 @@ import Typography from "@material-ui/core/Typography";
 import ListItem from "@material-ui/core/ListItem";
 import { Divider, ListItemIcon, SvgIcon } from "@material-ui/core";
 import ListItemText from "@material-ui/core/ListItemText";
-import React, { Component, useState }  from 'react';
+import React, { Component, useState } from "react";
 
 //Import icons
-import HomeIcon from '@material-ui/icons/Home';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import CategoryIcon from '@material-ui/icons/Category';
-import PeopleIcon from '@material-ui/icons/People';
-import ReceiptIcon from '@material-ui/icons/Receipt';
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+import HomeIcon from "@material-ui/icons/Home";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
+import CategoryIcon from "@material-ui/icons/Category";
+import PeopleIcon from "@material-ui/icons/People";
+import ReceiptIcon from "@material-ui/icons/Receipt";
+import RotateLeftIcon from "@material-ui/icons/RotateLeft";
+import SettingsIcon from "@material-ui/icons/Settings";
+import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 
 import {
   BrowserRouter as Router,
   Route,
   Switch,
-  NavLink
+  NavLink,
 } from "react-router-dom";
 
 import NotFound from "../NotFound";
-import AdminProductDetail from "../AdminProductDetail"
-import AdminProducts from "../AdminProducts"
-import HeaderAminPage from "../HeaderAminPage"
-import AdminCategories from "../AdminCategories"
+import AdminProductDetail from "../AdminProductDetail";
+import AdminProducts from "../AdminProducts";
+import HeaderAminPage from "../HeaderAminPage";
+import AdminCategories from "../AdminCategories";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex"
+    display: "flex",
   },
   content: {
     flexGrow: 1,
     paddingTop: "80px",
     paddingLeft: "20px",
     paddingRight: "20px",
-    paddingBottom: "20px"
+    paddingBottom: "20px",
   },
 }));
-
-
 
 export default function AdminPage() {
   const classes = useStyles();
@@ -71,11 +69,10 @@ export default function AdminPage() {
       <div className={classes.content}>
         <Switch>
           <Route exact path="/admin/products" component={AdminProducts} />
+          <Route path="/admin/products/:id" component={AdminProductDetail} />
           <Route exact path="/admin/categories" component={AdminCategories} />
-          <Route exact path="/admin/productdetail" component={AdminProductDetail} />
         </Switch>
       </div>
-      
     </div>
   );
 }
