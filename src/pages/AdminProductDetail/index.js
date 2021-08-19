@@ -47,14 +47,7 @@ export default function ProductDetail({ match, location }) {
   const [products, setProducts] = useState(productsOrder);
   const [click, setClick] = useState(0);
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+  
   let history = useHistory();
 
   // async function fetchProduct(productId) {
@@ -76,6 +69,14 @@ export default function ProductDetail({ match, location }) {
   // useEffect(() => {
   //   fetchProduct(productId);
   // }, []);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   function handleAddWishlist() {
     let temp = {
