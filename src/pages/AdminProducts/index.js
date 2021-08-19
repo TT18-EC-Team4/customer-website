@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import AddIcon from "@material-ui/icons/Add";
+import axios from "axios";
 import {
   Button,
   Chip,
@@ -47,10 +48,43 @@ const mainTheme = createTheme({
 
 export default function AdminProducts() {
   const classes = useStyles();
-  const [products, setProducts] = useState([]);
+  const firstFetch = require("../../data/products.json").products;
+  const [products, setProducts] = useState(firstFetch);
   const [hasErrors, setErrors] = useState(false);
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
+  const [current, setCurrent] = useState({});
+
+  // async function fetchData() {
+  //   try {
+  //     const products = require("../../data/products.json").products;
+  //     setProducts(products);
+  //   } catch (err) {
+  //     setErrors(true);
+  //   }
+  // }
+
+  // async function fetchData() {
+  //   axios
+  //     .get("http://localhost:5000/admin/products")
+  //     .then((res) => {
+  //       return res.data.products;
+  //     })
+  //     .catch((err) => {
+  //       setErrors(true);
+  //     });
+  // }
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  useEffect(() => {
+    console.log(products);
+  }, [products]);
+
+  const handleClickOpen = (product) => {
+    console.log(products);
+    setCurrent(product);
     setOpen(true);
   };
 
@@ -58,18 +92,32 @@ export default function AdminProducts() {
     setOpen(false);
   };
 
-  async function fetchData() {
-    try {
-      const products = require("../../data/products.json").products;
-      setProducts(products);
-    } catch (err) {
-      setErrors(true);
+  const handleSaveEdit = () => {
+    setOpen(false);
+    let temp = products;
+    for (let i in temp) {
+      if (!temp[i].id.localeCompare(current.id)) {
+        temp[i].name = current.name;
+        temp[i].author = current.author;
+        temp[i].publishedYear = current.publishedYear;
+        setProducts(temp);
+      }
     }
-  }
+  };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // const handleDeleteCat = (item) => {
+  //   console.log(item);
+  //   let temp = products;
+  //   for (let i in temp) {
+  //     if (temp[i] === current) {
+  //       temp[i].category = temp[i].category.filter((cat) => cat !== item);
+  //       console.log(temp[i].category);
+  //       setCurrent(temp[i]);
+  //       break;
+  //     }
+  //   }
+  //   setProducts(temp);
+  // };
 
   return (
     <div className={classes.root}>
@@ -98,7 +146,7 @@ export default function AdminProducts() {
                   <TableCell align="right">{product.id}</TableCell>
                   <TableCell align="center">
                     <img
-                      src={`../../${product.picture}/preview.jpg`}
+                      src={product.picture}
                       alt={product.name}
                       style={{ width: "100%" }}
                     />
@@ -113,7 +161,7 @@ export default function AdminProducts() {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={handleClickOpen}
+                      onClick={() => handleClickOpen(product)}
                     >
                       Edit
                     </Button>
@@ -128,38 +176,42 @@ export default function AdminProducts() {
                         <TextField
                           fullWidth
                           name="title"
-                          label="Title"
-                          placeholder={product.name}
+                          label="Name of Book"
+                          placeholder={current.name}
+                          onChange={(val) => {
+                            setCurrent({ ...current, name: val.target.value });
+                          }}
                         />
                         <TextField
                           fullWidth
                           name="author-name"
-                          label="Author's name"
-                          placeholder={product.author}
+                          label="Author of Book"
+                          placeholder={current.author}
+                          onChange={(val) => {
+                            setCurrent({
+                              ...current,
+                              author: val.target.value,
+                            });
+                          }}
                         />
                         <TextField
                           fullWidth
                           name="published-year"
-                          label="Year of Publication"
-                          placeholder={product.publishedYear}
+                          label="Published Year of Book"
+                          placeholder={current.publishedYear}
+                          onChange={(val) => {
+                            setCurrent({
+                              ...current,
+                              publishedYear: val.target.value,
+                            });
+                          }}
                           style={{ marginBottom: "10px" }}
                         />
-                        {product.category
-                          ? product.category.map((item) => (
+                        {/* {current.category
+                          ? current.category.map((item) => (
                               <Chip
                                 label={item}
-                                onDelete={() => {
-                                  let temp = products;
-                                  for (let i in temp) {
-                                    if (temp[i] === product) {
-                                      temp[i].category.filter(
-                                        (cat) => cat !== item
-                                      );
-                                      break;
-                                    }
-                                  }
-                                  setProducts(temp);
-                                }}
+                                onDelete={() => handleDeleteCat(item)}
                               />
                             ))
                           : null}
@@ -175,14 +227,14 @@ export default function AdminProducts() {
                               </InputAdornment>
                             ),
                           }}
-                        />
+                        /> */}
                         <ThemeProvider theme={mainTheme}>
                           <Button
-                            type="submit"
                             variant="contained"
                             color="primary"
                             fullWidth
                             style={{ marginTop: "10px" }}
+                            onClick={handleSaveEdit}
                           >
                             Finalize
                           </Button>
