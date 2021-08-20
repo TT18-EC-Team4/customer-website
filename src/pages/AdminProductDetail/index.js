@@ -57,12 +57,14 @@ export default function AdminProductDetail({ match, location }) {
   const [product, setProduct] = useState(location.state.product);
   const [categories, setCategories] = useState(location.state.categories);
   const productId = match.params.id;
+  const [currentCat, setCurrentCat] = useState([]);
   // const [click, setClick] = useState(0);
   const [open, setOpen] = useState(false);
 
   let history = useHistory();
 
   const handleClose = () => {
+    setCurrentCat([]);
     setOpen(false);
   };
 
@@ -79,7 +81,7 @@ export default function AdminProductDetail({ match, location }) {
           author: product.author,
           publishedYear: product.publishedYear,
           picture: product.picture,
-          category: product.category,
+          category: currentCat,
           quantity: product.quantity,
           onDiscount: product.onDiscount,
           numOfReviews: product.numOfReviews,
@@ -108,6 +110,21 @@ export default function AdminProductDetail({ match, location }) {
         });
       setOpen(false);
     } catch {}
+  };
+
+  const handleChangeCat = (e) => {
+    console.log(e.target.name);
+    console.log(e.target.checked);
+    if (e.target.checked) {
+      let temp = currentCat;
+      temp.push(e.target.name);
+      console.log(temp);
+      setCurrentCat(temp);
+    } else {
+      let temp = currentCat.filter((item) => item !== e.target.name);
+      console.log(temp);
+      setCurrentCat(currentCat.filter((item) => item !== e.target.name));
+    }
   };
 
   return (
@@ -140,10 +157,44 @@ export default function AdminProductDetail({ match, location }) {
                   <Col className="text-center">{product.author}</Col>
                 </Row>
               </ListGroup.Item>
+              <ListGroup.Item variant="transparent">
+                <Row>
+                  <Col className="text-lg font-weight-bold">Cost</Col>
+                  <Col className="text-center">{product.cost}</Col>
+                </Row>
+              </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col className="text-lg font-weight-bold">Published Year</Col>
                   <Col className="text-center">{product.publishedYear}</Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col className="text-lg font-weight-bold">Quantity</Col>
+                  <Col className="text-center">{product.quantity}</Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col className="text-lg font-weight-bold">Discount</Col>
+                  <Col className="text-center">
+                    {product.onDiscount ? <CheckIcon /> : <ClearIcon />}
+                  </Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col className="text-lg font-weight-bold">
+                    Number of Reviews
+                  </Col>
+                  <Col className="text-center">{product.numOfReviews}</Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col className="text-lg font-weight-bold">Rating Point</Col>
+                  <Col className="text-center">{product.ratePoint}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
@@ -218,6 +269,18 @@ export default function AdminProductDetail({ match, location }) {
                       />
                       <TextField
                         fullWidth
+                        name="book-cost"
+                        label="Cost of Book"
+                        placeholder={product.cost}
+                        onChange={(val) => {
+                          setProduct({
+                            ...product,
+                            cost: val.target.value,
+                          });
+                        }}
+                      />
+                      <TextField
+                        fullWidth
                         name="published-year"
                         label="Published Year of Book"
                         placeholder={product.publishedYear}
@@ -229,16 +292,81 @@ export default function AdminProductDetail({ match, location }) {
                         }}
                         style={{ marginBottom: "10px" }}
                       />
+                      <TextField
+                        fullWidth
+                        name="picture-book"
+                        label="Picture of Book"
+                        placeholder={product.picture}
+                        onChange={(val) => {
+                          setProduct({
+                            ...product,
+                            picture: val.target.value,
+                          });
+                        }}
+                      />
+                      <TextField
+                        fullWidth
+                        name="quantity"
+                        label="Quantity of Book"
+                        placeholder={product.quantity}
+                        onChange={(val) => {
+                          setProduct({
+                            ...product,
+                            quantity: val.target.value,
+                          });
+                        }}
+                      />
+                      <TextField
+                        fullWidth
+                        name="book-discount"
+                        label="Discount of Book"
+                        placeholder={product.onDiscount}
+                        onChange={(val) => {
+                          setProduct({
+                            ...product,
+                            onDiscount: val.target.value,
+                          });
+                        }}
+                      />
+                      <TextField
+                        fullWidth
+                        name="num-review"
+                        label="Reviews of Book"
+                        placeholder={product.numOfReviews}
+                        onChange={(val) => {
+                          setProduct({
+                            ...product,
+                            numOfReviews: val.target.value,
+                          });
+                        }}
+                      />
+                      <TextField
+                        fullWidth
+                        name="rate-point"
+                        label="Rating of Book"
+                        placeholder={product.ratePoint}
+                        onChange={(val) => {
+                          setProduct({
+                            ...product,
+                            ratePoint: val.target.value,
+                          });
+                        }}
+                      />
                       <FormControl className={classes.formControl}>
                         <FormGroup row={true}>
-                        {categories ?
-                          categories.map((item) => (
-                          <FormControlLabel
-                            control={<Checkbox name={item.name} />}
-                            label={item.name}
-                          />
-                          ))
-                          : null}
+                          {categories
+                            ? categories.map((item) => (
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      onChange={handleChangeCat}
+                                      name={item.name}
+                                    />
+                                  }
+                                  label={item.name}
+                                />
+                              ))
+                            : null}
                         </FormGroup>
                       </FormControl>
                       <ThemeProvider theme={mainTheme}>

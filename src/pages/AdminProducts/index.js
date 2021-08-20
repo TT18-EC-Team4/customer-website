@@ -93,27 +93,29 @@ export default function AdminProducts() {
   };
 
   const handleChangeCat = (e) => {
-    let temp = currentCat;
-    temp.push(e.target.name);
-    setCurrentCat(temp);
+    console.log(e.target.name);
+    console.log(e.target.checked);
+    if (e.target.checked) {
+      let temp = currentCat;
+      temp.push(e.target.name);
+      console.log(temp);
+      setCurrentCat(temp);
+    } else {
+      let temp = currentCat.filter((item) => item !== e.target.name);
+      console.log(temp);
+      setCurrentCat(currentCat.filter((item) => item !== e.target.name));
+    }
   };
 
   const handleNewProduct = () => {
+    const temp = { ...current, category: currentCat };
+    console.log(temp);
     setCurrent({ ...current, category: currentCat });
     try {
       axios
-        .post("http://localhost:5000/admin/products", { ...current })
+        .post("http://localhost:5000/admin/products", { ...temp })
         .then(async (res) => {
           alert(res.data.msg);
-        })
-        .catch((err) => {
-          setErrors(true);
-        });
-
-      axios
-        .get("http://localhost:5000/admin/category")
-        .then(async (res) => {
-          setCategories(res.data);
         })
         .catch((err) => {
           setErrors(true);
