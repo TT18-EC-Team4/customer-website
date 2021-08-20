@@ -60,17 +60,68 @@ export default function AdminProducts() {
   const classes = useStyles();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [currentCat, setCurrentCat] = useState([]);
   const [hasErrors, setErrors] = useState(false);
   const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState({});
+  const [current, setCurrent] = useState({
+    id: "",
+    name: "",
+    cost: "",
+    author: "",
+    publishedYear: "",
+    picture: "",
+    category: [],
+    quantity: "",
+  });
   let history = useHistory();
 
   const handleClose = () => {
+    setCurrentCat([]);
     setOpen(false);
   };
 
   const openDialog = () => {
     setOpen(true);
+  };
+
+  const handleProductDetail = (product) => {
+    console.log(product);
+    history.push(`/admin/products/${product.id}`, {
+      product: product,
+      categories: categories,
+    });
+  };
+
+  const handleChangeCat = (e) => {
+    let temp = currentCat;
+    temp.push(e.target.name);
+    setCurrentCat(temp);
+  };
+
+  const handleNewProduct = () => {
+    setCurrent({ ...current, category: currentCat });
+    try {
+      axios
+        .post("http://localhost:5000/admin/products", { ...current })
+        .then(async (res) => {
+          alert(res.data.msg);
+        })
+        .catch((err) => {
+          setErrors(true);
+        });
+
+      axios
+        .get("http://localhost:5000/admin/category")
+        .then(async (res) => {
+          setCategories(res.data);
+        })
+        .catch((err) => {
+          setErrors(true);
+        });
+    } catch (err) {
+      setErrors(true);
+    }
+    setOpen(false);
   };
 
   async function fetchData() {
@@ -110,19 +161,12 @@ export default function AdminProducts() {
   useEffect(() => {
     fetchData();
     console.log(products);
-  }, []);
+    console.log(current);
+  }, [open]);
 
   // useEffect(() => {
   //   console.log(products);
   // }, [products]);
-
-  const handleProductDetail = (product) => {
-    console.log(product);
-    history.push(`/admin/products/${product.id}`, {
-      product: product,
-      categories: categories,
-    });
-  };
 
   return (
     <div className={classes.root}>
@@ -134,98 +178,169 @@ export default function AdminProducts() {
         </Paper>
       )}
       {!hasErrors && (
-        <Paper style={{width: '100%'}} elevation={0}>
-          <Paper style={{textAlign: 'right', marginBottom: '0.75%'}} elevation={0}>
+        <Paper style={{ width: "100%" }} elevation={0}>
+          <Paper
+            style={{ textAlign: "right", marginBottom: "0.75%" }}
+            elevation={0}
+          >
             <Button
-              variant='contained'
-              color='primary'
-              startIcon={<AddIcon/>}
+              variant="contained"
+              color="primary"
+              startIcon={<AddIcon />}
               onClick={openDialog}
             >
               Add new product
             </Button>
             <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    BackdropProps={{
-                      style: { backgroundColor: "transparent" },
-                    }}
-                  >
-                    <form style={{ padding: "20px 60px 20px 60px" }}>
-                      <TextField
-                        fullWidth
-                        name="title"
-                        label="Book's Title"
-                      />
-                      <TextField
-                        fullWidth
-                        name="author-name"
-                        label="Author"
-                      />
-                      <TextField
-                        fullWidth
-                        name="published-year"
-                        label="Year of Publication"
-                        style={{ marginBottom: "10px" }}
-                      />
-                      <FormControl className={classes.formControl}>
-                        <FormGroup row={true}>
-                        {categories ?
-                          categories.map((item) => (
+              open={open}
+              onClose={handleClose}
+              BackdropProps={{
+                style: { backgroundColor: "transparent" },
+              }}
+            >
+              <form style={{ padding: "20px 60px 20px 60px" }}>
+                <TextField
+                  fullWidth
+                  name="id"
+                  label="Book's ID"
+                  onChange={(val) => {
+                    setCurrent({
+                      ...current,
+                      id: val.target.value,
+                    });
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  name="title"
+                  label="Book's Title"
+                  onChange={(val) => {
+                    setCurrent({
+                      ...current,
+                      name: val.target.value,
+                    });
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  name="cost"
+                  label="Book's Cost"
+                  onChange={(val) => {
+                    setCurrent({
+                      ...current,
+                      cost: val.target.value,
+                    });
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  name="author-name"
+                  label="Book's Author"
+                  onChange={(val) => {
+                    setCurrent({
+                      ...current,
+                      author: val.target.value,
+                    });
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  name="published-year"
+                  label="Year of Publication"
+                  onChange={(val) => {
+                    setCurrent({
+                      ...current,
+                      publishedYear: val.target.value,
+                    });
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  name="picture"
+                  label="Link of Picture"
+                  onChange={(val) => {
+                    setCurrent({
+                      ...current,
+                      picture: val.target.value,
+                    });
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  name="quantity"
+                  label="Book's quantity"
+                  style={{ marginBottom: "10px" }}
+                  onChange={(val) => {
+                    setCurrent({
+                      ...current,
+                      quantity: parseInt(val.target.value),
+                    });
+                  }}
+                />
+                <FormControl className={classes.formControl}>
+                  <FormGroup row={true}>
+                    {categories
+                      ? categories.map((item) => (
                           <FormControlLabel
-                            control={<Checkbox name={item.name} />}
+                            control={
+                              <Checkbox
+                                onChange={handleChangeCat}
+                                name={item.name}
+                              />
+                            }
                             label={item.name}
                           />
-                          ))
-                          : null}
-                        </FormGroup>
-                      </FormControl>
-                      <ThemeProvider theme={mainTheme}>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          fullWidth
-                          style={{ marginTop: "10px" }}
-                        >
-                          Add new
-                        </Button>
-                      </ThemeProvider>
-                    </form>
-                  </Dialog>
+                        ))
+                      : null}
+                  </FormGroup>
+                </FormControl>
+                <ThemeProvider theme={mainTheme}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    style={{ marginTop: "10px" }}
+                    onClick={handleNewProduct}
+                  >
+                    Add new
+                  </Button>
+                </ThemeProvider>
+              </form>
+            </Dialog>
           </Paper>
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell style={{ width: "20px" }}>#ID</TableCell>
-                <TableCell style={{ width: "35px" }}>Hình</TableCell>
-                <TableCell>Tên sản phẩm</TableCell>
-                <TableCell style={{ width: "50px" }}></TableCell>
-                <TableCell style={{ width: "50px" }}></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {products.map((product) => (
-                <TableRow
-                  onClick={() => {
-                    handleProductDetail(product);
-                  }}
-                  key={product.id}
-                >
-                  <TableCell align="right">{product.id}</TableCell>
-                  <TableCell align="center">
-                    <img
-                      src={product.picture}
-                      alt={product.name}
-                      style={{ width: "100%" }}
-                    />
-                  </TableCell>
-                  <TableCell align="left">{product.name}</TableCell>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{ width: "20px" }}>#ID</TableCell>
+                  <TableCell style={{ width: "35px" }}>Hình</TableCell>
+                  <TableCell>Tên sản phẩm</TableCell>
+                  <TableCell style={{ width: "50px" }}></TableCell>
+                  <TableCell style={{ width: "50px" }}></TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {products.map((product) => (
+                  <TableRow
+                    onClick={() => {
+                      handleProductDetail(product);
+                    }}
+                    key={product.id}
+                  >
+                    <TableCell align="right">{product.id}</TableCell>
+                    <TableCell align="center">
+                      <img
+                        src={product.picture}
+                        alt={product.name}
+                        style={{ width: "100%" }}
+                      />
+                    </TableCell>
+                    <TableCell align="left">{product.name}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Paper>
       )}
     </div>
