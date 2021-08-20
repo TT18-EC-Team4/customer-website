@@ -64,6 +64,15 @@ export default function AdminProducts() {
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState({});
   let history = useHistory();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const openDialog = () => {
+    setOpen(true);
+  };
+
   async function fetchData() {
     try {
       axios
@@ -125,6 +134,65 @@ export default function AdminProducts() {
         </Paper>
       )}
       {!hasErrors && (
+        <Paper style={{width: '100%'}} elevation={0}>
+          <Paper style={{textAlign: 'right', marginBottom: '0.75%'}} elevation={0}>
+            <Button
+              variant='contained'
+              color='primary'
+              startIcon={<AddIcon/>}
+              onClick={openDialog}
+            >
+              Add new product
+            </Button>
+            <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    BackdropProps={{
+                      style: { backgroundColor: "transparent" },
+                    }}
+                  >
+                    <form style={{ padding: "20px 60px 20px 60px" }}>
+                      <TextField
+                        fullWidth
+                        name="title"
+                        label="Book's Title"
+                      />
+                      <TextField
+                        fullWidth
+                        name="author-name"
+                        label="Author"
+                      />
+                      <TextField
+                        fullWidth
+                        name="published-year"
+                        label="Year of Publication"
+                        style={{ marginBottom: "10px" }}
+                      />
+                      <FormControl className={classes.formControl}>
+                        <FormGroup row={true}>
+                        {categories ?
+                          categories.map((item) => (
+                          <FormControlLabel
+                            control={<Checkbox name={item.name} />}
+                            label={item.name}
+                          />
+                          ))
+                          : null}
+                        </FormGroup>
+                      </FormControl>
+                      <ThemeProvider theme={mainTheme}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          fullWidth
+                          style={{ marginTop: "10px" }}
+                        >
+                          Add new
+                        </Button>
+                      </ThemeProvider>
+                    </form>
+                  </Dialog>
+          </Paper>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
@@ -158,6 +226,7 @@ export default function AdminProducts() {
             </TableBody>
           </Table>
         </TableContainer>
+        </Paper>
       )}
     </div>
   );

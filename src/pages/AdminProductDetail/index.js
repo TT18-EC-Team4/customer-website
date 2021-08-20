@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 2),
   },
   formControl: {
-    margin: theme.spacing(3),
+    margin: theme.spacing(2),
   },
 }));
 
@@ -229,14 +229,18 @@ export default function AdminProductDetail({ match, location }) {
                         }}
                         style={{ marginBottom: "10px" }}
                       />
-                      {/* <FormGroup>
-                        {categories.map((item) => (
+                      <FormControl className={classes.formControl}>
+                        <FormGroup row={true}>
+                        {categories ?
+                          categories.map((item) => (
                           <FormControlLabel
-                            control={<Checkbox name={item} />}
-                            label={item}
+                            control={<Checkbox name={item.name} />}
+                            label={item.name}
                           />
-                        ))}
-                      </FormGroup> */}
+                          ))
+                          : null}
+                        </FormGroup>
+                      </FormControl>
                       <ThemeProvider theme={mainTheme}>
                         <Button
                           variant="contained"
