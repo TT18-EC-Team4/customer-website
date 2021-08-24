@@ -4,23 +4,49 @@ import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-// import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 
-// const products = [
-//   { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
-//   { name: 'Product 2', desc: 'Another thing', price: '$3.45' },
-//   { name: 'Product 3', desc: 'Something else', price: '$6.51' },
-//   { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
-//   { name: 'Shipping', desc: '', price: 'Free' },
-// ];
-// const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-// const payments = [
-//   { name: 'Card type', detail: 'Visa' },
-//   { name: 'Card holder', detail: 'Mr John Smith' },
-//   { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-//   { name: 'Expiry date', detail: '04/2024' },
-//   { name: 'Order number', detail: '#2001539' },
-// ];
+const Cities = [
+  {
+    value: 0,
+    label: "Hồ Chí Minh",
+  },
+  {
+    value: 1,
+    label: "Cần Thơ",
+  },
+];
+
+const Districts = [
+  [
+    {
+      value: 0,
+      label: "Quận 1",
+    },
+    {
+      value: 1,
+      label: "Quận 2",
+    },
+    {
+      value: 2,
+      label: "Quận 3",
+    },
+  ],
+  [
+    {
+      value: 0,
+      label: "Quận Ninh Kiều",
+    },
+    {
+      value: 1,
+      label: "Quận Bình Thủy",
+    },
+    {
+      value: 2,
+      label: "Quận Cái Răng",
+    },
+  ],
+];
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -34,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Review({ products }) {
+export default function Review({ products, info }) {
   const classes = useStyles();
 
   const [total, setTotal] = useState(0);
@@ -73,7 +99,9 @@ export default function Review({ products }) {
                   primary={product.name}
                   secondary={product.author}
                 />
-                <Typography variant="body2">{product.cost} x {product.quantity}</Typography>
+                <Typography variant="body2">
+                  {product.cost} x {product.quantity}
+                </Typography>
               </ListItem>
             ))}
             <ListItem className={classes.listItem}>
@@ -85,32 +113,19 @@ export default function Review({ products }) {
           </div>
         )}
       </List>
-      {/* <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+      <Grid container spacing={2}>
+        <Grid item xs={2} sm={10}>
           <Typography variant="h6" gutterBottom className={classes.title}>
             Shipping
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
-        </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Payment details
+          <Typography gutterBottom>Name: {info.name}</Typography>
+          <Typography gutterBottom>
+            Address: {info.address}, {Districts[info.city][info.district].label}
+            , {Cities[info.city].label}
           </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
+          <Typography gutterBottom>Phone: {info.phone}</Typography>
         </Grid>
-      </Grid> */}
+      </Grid>
     </React.Fragment>
   );
 }

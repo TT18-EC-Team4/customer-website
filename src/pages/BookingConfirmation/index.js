@@ -3,16 +3,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 // import { useLocation } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
-import {
-  Grid,
-  Button,
-} from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import { Row, Col, Image, ListGroup } from "react-bootstrap";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import Header from "../../pages/Header";
 import { useHistory, useLocation } from "react-router-dom";
-import "../BookingConfirmation/BookingConfirmation.scss"
+import "../BookingConfirmation/BookingConfirmation.scss";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(3, 2),
-  }
+  },
 }));
 
 export default function BookingConfirmation() {
@@ -67,7 +64,9 @@ export default function BookingConfirmation() {
 
   const handleSub = (product) => {
     const result = products.copyWithin(0, 0);
-    const findIndex = products.findIndex(productItemt => productItemt.id == product.id);
+    const findIndex = products.findIndex(
+      (productItemt) => productItemt.id == product.id
+    );
     result[findIndex].quantity = result[findIndex].quantity - 1;
     if (result[findIndex] === 0) {
       handleDelete(product);
@@ -108,7 +107,7 @@ export default function BookingConfirmation() {
                   return (
                     <ListGroup>
                       <ListGroup.Item>
-                        <Row >
+                        <Row>
                           <Col className="text-center">
                             <Image
                               src={product.picture}
@@ -119,12 +118,16 @@ export default function BookingConfirmation() {
                           <Col xs={10}>
                             <Row>
                               <Row>
-                                <Typography className="text-capitalize" noWrap variant="h4">
+                                <Typography
+                                  className="text-capitalize"
+                                  noWrap
+                                  variant="h4"
+                                >
                                   {product.name}
                                 </Typography>
                               </Row>
                               <Row>
-                                <Typography noWrap variant="h6" >
+                                <Typography noWrap variant="h6">
                                   x{product.quantity}
                                 </Typography>
                               </Row>
@@ -134,15 +137,15 @@ export default function BookingConfirmation() {
                       </ListGroup.Item>
                       <ListGroup.Item>
                         <Row>
-                          <Col
-                            className="d-flex"
-                          >
+                          <Col className="d-flex">
                             <Button
                               className="ml-auto"
                               variant="outlined"
                               color="primary"
                               type="submit"
-                              onClick={() => { handleSub(product) }}
+                              onClick={() => {
+                                handleSub(product);
+                              }}
                             >
                               <RemoveIcon />
                             </Button>
@@ -151,7 +154,9 @@ export default function BookingConfirmation() {
                               variant="outlined"
                               color="primary"
                               type="submit"
-                              onClick={() => { handleAdd(product) }}
+                              onClick={() => {
+                                handleAdd(product);
+                              }}
                             >
                               <AddIcon />
                             </Button>
@@ -160,7 +165,9 @@ export default function BookingConfirmation() {
                               variant="contained"
                               color="secondary"
                               type="submit"
-                              onClick={() => { handleDelete(product) }}
+                              onClick={() => {
+                                handleDelete(product);
+                              }}
                             >
                               Delete
                             </Button>
@@ -186,37 +193,49 @@ export default function BookingConfirmation() {
                 }
               })}
             </div>
-            <ListGroup>
-              <ListGroup.Item>
-                <Row style={{ fontWeight: "bold" }}>
-                  <Col>SUM AMOUNT</Col>
-                  <Col align="right">{total}</Col>
-                  <Col align="right">VND</Col>
-                </Row>
-                <Row style={{ fontWeight: "bold" }}>
-                  <Col>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      className={classes.button}
-                      onClick={handleReturn}
-                    >
-                      Continue Shopping
-                    </Button>
-                  </Col>
-                  <Col align="right">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classes.button}
-                      onClick={handlePurchase}
-                    >
-                      Checkout
-                    </Button>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-            </ListGroup>
+            {total > 0 ? (
+              <ListGroup>
+                <ListGroup.Item>
+                  <Row style={{ fontWeight: "bold" }}>
+                    <Col>SUM AMOUNT</Col>
+                    <Col align="right">{total}</Col>
+                    <Col align="right">VND</Col>
+                  </Row>
+                  <Row style={{ fontWeight: "bold" }}>
+                    <Col>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        className={classes.button}
+                        onClick={handleReturn}
+                      >
+                        Continue Shopping
+                      </Button>
+                    </Col>
+                    <Col align="right">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        onClick={handlePurchase}
+                      >
+                        Checkout
+                      </Button>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              </ListGroup>
+            ) : (
+              <Col align="center">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleReturn}
+                >
+                  Continue Shopping
+                </Button>
+              </Col>
+            )}
           </Grid>
         </Grid>
       )}

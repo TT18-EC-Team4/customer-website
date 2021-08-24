@@ -1,10 +1,10 @@
 import React, { createContext, useState, useEffect } from "react";
-import ProductsAPI from "./api/ProductsAPI";
+// import ProductsAPI from "./api/ProductsAPI";
 import UserAPI from "./api/UserAPI";
-import CategoriesAPI from "./api/CategoriesAPI";
+// import CategoriesAPI from "./api/CategoriesAPI";
 
-import axios from "axios";
-import Cookie from 'js-cookie';
+// import axios from "axios";
+import Cookie from "js-cookie";
 
 export const GlobalState = createContext();
 
@@ -15,9 +15,7 @@ export const DataProvider = ({ children }) => {
     const firstLogin = localStorage.getItem("firstLogin");
     if (firstLogin) {
       const refreshToken = async () => {
-        
-
-        setToken(Cookie.get('refreshtoken'));
+        setToken(Cookie.get("refreshtoken"));
 
         setTimeout(() => {
           refreshToken();

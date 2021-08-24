@@ -7,9 +7,10 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
+// import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 
+import FinishPurchase from "../FinishPurchase";
 import AddressForm from "../AddressForm";
 import PaymentForm from "../PaymentForm";
 import Review from "../Review";
@@ -53,25 +54,32 @@ const useStyles = makeStyles((theme) => ({
   content: {
     paddingTop: "100px",
     marginLeft: "auto",
-    marginRight: "auto"
-  }
+    marginRight: "auto",
+  },
 }));
 
 export default function BookingCheckout({ history, location }) {
+  const [info, setInfo] = React.useState({
+    city: 0,
+    district: 0,
+    name: "",
+    phone: "",
+    address: "",
+  });
+
   const steps = ["Delivery Address", "Order Detail", "Payment Method"];
   const productsOrder = location.state || [];
 
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <AddressForm />;
+        return <AddressForm info={info} setInfo={setInfo} />;
       case 1:
-        // console.log(location.state);
-        return <Review products={productsOrder} />;
+        return <Review products={productsOrder} info={info} />;
       case 2:
         let temp = 0;
         for (var i = 0; i < productsOrder.length; i++) {
-          temp += productsOrder[i].cost;
+          temp += productsOrder[i].cost * productsOrder[i].quantity;
         }
         return <PaymentForm total={temp} />;
       default:
@@ -111,18 +119,13 @@ export default function BookingCheckout({ history, location }) {
           </Stepper>
           <Fragment>
             {activeStep === 0 ? (
-              <AddressForm handleSubmit={handleSubmit} />
+              <AddressForm
+                handleSubmit={handleSubmit}
+                info={info}
+                setInfo={setInfo}
+              />
             ) : activeStep === steps.length ? (
-              <Fragment>
-                <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
-                </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is #0000001. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
-              </Fragment>
+              <FinishPurchase info={info} product={productsOrder} />
             ) : (
               <Fragment>
                 {getStepContent(activeStep)}
