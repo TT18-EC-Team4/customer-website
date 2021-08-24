@@ -13,7 +13,7 @@ export default function BookingCheckout({ info, product }) {
         const userId = localStorage.getItem("userID");
         let cart = [];
         product.map((item) => {
-          cart.push(item.id);
+          cart.push(item.name);
         });
         let total = 0;
         for (var i = 0; i < product.length; i++) {
