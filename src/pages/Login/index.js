@@ -104,7 +104,7 @@ export default function Login({ location }) {
           <Paper className={classes.form} elevation={20}>
             <Grid align="center">
               <Avatar></Avatar>
-              <h2>Sign Up</h2>
+              <h2>Login</h2>
               <form
                 onSubmit={handleOnSubmit}
                 style={{ padding: "0px 60px 20px 60px" }}

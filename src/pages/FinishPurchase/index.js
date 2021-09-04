@@ -12,9 +12,9 @@ export default function BookingCheckout({ info, product }) {
       try {
         const userId = localStorage.getItem("userID");
         let cart = [];
-        product.map((item) => {
-          cart.push(item.name);
-        });
+        for (var i in product) {
+          cart.push(product[i].name);
+        }
         let total = 0;
         for (var i = 0; i < product.length; i++) {
           total += product[i].cost * product[i].quantity;
@@ -41,11 +41,11 @@ export default function BookingCheckout({ info, product }) {
           cart: cart,
           total: total,
           orderDate: dateTime,
-          status: "Append",
+          status: "Pending",
         });
         console.log(param);
         axios
-          .post("http://localhost:5000/user/orders/checkout", param, {
+          .post("http://localhost:5000/user/checkout", param, {
             headers: {
               "content-type": "application/json",
             },
