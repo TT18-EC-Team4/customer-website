@@ -44,7 +44,7 @@ export default function Orders({ location }) {
       const userID = localStorage.getItem("userID");
       axios
         .post(
-          "http://localhost:5000/user/orders",
+          "https://ecommerce-backend-0001.herokuapp.com/user/orders",
           { userID: userID },
           {
             headers: {

@@ -45,7 +45,7 @@ export default function AdminCategories() {
   const handleAddCat = () => {
     try {
       axios
-        .post(`http://localhost:5000/admin/category`, { name: currentCat })
+        .post(`https://ecommerce-backend-0001.herokuapp.com/admin/category`, { name: currentCat })
         .then(async (res) => {
           alert(res.data.msg);
         })
@@ -59,7 +59,7 @@ export default function AdminCategories() {
   const handleDeleteCat = (category) => {
     try {
       axios
-        .delete(`http://localhost:5000/admin/category/${category}`)
+        .delete(`https://ecommerce-backend-0001.herokuapp.com/admin/category/${category}`)
         .then(async (res) => {
           alert(res.data.msg);
         })
@@ -84,7 +84,7 @@ export default function AdminCategories() {
   async function fetchData() {
     try {
       axios
-        .get("http://localhost:5000/admin/category")
+        .get("https://ecommerce-backend-0001.herokuapp.com/admin/category")
         .then(async (res) => {
           setCategories(res.data);
         })

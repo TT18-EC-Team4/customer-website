@@ -74,7 +74,7 @@ export default function Register({ location }) {
     e.preventDefault();
     try {
       if (user.password === user.password2) {
-        await axios.post("http://localhost:5000/user/register", { ...user });
+        await axios.post("https://ecommerce-backend-0001.herokuapp.com/user/register", { ...user });
 
         localStorage.setItem("firstLogin", true);
 

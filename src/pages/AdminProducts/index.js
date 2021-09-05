@@ -113,7 +113,7 @@ export default function AdminProducts() {
     setCurrent({ ...current, category: currentCat });
     try {
       axios
-        .post("http://localhost:5000/admin/products", { ...temp })
+        .post("https://ecommerce-backend-0001.herokuapp.com/admin/products", { ...temp })
         .then(async (res) => {
           alert(res.data.msg);
         })
@@ -129,7 +129,7 @@ export default function AdminProducts() {
   async function fetchData() {
     try {
       axios
-        .get("http://localhost:5000/admin/products")
+        .get("https://ecommerce-backend-0001.herokuapp.com/admin/products")
         .then(async (res) => {
           setProducts(res.data.products);
         })
@@ -138,7 +138,7 @@ export default function AdminProducts() {
         });
 
       axios
-        .get("http://localhost:5000/admin/category")
+        .get("https://ecommerce-backend-0001.herokuapp.com/admin/category")
         .then(async (res) => {
           setCategories(res.data);
         })

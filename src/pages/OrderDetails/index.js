@@ -30,7 +30,7 @@ export default function Orders({ match, location }) {
 
   const handleCancel = () => {
     axios
-      .put(`http://localhost:5000/user/orders/${orderId}`)
+      .put(`https://ecommerce-backend-0001.herokuapp.com/user/orders/${orderId}`)
       .then((res) => {
         const { msg, newStatus } = res.data;
         setOrder({ ...order, status: newStatus });

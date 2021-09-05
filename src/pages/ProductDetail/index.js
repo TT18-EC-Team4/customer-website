@@ -50,7 +50,7 @@ export default function ProductDetail({ match, location }) {
 
   // async function fetchProduct(productId) {
   //   // axios
-  //   //   .get("http://localhost:5000/api/products")
+  //   //   .get("https://ecommerce-backend-0001.herokuapp.com/api/products")
   //   //   .then((res) => {
   //   //     const products = res.data.products;
   //   //     const product = products.find((product) => product.id === productId);

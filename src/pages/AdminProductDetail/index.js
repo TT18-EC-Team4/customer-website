@@ -75,7 +75,7 @@ export default function AdminProductDetail({ match, location }) {
   const handleSaveEdit = () => {
     try {
       axios
-        .put(`http://localhost:5000/admin/products/${productId}`, {
+        .put(`https://ecommerce-backend-0001.herokuapp.com/admin/products/${productId}`, {
           name: product.name,
           cost: product.cost,
           author: product.author,
@@ -100,7 +100,7 @@ export default function AdminProductDetail({ match, location }) {
   const handleDelete = () => {
     try {
       axios
-        .delete(`http://localhost:5000/admin/products/${productId}`)
+        .delete(`https://ecommerce-backend-0001.herokuapp.com/admin/products/${productId}`)
         .then(async (res) => {
           alert(res.data.msg);
           history.push("/admin/products");

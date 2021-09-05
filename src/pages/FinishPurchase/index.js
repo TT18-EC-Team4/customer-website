@@ -45,7 +45,7 @@ export default function BookingCheckout({ info, product }) {
         });
         console.log(param);
         axios
-          .post("http://localhost:5000/user/checkout", param, {
+          .post("https://ecommerce-backend-0001.herokuapp.com/user/checkout", param, {
             headers: {
               "content-type": "application/json",
             },

@@ -10,7 +10,7 @@ function UserAPI(token) {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/user/infor", {
+        const res = await axios.get("https://ecommerce-backend-0001.herokuapp.com/user/infor", {
           headers: { Authorization: token },
         });
 
@@ -39,7 +39,7 @@ function UserAPI(token) {
       setCart([...cart, { ...product, quantity: 1 }]);
 
       await axios.patch(
-        "http://localhost:5000/user/addcart",
+        "https://ecommerce-backend-0001.herokuapp.com/user/addcart",
         { cart: [...cart, { ...product, quantity: 1 }] },
         {
           headers: { Authorization: token },

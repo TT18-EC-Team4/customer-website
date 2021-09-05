@@ -39,7 +39,7 @@ export default function Home({ location }) {
   async function fetchData() {
     axios
       .post(
-        "http://localhost:5000/user/products",
+        "https://ecommerce-backend-0001.herokuapp.com/user/products",
         { page: 1, limit: 15 },
         {
           headers: {
@@ -50,7 +50,7 @@ export default function Home({ location }) {
       .then((res) => {
         const products = res.data.products;
         axios
-          .get("http://localhost:5000/user/category")
+          .get("https://ecommerce-backend-0001.herokuapp.com/user/category")
           .then((res1) => {
             const cat = res1.data;
             let cnt = 0;

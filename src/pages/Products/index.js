@@ -60,7 +60,7 @@ export default function Products() {
   async function fetchData() {
     const param = JSON.stringify({ page: filter._page, limit: filter._limit });
     axios
-      .post("http://localhost:5000/user/products", param, {
+      .post("https://ecommerce-backend-0001.herokuapp.com/user/products", param, {
         headers: {
           "content-type": "application/json",
         },
@@ -74,7 +74,7 @@ export default function Products() {
         setErrors(true);
       });
     axios
-      .get("http://localhost:5000/user/category")
+      .get("https://ecommerce-backend-0001.herokuapp.com/user/category")
       .then((res1) => {
         const cat = res1.data;
         const categoryArray = {};

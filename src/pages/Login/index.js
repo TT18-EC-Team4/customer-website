@@ -73,7 +73,7 @@ export default function Login({ location }) {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/user/login", {
+      const res = await axios.post("https://ecommerce-backend-0001.herokuapp.com/user/login", {
         ...user,
       });
       console.log(res.data);

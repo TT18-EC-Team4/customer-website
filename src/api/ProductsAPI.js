@@ -13,7 +13,7 @@ function ProductsAPI() {
 
     useEffect(() =>{
         const getProducts = async () => {
-            const res = await axios.get(`http://localhost:5000/api/products?limit=${page*9}&${category}&${sort}&title[regex]=${search}`)
+            const res = await axios.get(`https://ecommerce-backend-0001.herokuapp.com/api/products?limit=${page*9}&${category}&${sort}&title[regex]=${search}`)
             setProducts(res.data.products)
             setResult(res.data.result)
         }
